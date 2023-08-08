@@ -15,9 +15,11 @@ export type TabsProvide = {
   id: string;
   props: TabsProps;
   setLine: () => void;
+  scrollable: ComputedRef<boolean>;
   onRendered: (name: Numeric, title?: string) => void;
-  scrollIntoView: (immediate?: boolean) => void;
   currentName: ComputedRef<Numeric | undefined>;
+  setTitleRefs: (index: number) => (el: unknown) => void;
+  scrollIntoView: (immediate?: boolean) => void;
 };
 
 export type TabsExpose = {
@@ -26,3 +28,18 @@ export type TabsExpose = {
 };
 
 export type TabsInstance = ComponentPublicInstance<TabsProps, TabsExpose>;
+
+export type TabsThemeVars = {
+  tabTextColor?: string;
+  tabActiveTextColor?: string;
+  tabDisabledTextColor?: string;
+  tabFontSize?: string;
+  tabLineHeight?: number | string;
+  tabsDefaultColor?: string;
+  tabsLineHeight?: number | string;
+  tabsCardHeight?: string;
+  tabsNavBackground?: string;
+  tabsBottomBarWidth?: string;
+  tabsBottomBarHeight?: string;
+  tabsBottomBarColor?: string;
+};

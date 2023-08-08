@@ -24,6 +24,8 @@ export type ShareSheetOption = {
 
 export type ShareSheetOptions = ShareSheetOption[] | ShareSheetOption[][];
 
+const isImage = (name?: string) => name?.includes('/');
+
 const popupInheritKeys = [
   ...popupSharedPropKeys,
   'round',
@@ -44,7 +46,7 @@ const iconMap: Record<string, string> = {
 
 const [name, bem, t] = createNamespace('share-sheet');
 
-const shareSheetProps = extend({}, popupSharedProps, {
+export const shareSheetProps = extend({}, popupSharedProps, {
   title: String,
   round: truthProp,
   options: makeArrayProp<ShareSheetOption | ShareSheetOption[]>(),
@@ -93,14 +95,14 @@ export default defineComponent({
     };
 
     const renderIcon = (icon: string) => {
-      if (iconMap[icon]) {
-        return (
-          <div class={bem('icon', [icon])}>
-            <Icon name={iconMap[icon] || icon} />
-          </div>
-        );
+      if (isImage(icon)) {
+        return <img src={icon} class={bem('image-icon')} />;
       }
-      return <img src={icon} class={bem('image-icon')} />;
+      return (
+        <div class={bem('icon', [icon])}>
+          <Icon name={iconMap[icon] || icon} />
+        </div>
+      );
     };
 
     const renderOption = (option: ShareSheetOption, index: number) => {
@@ -129,7 +131,7 @@ export default defineComponent({
       const { options } = props;
       if (Array.isArray(options[0])) {
         return (options as ShareSheetOption[][]).map((item, index) =>
-          renderOptions(item, index !== 0)
+          renderOptions(item, index !== 0),
         );
       }
       return renderOptions(options as ShareSheetOption[]);

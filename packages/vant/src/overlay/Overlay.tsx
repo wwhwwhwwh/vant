@@ -25,7 +25,7 @@ import { useLazyRender } from '../composables/use-lazy-render';
 
 const [name, bem] = createNamespace('overlay');
 
-const overlayProps = {
+export const overlayProps = {
   show: Boolean,
   zIndex: numericProp,
   duration: numericProp,
@@ -55,7 +55,7 @@ export default defineComponent({
     const renderOverlay = lazyRender(() => {
       const style: CSSProperties = extend(
         getZIndexStyle(props.zIndex),
-        props.customStyle
+        props.customStyle,
       );
 
       if (isDef(props.duration)) {

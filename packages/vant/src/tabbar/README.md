@@ -113,7 +113,7 @@ export default {
 ### Custom Color
 
 ```html
-<van-tabbar v-model="active" active-color="#ee0a24" inactive-color="#000">
+<van-tabbar v-model="active" active-color="#ee0a24">
   <van-tabbar-item icon="home-o">Tab</van-tabbar-item>
   <van-tabbar-item icon="search">Tab</van-tabbar-item>
   <van-tabbar-item icon="friends-o">Tab</van-tabbar-item>
@@ -134,12 +134,12 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const active = ref(0);
-    const onChange = (index) => Toast(`Tab ${index}`);
+    const onChange = (index) => showToast(`Tab ${index}`);
     return {
       icon,
       onChange,
@@ -191,9 +191,9 @@ export default {
 | icon-prefix | Icon className prefix | _string_ | `van-icon` |
 | dot | Whether to show red dot | _boolean_ | - |
 | badge | Content of the badge | _number \| string_ | `''` |
-| badge-props `v3.2.8` | Props of Badge, see [Badge - props](#/en-US/badge#props) | _BadgeProps_ | - |
+| badge-props | Props of Badge, see [Badge - props](#/en-US/badge#props) | _BadgeProps_ | - |
 | url | Link | _string_ | - |
-| to | Target route of the link, same as to of vue-router | _string \| object_ | - |
+| to | The target route should navigate to when clicked on, same as the [to prop](https://router.vuejs.org/api/interfaces/RouterLinkProps.html#Properties-to) of Vue Router | _string \| object_ | - |
 | replace | If true, the navigation will not leave a history record | _boolean_ | `false` |
 
 ### TabbarItem Slots
@@ -220,11 +220,11 @@ The component provides the following CSS variables, which can be used to customi
 | --- | --- | --- |
 | --van-tabbar-height | _50px_ | - |
 | --van-tabbar-z-index | _1_ | - |
-| --van-tabbar-background-color | _var(--van-background-color-light)_ | - |
+| --van-tabbar-background | _var(--van-background-2)_ | - |
 | --van-tabbar-item-font-size | _var(--van-font-size-sm)_ | - |
-| --van-tabbar-item-text-color | _var(--van-gray-7)_ | - |
+| --van-tabbar-item-text-color | _var(--van-text-color)_ | - |
 | --van-tabbar-item-active-color | _var(--van-primary-color)_ | - |
-| --van-tabbar-item-active-background-color | _var(--van-background-color-light)_ | - |
+| --van-tabbar-item-active-background | _var(--van-background-2)_ | - |
 | --van-tabbar-item-line-height | _1_ | - |
 | --van-tabbar-item-icon-size | _22px_ | - |
 | --van-tabbar-item-icon-margin-bottom | _var(--van-padding-base)_ | - |

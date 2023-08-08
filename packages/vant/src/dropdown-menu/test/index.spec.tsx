@@ -10,7 +10,7 @@ function renderWrapper(
     direction?: DropdownMenuDirection | undefined;
     closeOnClickOutside?: boolean;
     icon?: string;
-  } = {}
+  } = {},
 ) {
   return mount({
     setup() {
@@ -242,14 +242,14 @@ test('toggle method', (done) => {
         await later();
 
         expect(
-          wrapper.find('.van-dropdown-item__content').style.display
+          wrapper.find('.van-dropdown-item__content').style.display,
         ).toEqual('');
 
         // hide
         item.value.toggle(false, { immediate: true });
         await later();
         expect(
-          wrapper.find('.van-dropdown-item__content').style.display
+          wrapper.find('.van-dropdown-item__content').style.display,
         ).toEqual('none');
 
         done();
@@ -277,4 +277,21 @@ test('title slot', async () => {
 
   await later();
   expect(wrapper.html()).toMatchSnapshot();
+});
+
+test('DropdownItem should inherit attrs when using teleport prop', async () => {
+  const root = document.createElement('div');
+  mount({
+    setup() {
+      return () => (
+        <DropdownMenu>
+          <DropdownItem class="foo" teleport={root} />
+        </DropdownMenu>
+      );
+    },
+  });
+
+  await later();
+  const item = root.querySelector('.van-dropdown-item');
+  expect(item?.classList.contains('foo')).toBeTruthy();
 });

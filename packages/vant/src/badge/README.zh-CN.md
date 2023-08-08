@@ -147,9 +147,9 @@ app.use(Badge);
 | color | 徽标背景颜色 | _string_ | `#ee0a24` |
 | dot | 是否展示为小红点 | _boolean_ | `false` |
 | max | 最大值，超过最大值会显示 `{max}+`，仅当 content 为数字时有效 | _number \| string_ | - |
-| offset `v3.0.5` | 设置徽标的偏移量，数组的两项分别对应水平和垂直方向的偏移量，默认单位为 `px` | _[number \| string, number \| string]_ | - |
-| show-zero `v3.0.10` | 当 content 为数字 0 或字符串 '0' 时，是否展示徽标 | _boolean_ | `true` |
-| position `v3.2.7` | 徽标位置，可选值为 `top-left` `bottom-left` `bottom-right` | _string_ | `top-right` |
+| offset | 设置徽标的偏移量，数组的两项分别对应水平向右和垂直向下方向的偏移量，默认单位为 `px` | _[number \| string, number \| string]_ | - |
+| show-zero | 当 content 为数字 0 或字符串 '0' 时，是否展示徽标 | _boolean_ | `true` |
+| position | 徽标位置，可选值为 `top-left` `bottom-left` `bottom-right` | _string_ | `top-right` |
 
 ### Slots
 
@@ -178,9 +178,9 @@ import type { BadgeProps, BadgePosition } from 'vant';
 | --van-badge-color | _var(--van-white)_ | - |
 | --van-badge-padding | _0 3px_ | - |
 | --van-badge-font-size | _var(--van-font-size-sm)_ | - |
-| --van-badge-font-weight | _var(--van-font-weight-bold)_ | - |
-| --van-badge-border-width | _var(--van-border-width-base)_ | - |
-| --van-badge-background-color | _var(--van-danger-color)_ | - |
+| --van-badge-font-weight | _var(--van-font-bold)_ | - |
+| --van-badge-border-width | _var(--van-border-width)_ | - |
+| --van-badge-background | _var(--van-danger-color)_ | - |
 | --van-badge-dot-color | _var(--van-danger-color)_ | - |
 | --van-badge-dot-size | _8px_ | - |
-| --van-badge-font-family | _-apple-system-font, Helvetica Neue, Arial, sans-serif_ | - |
+| --van-badge-font | _-apple-system-font, Helvetica Neue, Arial, sans-serif_ | - |

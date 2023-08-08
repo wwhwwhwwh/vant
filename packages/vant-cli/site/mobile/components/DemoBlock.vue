@@ -1,6 +1,8 @@
 <template>
   <div class="van-doc-demo-block">
-    <h2 v-if="title" class="van-doc-demo-block__title">{{ title }}</h2>
+    <h2 v-if="title" class="van-doc-demo-block__title" :id="slugifyTitle">
+      {{ title }}
+    </h2>
     <div v-if="card" class="van-doc-demo-block__card">
       <slot />
     </div>
@@ -16,17 +18,48 @@ export default {
     card: Boolean,
     title: String,
   },
+
+  data() {
+    return {
+      slugify: null,
+    };
+  },
+
+  computed: {
+    slugifyTitle() {
+      return this.slugify ? this.slugify(this.title) : '';
+    },
+  },
+
+  watch: {
+    slugifyTitle(newVal) {
+      if (newVal) {
+        this.$nextTick(() => {
+          let hash = '';
+          if (top) hash = top.location.hash.split('#').pop();
+          else hash = location.hash.split('#').pop();
+          const target = document.getElementById(newVal);
+          if (target && newVal === hash) {
+            target.scrollIntoView(true);
+          }
+        });
+      }
+    },
+  },
+
+  async mounted() {
+    const { slugify } = await import('transliteration');
+    this.slugify = slugify;
+  },
 };
 </script>
 
 <style lang="less">
-@import '../../common/style/var';
-
 .van-doc-demo-block {
   &__title {
     margin: 0;
     padding: 32px 16px 16px;
-    color: @van-doc-text-light-blue;
+    color: var(--van-doc-text-color-4);
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;

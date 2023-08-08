@@ -48,6 +48,7 @@ Current supported languages:
 | German (formal)          | de-DE-formal | -        |
 | Greek                    | el-GR        | `v3.5.0` |
 | English                  | en-US        | -        |
+| Esperanto                | eo-EO        | `v4.0.9` |
 | Spanish (Spain)          | es-ES        | -        |
 | Farsi                    | fa-IR        | `v3.5.0` |
 | French                   | fr-FR        | -        |
@@ -57,23 +58,47 @@ Current supported languages:
 | Icelandic                | is-IS        | `v3.4.7` |
 | Italian                  | it-IT        | `v3.4.5` |
 | Japanese                 | ja-JP        | -        |
+| Khmer                    | km-KH        | `v4.1.2` |
 | Korean                   | ko-KR        | `v3.4.3` |
 | Lao                      | la-LA        | `v3.4.7` |
+| Mongolian                | mm-MN        | `v4.0.5` |
 | Norwegian                | nb-NO        | -        |
+| Dutch                    | nl-NL        | `v4.0.5` |
 | Portuguese (Brazil)      | pt-BR        | `v3.3.3` |
 | Romanian                 | ro-RO        | -        |
 | Russian                  | ru-RU        | `v3.1.5` |
+| Serbian                  | sr-RS        | `v4.6.4` |
 | Swedish                  | sv-SE        | `v3.4.7` |
-| Turkish                  | tr-TR        | -        |
 | Thai                     | th-TH        | -        |
+| Turkish                  | tr-TR        | -        |
 | Ukrainian                | uk-UA        | `v3.4.5` |
 | Vietnamese               | vi-VN        | `v3.4.5` |
 | Chinese                  | zh-CN        | -        |
 | Traditional Chinese (HK) | zh-HK        | -        |
 | Traditional Chinese (TW) | zh-TW        | -        |
 
-> View all language configs [Here](https://github.com/vant-ui/vant/tree/dev/packages/vant/src/locale/lang).
+> View all language configs [Here](https://github.com/vant-ui/vant/tree/main/packages/vant/src/locale/lang).
 
 ### Add new language
 
 If you can’t find the language you need, please send us a Pull Request to add the new language pack, you can refer to [Add German language pack](https://github.com/vant-ui/vant/pull/7245) PR.
+
+### Get Current Lang
+
+You can get the current language using `useCurrentLang` method.
+
+- **Type:**
+
+```ts
+function useCurrentLang(): Ref<string>;
+```
+
+- **Example:**
+
+```ts
+import { useCurrentLang } from 'vant';
+
+const currentLang = useCurrentLang();
+
+console.log(currentLang.value); // --> 'en-US'
+```

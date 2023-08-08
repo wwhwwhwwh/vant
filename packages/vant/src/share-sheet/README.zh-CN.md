@@ -34,7 +34,7 @@ app.use(ShareSheet);
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
@@ -48,7 +48,7 @@ export default {
     ];
 
     const onSelect = (option) => {
-      Toast(option.name);
+      showToast(option.name);
       showShare.value = false;
     };
 
@@ -186,7 +186,8 @@ export default {
 | cancel-text | 取消按钮文字，传入空字符串可以隐藏按钮 | _string_ | `'取消'` |
 | description | 标题下方的辅助描述文字 | _string_ | - |
 | duration | 动画时长，单位秒，设置为 0 可以禁用动画 | _number \| string_ | `0.3` |
-| round `v3.2.6` | 是否显示圆角 | _boolean_ | `true` |
+| z-index | 将面板的 z-index 层级设置为一个固定值 | _number \| string_ | `2000+` |
+| round | 是否显示圆角 | _boolean_ | `true` |
 | overlay | 是否显示遮罩层 | _boolean_ | `true` |
 | overlay-class | 自定义遮罩层类名 | _string \| Array \| object_ | - |
 | overlay-style | 自定义遮罩层样式 | _object_ | - |
@@ -195,8 +196,8 @@ export default {
 | close-on-popstate | 是否在页面回退时自动关闭 | _boolean_ | `true` |
 | close-on-click-overlay | 是否在点击遮罩层后关闭 | _boolean_ | `true` |
 | safe-area-inset-bottom | 是否开启[底部安全区适配](#/zh-CN/advanced-usage#di-bu-an-quan-qu-gua-pei) | _boolean_ | `true` |
-| teleport | 指定挂载的节点，等同于 Teleport 组件的 [to 属性](https://v3.cn.vuejs.org/api/built-in-components.html#teleport) | _string \| Element_ | - |
-| before-close `v3.1.4` | 关闭前的回调函数，返回 `false` 可阻止关闭，支持返回 Promise | _(action: string) => boolean \| Promise\<boolean\>_ | - |
+| teleport | 指定挂载的节点，等同于 Teleport 组件的 [to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) | _string \| Element_ | - |
+| before-close | 关闭前的回调函数，返回 `false` 可阻止关闭，支持返回 Promise | _(action: string) => boolean \| Promise\<boolean\>_ | - |
 
 ### Option 数据结构
 
@@ -223,11 +224,11 @@ export default {
 
 ### Slots
 
-| 名称             | 说明               |
-| ---------------- | ------------------ |
-| title            | 自定义顶部标题     |
-| description      | 自定义描述文字     |
-| cancel `v3.0.10` | 自定义取消按钮内容 |
+| 名称        | 说明               |
+| ----------- | ------------------ |
+| title       | 自定义顶部标题     |
+| description | 自定义描述文字     |
+| cancel      | 自定义取消按钮内容 |
 
 ### 类型定义
 
@@ -263,7 +264,7 @@ import type {
 | --van-share-sheet-option-description-font-size | _var(--van-font-size-sm)_ | - |
 | --van-share-sheet-cancel-button-font-size | _var(--van-font-size-lg)_ | - |
 | --van-share-sheet-cancel-button-height | _48px_ | - |
-| --van-share-sheet-cancel-button-background | _var(--van-background-color-light)_ | - |
+| --van-share-sheet-cancel-button-background | _var(--van-background-2)_ | - |
 
 ## 常见问题
 

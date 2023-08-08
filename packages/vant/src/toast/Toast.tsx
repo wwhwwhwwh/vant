@@ -27,7 +27,7 @@ import { Popup } from '../popup';
 import { Loading, LoadingType } from '../loading';
 
 // Types
-import type { ToastType, ToastPosition } from './types';
+import type { ToastType, ToastPosition, ToastWordBreak } from './types';
 
 const [name, bem] = createNamespace('toast');
 
@@ -41,7 +41,7 @@ const popupInheritProps = [
   'closeOnClickOverlay',
 ] as const;
 
-const toastProps = {
+export const toastProps = {
   icon: String,
   show: Boolean,
   type: makeStringProp<ToastType>('text'),
@@ -51,6 +51,7 @@ const toastProps = {
   duration: makeNumberProp(2000),
   position: makeStringProp<ToastPosition>('middle'),
   teleport: [String, Object] as PropType<TeleportProps['to']>,
+  wordBreak: String as PropType<ToastWordBreak>,
   className: unknownProp,
   iconPrefix: String,
   transition: makeStringProp('van-fade'),
@@ -71,8 +72,8 @@ export default defineComponent({
 
   emits: ['update:show'],
 
-  setup(props, { emit }) {
-    let timer: NodeJS.Timeout;
+  setup(props, { emit, slots }) {
+    let timer: ReturnType<typeof setTimeout>;
     let clickable = false;
 
     const toggleClickable = () => {
@@ -118,6 +119,10 @@ export default defineComponent({
     const renderMessage = () => {
       const { type, message } = props;
 
+      if (slots.message) {
+        return <div class={bem('text')}>{slots.message()}</div>;
+      }
+
       if (isDef(message) && message !== '') {
         return type === 'html' ? (
           <div key={0} class={bem('text')} innerHTML={String(message)} />
@@ -138,7 +143,7 @@ export default defineComponent({
             updateShow(false);
           }, props.duration);
         }
-      }
+      },
     );
 
     onMounted(toggleClickable);
@@ -147,7 +152,11 @@ export default defineComponent({
     return () => (
       <Popup
         class={[
-          bem([props.position, { [props.type]: !props.icon }]),
+          bem([
+            props.position,
+            props.wordBreak === 'normal' ? 'break-normal' : props.wordBreak,
+            { [props.type]: !props.icon },
+          ]),
           props.className,
         ]}
         lockScroll={false}

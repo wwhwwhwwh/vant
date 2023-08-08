@@ -14,3 +14,10 @@ export type IndexBarInstance = ComponentPublicInstance<
   IndexBarProps,
   IndexBarExpose
 >;
+
+export type IndexBarThemeVars = {
+  indexBarSidebarZIndex?: number | string;
+  indexBarIndexFontSize?: string;
+  indexBarIndexLineHeight?: number | string;
+  indexBarIndexActiveColor?: string;
+};

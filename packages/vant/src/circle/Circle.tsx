@@ -34,7 +34,7 @@ function getPath(clockwise: boolean, viewBoxSize: number) {
 
 export type CircleStartPosition = 'top' | 'right' | 'bottom' | 'left';
 
-const circleProps = {
+export const circleProps = {
   text: String,
   size: numericProp,
   fill: makeStringProp('none'),
@@ -90,7 +90,7 @@ export default defineComponent({
         const startRate = props.currentRate;
         const endRate = format(rate);
         const duration = Math.abs(
-          ((startRate - endRate) * 1000) / +props.speed
+          ((startRate - endRate) * 1000) / +props.speed,
         );
 
         const animate = () => {
@@ -114,7 +114,7 @@ export default defineComponent({
           emit('update:currentRate', endRate);
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const renderHover = () => {

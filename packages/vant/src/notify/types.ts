@@ -1,4 +1,3 @@
-import { Notify } from './function-call';
 import type { Numeric } from '../utils';
 
 export type NotifyMessage = Numeric;
@@ -21,8 +20,13 @@ export type NotifyOptions = {
   onOpened?: () => void;
 };
 
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $notify: typeof Notify;
-  }
-}
+export type NotifyThemeVars = {
+  notifyTextColor?: string;
+  notifyPadding?: string;
+  notifyFontSize?: string;
+  notifyLineHeight?: number | string;
+  notifyPrimaryBackground?: string;
+  notifySuccessBackground?: string;
+  notifyDangerBackground?: string;
+  notifyWarningBackground?: string;
+};

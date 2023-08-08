@@ -1,7 +1,6 @@
-import { extend, inBrowser, withInstall, ComponentInstance } from '../utils';
+import { extend, inBrowser, ComponentInstance } from '../utils';
 import { mountComponent, usePopupState } from '../utils/mount-component';
 import VanImagePreview from './ImagePreview';
-import type { App } from 'vue';
 import type { ImagePreviewOptions } from './types';
 
 let instance: ComponentInstance;
@@ -27,6 +26,7 @@ const defaultConfig: ImagePreviewOptions = {
   swipeDuration: 300,
   showIndicators: false,
   closeOnPopstate: true,
+  closeOnClickOverlay: true,
   closeIconPosition: 'top-right',
 };
 
@@ -49,9 +49,9 @@ function initInstance() {
   }));
 }
 
-const ImagePreview = (
+export const showImagePreview = (
   options: string[] | ImagePreviewOptions,
-  startPosition = 0
+  startPosition = 0,
 ) => {
   /* istanbul ignore if */
   if (!inBrowser) {
@@ -70,11 +70,3 @@ const ImagePreview = (
 
   return instance;
 };
-
-ImagePreview.Component = withInstall(VanImagePreview);
-
-ImagePreview.install = (app: App) => {
-  app.use(ImagePreview.Component);
-};
-
-export { ImagePreview };

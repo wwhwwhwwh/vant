@@ -7,7 +7,14 @@ import { useTranslate } from '../../../docs/site';
 import { deepClone } from '../../utils/deep-clone';
 import zhCNOptions from './area-zh-CN';
 import enUSOptions from './area-en-US';
+import { useCurrentLang } from '../../locale';
+import { useCascaderAreaData } from '@vant/area-data';
+import { closeToast, showLoadingToast } from '../../toast';
 import type { Numeric } from '../../utils';
+
+const lang = useCurrentLang();
+
+const cascaderAreaData = useCascaderAreaData();
 
 const t = useTranslate({
   'zh-CN': {
@@ -28,6 +35,7 @@ const t = useTranslate({
       { text: '宁波市', value: '330200' },
     ],
     currentLevel: (level: number) => `当前为第 ${level} 级`,
+    chinaAreaData: '中国省市区数据',
     customContent: '自定义选项上方内容',
     customFieldNames: '自定义字段名',
   },
@@ -49,6 +57,7 @@ const t = useTranslate({
       { text: 'Ningbo', value: '330200' },
     ],
     currentLevel: (level: number) => `Current level is ${level}`,
+    chinaAreaData: 'China Area Data',
     customContent: 'Custom Content',
     customFieldNames: 'Custom Field Names',
   },
@@ -63,6 +72,11 @@ type StateItem = {
 };
 
 const baseState = reactive<StateItem>({
+  show: false,
+  value: '',
+  result: '',
+});
+const chinaAreaDataState = reactive<StateItem>({
   show: false,
   value: '',
   result: '',
@@ -118,10 +132,12 @@ const customFieldOptions = computed(() => {
 });
 
 const loadDynamicOptions = ({ value }: CascaderOption) => {
-  if (value === '330000') {
+  if (value === '330000' && asyncState.options![0].children?.length === 0) {
+    showLoadingToast(t('loading'));
     setTimeout(() => {
       asyncState.options![0].children = t('asyncOptions2');
-    }, 500);
+      closeToast();
+    }, 1000);
   }
 };
 
@@ -130,7 +146,7 @@ const onFinish = (
   {
     value,
     selectedOptions,
-  }: { value: Numeric; selectedOptions: CascaderOption[] }
+  }: { value: Numeric; selectedOptions: CascaderOption[] },
 ) => {
   const result = selectedOptions
     .map((option) => option.text || option.name)
@@ -168,6 +184,31 @@ const onFinish = (
     </van-popup>
   </demo-block>
 
+  <demo-block v-if="lang === 'zh-CN'" card :title="t('chinaAreaData')">
+    <van-field
+      v-model="chinaAreaDataState.result"
+      is-link
+      readonly
+      :label="t('area')"
+      :placeholder="t('selectArea')"
+      @click="chinaAreaDataState.show = true"
+    />
+    <van-popup
+      v-model:show="chinaAreaDataState.show"
+      round
+      teleport="body"
+      position="bottom"
+    >
+      <van-cascader
+        v-model="chinaAreaDataState.value"
+        :title="t('selectArea')"
+        :options="cascaderAreaData"
+        @close="chinaAreaDataState.show = false"
+        @finish="onFinish(chinaAreaDataState, $event)"
+      />
+    </van-popup>
+  </demo-block>
+
   <demo-block card :title="t('customColor')">
     <van-field
       v-model="customColorState.result"
@@ -187,7 +228,7 @@ const onFinish = (
         v-model="customColorState.value"
         :title="t('selectArea')"
         :options="t('options')"
-        active-color="#1989fa"
+        active-color="#ee0a24"
         @close="customColorState.show = false"
         @finish="onFinish(customColorState, $event)"
       />
@@ -272,7 +313,7 @@ const onFinish = (
         @finish="onFinish(customContentState, $event)"
       >
         <template #options-top="{ tabIndex }">
-          <div class="current-level">{{ t('currentLevel', tabIndex) }}</div>
+          <div class="current-level">{{ t('currentLevel', tabIndex + 1) }}</div>
         </template>
       </van-cascader>
     </van-popup>
@@ -281,6 +322,8 @@ const onFinish = (
 
 <style lang="less">
 .current-level {
-  padding: 10px 16px 0;
+  font-size: 14px;
+  padding: 16px 16px 0;
+  color: var(--van-gray-6);
 }
 </style>

@@ -12,6 +12,7 @@ import {
   truthProp,
   unknownProp,
   numericProp,
+  makeStringProp,
   createNamespace,
 } from '../utils';
 
@@ -28,6 +29,7 @@ export type CellSize = 'normal' | 'large';
 export type CellArrowDirection = 'up' | 'down' | 'left' | 'right';
 
 export const cellSharedProps = {
+  tag: makeStringProp<keyof HTMLElementTagNameMap>('div'),
   icon: String,
   size: String as PropType<CellSize>,
   title: numericProp,
@@ -49,7 +51,7 @@ export const cellSharedProps = {
   },
 };
 
-const cellProps = extend({}, cellSharedProps, routeProps);
+export const cellProps = extend({}, cellSharedProps, routeProps);
 
 export type CellProps = ExtractPropTypes<typeof cellProps>;
 
@@ -75,12 +77,20 @@ export default defineComponent({
 
     const renderTitle = () => {
       if (slots.title || isDef(props.title)) {
+        const titleSlot = slots.title?.();
+
+        // Allow Field to dynamically set empty label
+        // https://github.com/youzan/vant/issues/11368
+        if (Array.isArray(titleSlot) && titleSlot.length === 0) {
+          return;
+        }
+
         return (
           <div
             class={[bem('title'), props.titleClass]}
             style={props.titleStyle}
           >
-            {slots.title ? slots.title() : <span>{props.title}</span>}
+            {titleSlot || <span>{props.title}</span>}
             {renderLabel()}
           </div>
         );
@@ -93,9 +103,8 @@ export default defineComponent({
       const hasValue = slot || isDef(props.value);
 
       if (hasValue) {
-        const hasTitle = slots.title || isDef(props.title);
         return (
-          <div class={[bem('value', { alone: !hasTitle }), props.valueClass]}>
+          <div class={[bem('value'), props.valueClass]}>
             {slot ? slot() : <span>{props.value}</span>}
           </div>
         );
@@ -124,15 +133,16 @@ export default defineComponent({
       }
 
       if (props.isLink) {
-        const name = props.arrowDirection
-          ? `arrow-${props.arrowDirection}`
-          : 'arrow';
+        const name =
+          props.arrowDirection && props.arrowDirection !== 'right'
+            ? `arrow-${props.arrowDirection}`
+            : 'arrow';
         return <Icon name={name} class={bem('right-icon')} />;
       }
     };
 
     return () => {
-      const { size, center, border, isLink, required } = props;
+      const { tag, size, center, border, isLink, required } = props;
       const clickable = props.clickable ?? isLink;
 
       const classes: Record<string, boolean | undefined> = {
@@ -146,7 +156,7 @@ export default defineComponent({
       }
 
       return (
-        <div
+        <tag
           class={bem(classes)}
           role={clickable ? 'button' : undefined}
           tabindex={clickable ? 0 : undefined}
@@ -157,7 +167,7 @@ export default defineComponent({
           {renderValue()}
           {renderRightIcon()}
           {slots.extra?.()}
-        </div>
+        </tag>
       );
     };
   },

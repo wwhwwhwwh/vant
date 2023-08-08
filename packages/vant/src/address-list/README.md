@@ -34,7 +34,7 @@ app.use(AddressList);
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
@@ -63,8 +63,8 @@ export default {
       },
     ];
 
-    const onAdd = () => Toast('Add');
-    const onEdit = (item, index) => Toast('Edit:' + index);
+    const onAdd = () => showToast('Add');
+    const onEdit = (item, index) => showToast('Edit:' + index);
 
     return {
       list,
@@ -83,13 +83,15 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| v-model | Id of chosen address | _string_ | - |
+| v-model | Id of chosen address | _number \| string_ | - |
 | list | Address list | _Address[]_ | `[]` |
 | disabled-list | Disabled address list | _Address[]_ | `[]` |
 | disabled-text | Disabled text | _string_ | - |
 | switchable | Whether to allow switch address | _boolean_ | `true` |
+| show-add-button | Whether to show add button | _boolean_ | `true` |
 | add-button-text | Add button text | _string_ | `Add new address` |
 | default-tag-text | Default tag text | _string_ | - |
+| right-icon `v4.5.0` | Right Icon | _string_ | `edit` |
 
 ### Events
 
@@ -114,12 +116,12 @@ export default {
 
 ### Slots
 
-| Name         | Description                    | SlotProps       |
-| ------------ | ------------------------------ | --------------- |
-| default      | Custom content after list      | -               |
-| top          | Custom content before list     | -               |
-| item-bottom  | Custom content after list item | _item: Address_ |
-| tag `v3.0.9` | Custom tag of list item        | _item: Address_ |
+| Name        | Description                    | SlotProps       |
+| ----------- | ------------------------------ | --------------- |
+| default     | Custom content after list      | -               |
+| top         | Custom content before list     | -               |
+| item-bottom | Custom content after list item | _item: Address_ |
+| tag         | Custom tag of list item        | _item: Address_ |
 
 ### Types
 
@@ -148,5 +150,5 @@ The component provides the following CSS variables, which can be used to customi
 | --van-address-list-item-disabled-text-color | _var(--van-text-color-3)_ | - |
 | --van-address-list-item-font-size | _13px_ | - |
 | --van-address-list-item-line-height | _var(--van-line-height-sm)_ | - |
-| --van-address-list-item-radio-icon-color | _var(--van-danger-color)_ | - |
+| --van-address-list-radio-color | _var(--van-primary-color)_ | - |
 | --van-address-list-edit-icon-size | _20px_ | - |

@@ -47,7 +47,7 @@ export default {
 
 ### 限制输入范围
 
-通过 `min` 和 `max` 属性限制输入值的范围。
+通过 `min` 和 `max` 属性限制输入值的范围，默认超出范围后会自动校正最大值或最小值，通过 `auto-fixed` 可以关闭自动校正。
 
 ```html
 <van-stepper v-model="value" min="5" max="8" />
@@ -103,18 +103,18 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { closeToast, showLoadingToast } from 'vant';
 
 export default {
   setup() {
     const value = ref(1);
 
     const beforeChange = (value) => {
-      Toast.loading({ forbidClick: true });
+      showLoadingToast({ forbidClick: true });
 
       return new Promise((resolve) => {
         setTimeout(() => {
-          Toast.clear();
+          closeToast();
           // 在 resolve 函数中返回 true 或 false
           resolve(true);
         }, 500);
@@ -146,6 +146,7 @@ export default {
 | v-model | 当前输入的值 | _number \| string_ | - |
 | min | 最小值 | _number \| string_ | `1` |
 | max | 最大值 | _number \| string_ | - |
+| auto-fixed | 是否自动校正超出限制范围的数值，设置为 `false` 后输入超过限制范围的数值将不会自动校正 | _boolean_ | `true` |
 | default-value | 初始值，当 v-model 为空时生效 | _number \| string_ | `1` |
 | step | 步长，每次点击时改变的值 | _number \| string_ | `1` |
 | name | 标识符，通常为一个唯一的字符串或数字，可以在 `change` 事件回调参数中获取 | _number \| string_ | - |
@@ -191,21 +192,21 @@ import type { StepperTheme, StepperProps } from 'vant';
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称 | 默认值 | 描述 |
-| --- | --- | --- |
-| --van-stepper-background-color | _var(--van-active-color)_ | - |
-| --van-stepper-button-icon-color | _var(--van-text-color)_ | - |
-| --van-stepper-button-disabled-color | _var(--van-background-color)_ | - |
-| --van-stepper-button-disabled-icon-color | _var(--van-gray-5)_ | - |
-| --van-stepper-button-round-theme-color | _var(--van-danger-color)_ | - |
-| --van-stepper-input-width | _32px_ | - |
-| --van-stepper-input-height | _28px_ | - |
-| --van-stepper-input-font-size | _var(--van-font-size-md)_ | - |
-| --van-stepper-input-line-height | _normal_ | - |
-| --van-stepper-input-text-color | _var(--van-text-color)_ | - |
-| --van-stepper-input-disabled-text-color | _var(--van-text-color-3)_ | - |
-| --van-stepper-input-disabled-background-color | _var(--van-active-color)_ | - |
-| --van-stepper-border-radius | _var(--van-border-radius-md)_ | - |
+| 名称                                     | 默认值                     | 描述 |
+| ---------------------------------------- | -------------------------- | ---- |
+| --van-stepper-background                 | _var(--van-active-color)_  | -    |
+| --van-stepper-button-icon-color          | _var(--van-text-color)_    | -    |
+| --van-stepper-button-disabled-color      | _var(--van-background)_    | -    |
+| --van-stepper-button-disabled-icon-color | _var(--van-gray-5)_        | -    |
+| --van-stepper-button-round-theme-color   | _var(--van-primary-color)_ | -    |
+| --van-stepper-input-width                | _32px_                     | -    |
+| --van-stepper-input-height               | _28px_                     | -    |
+| --van-stepper-input-font-size            | _var(--van-font-size-md)_  | -    |
+| --van-stepper-input-line-height          | _normal_                   | -    |
+| --van-stepper-input-text-color           | _var(--van-text-color)_    | -    |
+| --van-stepper-input-disabled-text-color  | _var(--van-text-color-3)_  | -    |
+| --van-stepper-input-disabled-background  | _var(--van-active-color)_  | -    |
+| --van-stepper-radius                     | _var(--van-radius-md)_     | -    |
 
 ## 常见问题
 

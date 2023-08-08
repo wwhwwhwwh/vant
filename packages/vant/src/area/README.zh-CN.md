@@ -52,9 +52,9 @@ const areaList = {
 };
 ```
 
-### @vant/area-data
+### 中国省市区数据
 
-Vant 官方提供了一份默认的中国省市区数据，可以通过 [@vant/area-data](https://github.com/vant-ui/vant/tree/dev/packages/vant-area-data) 引入：
+Vant 提供了一份中国省市区数据，你可以安装 [@vant/area-data](https://github.com/vant-ui/vant/tree/main/packages/vant-area-data) npm 包来引入：
 
 ```bash
 # 通过 npm
@@ -77,14 +77,25 @@ export default {
 };
 ```
 
-> Tips: 中国的行政区划每年都会有变动，如果发现省市区数据未及时更新，欢迎提 Pull Request 帮助我们更新。
+> Tips: 中国的行政区划每年都会有变动，如果发现省市区数据未及时更新，欢迎提 Pull Request 帮助我们更新。你可以在[「国家统计局 - 全国区划代码」](http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/) 和[「民政部 - 行政区划代码」](https://www.mca.gov.cn/article/sj/xzqh/1980/)上查询到最新数据，请根据官方数据进行核实。
 
-### 选中省市区
+### 控制选中项
 
-如果想选中某个省市区，需要传入一个 `value` 属性，绑定对应的地区码。
+通过 `v-model` 绑定当前选中的地区码。
 
 ```html
-<van-area title="标题" :area-list="areaList" value="110101" />
+<van-area v-model="value" title="标题" :area-list="areaList" />
+```
+
+```js
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const value = ref('330302');
+    return { value };
+  },
+};
 ```
 
 ### 配置显示列
@@ -113,7 +124,7 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| value | 当前选中项对应的地区码 | _string_ | - |
+| v-model | 当前选中项对应的地区码 | _string_ | - |
 | title | 顶部栏标题 | _string_ | - |
 | confirm-button-text | 确认按钮文字 | _string_ | `确认` |
 | cancel-button-text | 取消按钮文字 | _string_ | `取消` |
@@ -121,51 +132,29 @@ export default {
 | columns-placeholder | 列占位提示文字 | _string[]_ | `[]` |
 | loading | 是否显示加载状态 | _boolean_ | `false` |
 | readonly | 是否为只读状态，只读状态下无法切换选项 | _boolean_ | `false` |
-| item-height | 选项高度，支持 `px` `vw` `vh` `rem` 单位，默认 `px` | _number \| string_ | `44` |
+| option-height | 选项高度，支持 `px` `vw` `vh` `rem` 单位，默认 `px` | _number \| string_ | `44` |
 | columns-num | 显示列数，3-省市区，2-省市，1-省 | _number \| string_ | `3` |
-| visible-item-count | 可见的选项个数 | _number \| string_ | `6` |
+| visible-option-num | 可见的选项个数 | _number \| string_ | `6` |
 | swipe-duration | 快速滑动时惯性滚动的时长，单位 `ms` | _number \| string_ | `1000` |
-| is-oversea-code | 根据地区码校验海外地址，海外地址会划分至单独的分类 | _() => boolean_ | - |
 
 ### Events
 
-| 事件    | 说明               | 回调参数                       |
-| ------- | ------------------ | ------------------------------ |
-| confirm | 点击完成按钮时触发 | _result: ConfirmResult_        |
-| cancel  | 点击取消按钮时触发 | -                              |
-| change  | 选项改变时触发     | 所有列选中值，当前列对应的索引 |
-
-### ConfirmResult 格式
-
-confirm 事件返回的数据整体为一个数组，数组每一项对应一列选项中被选中的数据。
-
-```js
-[
-  {
-    code: '110000',
-    name: '北京市',
-  },
-  {
-    code: '110100',
-    name: '北京市',
-  },
-  {
-    code: '110101',
-    name: '东城区',
-  },
-];
-```
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
+| confirm | 点击完成按钮时触发 | _{ selectedValues, selectedOptions, selectedIndexes }_ |
+| cancel | 点击取消按钮时触发 | _{ selectedValues, selectedOptions, selectedIndexes }_ |
+| change | 选项改变时触发 | _{ selectedValues, selectedOptions, selectedIndexes, columnIndex }_ |
 
 ### Slots
 
-| 名称             | 说明                   | 参数 |
-| ---------------- | ---------------------- | ---- |
-| toolbar `v3.1.2` | 自定义整个顶部栏的内容 | -    |
-| title            | 自定义标题内容         | -    |
-| confirm `v3.1.2` | 自定义确认按钮内容     | -    |
-| cancel `v3.1.2`  | 自定义取消按钮内容     | -    |
-| columns-top      | 自定义选项上方内容     | -    |
-| columns-bottom   | 自定义选项下方内容     | -    |
+| 名称           | 说明                   | 参数 |
+| -------------- | ---------------------- | ---- |
+| toolbar        | 自定义整个顶部栏的内容 | -    |
+| title          | 自定义标题内容         | -    |
+| confirm        | 自定义确认按钮内容     | -    |
+| cancel         | 自定义取消按钮内容     | -    |
+| columns-top    | 自定义选项上方内容     | -    |
+| columns-bottom | 自定义选项下方内容     | -    |
 
 ### 方法
 
@@ -173,14 +162,15 @@ confirm 事件返回的数据整体为一个数组，数组每一项对应一列
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| reset | 根据地区码重置所有选项，若不传地区码，则重置到第一项 | _code?: string_ | - |
+| confirm | 停止惯性滚动并触发 `confirm` 事件 | - | - |
+| getSelectedOptions | 获取当前选中的选项 | - | _PickerOption[]_ |
 
 ### 类型定义
 
 组件导出以下类型定义：
 
 ```ts
-import type { AreaProps, AreaList, AreaInstance, AreaColumnOption } from 'vant';
+import type { AreaProps, AreaList, AreaInstance } from 'vant';
 ```
 
 `AreaInstance` 是组件实例的类型，用法如下：
@@ -191,7 +181,7 @@ import type { AreaInstance } from 'vant';
 
 const areaRef = ref<AreaInstance>();
 
-areaRef.value?.reset();
+areaRef.value?.confirm();
 ```
 
 ## 常见问题

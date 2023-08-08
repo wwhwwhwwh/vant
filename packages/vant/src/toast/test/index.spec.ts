@@ -53,12 +53,12 @@ test('create a forbidClick toast', async () => {
   await later();
   expect(wrapper.html()).toMatchSnapshot();
   expect(
-    document.body.classList.contains('van-toast--unclickable')
+    document.body.classList.contains('van-toast--unclickable'),
   ).toBeTruthy();
 
   await wrapper.setProps({ forbidClick: false });
   expect(
-    document.body.classList.contains('van-toast--unclickable')
+    document.body.classList.contains('van-toast--unclickable'),
   ).toBeFalsy();
 });
 
@@ -87,4 +87,18 @@ test('should change loading icon size when using icon-size prop', async () => {
   await later();
   expect(wrapper.find('.van-loading__spinner').style.width).toEqual('10px');
   expect(wrapper.find('.van-loading__spinner').style.height).toEqual('10px');
+});
+
+test('should render message slot correctly', async () => {
+  const wrapper = mount(Toast, {
+    props: {
+      show: true,
+    },
+    slots: {
+      message: () => 'Custom Message',
+    },
+  });
+
+  await later();
+  expect(wrapper.html()).toMatchSnapshot();
 });

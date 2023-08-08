@@ -9,7 +9,7 @@ import {
 
 const [name, bem] = createNamespace('progress');
 
-const progressProps = {
+export const progressProps = {
   color: String,
   inactive: Boolean,
   pivotText: String,
@@ -21,7 +21,7 @@ const progressProps = {
   percentage: {
     type: numericProp,
     default: 0,
-    validator: (value: Numeric) => value >= 0 && value <= 100,
+    validator: (value: Numeric) => +value >= 0 && +value <= 100,
   },
 };
 
@@ -34,7 +34,7 @@ export default defineComponent({
 
   setup(props) {
     const background = computed(() =>
-      props.inactive ? undefined : props.color
+      props.inactive ? undefined : props.color,
     );
 
     const renderPivot = () => {

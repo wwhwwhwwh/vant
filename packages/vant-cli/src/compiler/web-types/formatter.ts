@@ -1,11 +1,6 @@
 /* eslint-disable no-continue */
 import { Articles } from './parser.js';
-import {
-  formatOptions,
-  formatType,
-  removeVersion,
-  toKebabCase,
-} from './utils.js';
+import { formatType, removeVersion, toKebabCase } from './utils.js';
 import { VueEventArgument, VueTag } from './type.js';
 
 function formatComponentName(name: string, tagPrefix: string) {
@@ -34,9 +29,15 @@ function formatArguments(input: string): VueEventArgument[] {
     } else if ([':', ',', '_', ' '].includes(input[0])) {
       input = input.substring(1);
     } else {
-      const val = input.match(/( |'|\||\w)+/)![0] || '';
-      input = input.substring(val.length);
-      items.push(val);
+      const matched = input.match(/( |'|\||\w)+/);
+
+      if (matched?.length && matched[0]) {
+        const val = matched[0];
+        input = input.substring(val.length);
+        items.push(val);
+      } else {
+        input = '';
+      }
     }
   }
 
@@ -66,9 +67,6 @@ function findTag(vueTags: VueTag[], name: string) {
 
   const newTag: VueTag = {
     name,
-    slots: [],
-    events: [],
-    attributes: [],
   };
 
   vueTags.push(newTag);
@@ -79,7 +77,7 @@ function findTag(vueTags: VueTag[], name: string) {
 export function formatter(
   vueTags: VueTag[],
   articles: Articles,
-  tagPrefix = ''
+  tagPrefix = '',
 ) {
   if (!articles.length) {
     return;
@@ -107,12 +105,16 @@ export function formatter(
       const tag = findTag(vueTags, name);
 
       table.body.forEach((line) => {
-        const [name, desc, type, defaultVal, options] = line;
-        tag.attributes!.push({
+        const [name, desc, type, defaultVal] = line;
+
+        if (!tag.attributes) {
+          tag.attributes = [];
+        }
+
+        tag.attributes.push({
           name: removeVersion(name),
           default: defaultVal,
           description: desc,
-          options: formatOptions(options),
           value: {
             type: formatType(type),
             kind: 'expression',
@@ -128,7 +130,12 @@ export function formatter(
 
       table.body.forEach((line) => {
         const [name, desc, args] = line;
-        tag.events!.push({
+
+        if (!tag.events) {
+          tag.events = [];
+        }
+
+        tag.events.push({
           name: removeVersion(name),
           description: desc,
           arguments: formatArguments(args),
@@ -143,7 +150,12 @@ export function formatter(
 
       table.body.forEach((line) => {
         const [name, desc] = line;
-        tag.slots!.push({
+
+        if (!tag.slots) {
+          tag.slots = [];
+        }
+
+        tag.slots.push({
           name: removeVersion(name),
           description: desc,
         });

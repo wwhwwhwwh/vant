@@ -1,6 +1,6 @@
 import fse from 'fs-extra';
-import execa from 'execa';
-import { join, relative } from 'path';
+import { execa } from 'execa';
+import { join, relative } from 'node:path';
 import { clean } from './clean.js';
 import { CSS_LANG } from '../common/css.js';
 import { createSpinner, consola } from '../common/logger.js';
@@ -66,7 +66,7 @@ async function preCompileDir(dir: string) {
         return compileSfc(filePath);
       }
       return Promise.resolve();
-    })
+    }),
   );
 }
 
@@ -78,7 +78,7 @@ async function compileDir(dir: string, format: Format) {
       return isDir(filePath)
         ? compileDir(filePath, format)
         : compileFile(filePath, format);
-    })
+    }),
   );
 }
 
@@ -104,7 +104,10 @@ async function buildTypeDeclarations() {
   const tsConfig = join(process.cwd(), 'tsconfig.declaration.json');
 
   if (existsSync(tsConfig)) {
-    await execa('tsc', ['-p', tsConfig]);
+    await execa('tsc', ['-p', tsConfig], {
+      stdout: 'inherit',
+      stderr: 'inherit',
+    });
   }
 }
 

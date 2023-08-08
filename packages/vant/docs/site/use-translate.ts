@@ -1,3 +1,4 @@
+import { inBrowser } from '@vant/use';
 import Locale from '../../src/locale';
 import enUS from '../../src/locale/lang/en-US';
 import { camelize, createTranslate } from '../../src/utils';
@@ -17,7 +18,7 @@ export function initDemoLocale() {
   });
 
   // switch lang after routing
-  if (window.vueRouter) {
+  if (inBrowser && window.vueRouter) {
     window.vueRouter.afterEach((to) => {
       const { lang } = to.meta || {};
 
@@ -52,6 +53,7 @@ export function initDemoLocale() {
       disabled: '禁用状态',
       uneditable: '不可编辑',
       basicUsage: '基础用法',
+      usingUrl: '使用图片 URL',
       advancedUsage: '高级用法',
       loadingStatus: '加载状态',
     },
@@ -78,6 +80,7 @@ export function initDemoLocale() {
       disabled: 'Disabled',
       uneditable: 'Uneditable',
       basicUsage: 'Basic Usage',
+      usingUrl: 'Using URL',
       advancedUsage: 'Advanced Usage',
       loadingStatus: 'Loading',
     },

@@ -87,8 +87,14 @@ export const fieldSharedProps = {
   inputAlign: String as PropType<FieldTextAlign>,
   placeholder: String,
   autocomplete: String,
+  autocapitalize: String,
+  autocorrect: String,
   errorMessage: String,
   enterkeyhint: String,
+  spellcheck: {
+    type: Boolean,
+    default: null,
+  },
   clearTrigger: makeStringProp<FieldClearTrigger>('focus'),
   formatTrigger: makeStringProp<FieldFormatTrigger>('onChange'),
   error: {
@@ -105,7 +111,7 @@ export const fieldSharedProps = {
   },
 };
 
-const fieldProps = extend({}, cellSharedProps, fieldSharedProps, {
+export const fieldProps = extend({}, cellSharedProps, fieldSharedProps, {
   rows: numericProp,
   type: makeStringProp<FieldType>('text'),
   rules: Array as PropType<FieldRule[]>,
@@ -133,11 +139,11 @@ export default defineComponent({
     'focus',
     'clear',
     'keypress',
-    'click-input',
-    'end-validate',
-    'start-validate',
-    'click-left-icon',
-    'click-right-icon',
+    'clickInput',
+    'endValidate',
+    'startValidate',
+    'clickLeftIcon',
+    'clickRightIcon',
     'update:modelValue',
   ],
 
@@ -223,7 +229,7 @@ export default defineComponent({
               });
             }
           }),
-        Promise.resolve()
+        Promise.resolve(),
       );
 
     const resetValidation = () => {
@@ -231,13 +237,17 @@ export default defineComponent({
       state.validateMessage = '';
     };
 
-    const endValidate = () => emit('end-validate', { status: state.status });
+    const endValidate = () =>
+      emit('endValidate', {
+        status: state.status,
+        message: state.validateMessage,
+      });
 
     const validate = (rules = props.rules) =>
       new Promise<FieldValidateError | void>((resolve) => {
         resetValidation();
         if (rules) {
-          emit('start-validate');
+          emit('startValidate');
           runRules(rules).then(() => {
             if (state.status === 'failed') {
               resolve({
@@ -277,10 +287,19 @@ export default defineComponent({
     // see: https://github.com/vant-ui/vant/issues/5033
     const limitValueLength = (value: string) => {
       const { maxlength } = props;
-      if (isDef(maxlength) && getStringLength(value) > maxlength) {
+      if (isDef(maxlength) && getStringLength(value) > +maxlength) {
         const modelValue = getModelValue();
         if (modelValue && getStringLength(modelValue) === +maxlength) {
           return modelValue;
+        }
+        // Remove redundant interpolated values,
+        // make it consistent with the native input maxlength behavior.
+        const selectionEnd = inputRef.value?.selectionEnd;
+        if (state.focused && selectionEnd) {
+          const valueArr = [...value];
+          const exceededLength = valueArr.length - +maxlength;
+          valueArr.splice(selectionEnd - exceededLength, exceededLength);
+          return valueArr.join('');
         }
         return cutString(value, +maxlength);
       }
@@ -289,21 +308,65 @@ export default defineComponent({
 
     const updateValue = (
       value: string,
-      trigger: FieldFormatTrigger = 'onChange'
+      trigger: FieldFormatTrigger = 'onChange',
     ) => {
+      const originalValue = value;
       value = limitValueLength(value);
+      // When the value length exceeds maxlength,
+      // record the excess length for correcting the cursor position.
+      // https://github.com/youzan/vant/issues/11289
+      const limitDiffLen =
+        getStringLength(originalValue) - getStringLength(value);
 
       if (props.type === 'number' || props.type === 'digit') {
         const isNumber = props.type === 'number';
         value = formatNumber(value, isNumber, isNumber);
       }
 
+      let formatterDiffLen = 0;
       if (props.formatter && trigger === props.formatTrigger) {
-        value = props.formatter(value);
+        const { formatter, maxlength } = props;
+        value = formatter(value);
+        // The length of the formatted value may exceed maxlength.
+        if (isDef(maxlength) && getStringLength(value) > +maxlength) {
+          value = cutString(value, +maxlength);
+        }
+        if (inputRef.value && state.focused) {
+          const { selectionEnd } = inputRef.value;
+          // The value before the cursor of the original value.
+          const bcoVal = cutString(originalValue, selectionEnd!);
+          // Record the length change of `bcoVal` after formatting,
+          // which is used to correct the cursor position.
+          formatterDiffLen =
+            getStringLength(formatter(bcoVal)) - getStringLength(bcoVal);
+        }
       }
 
       if (inputRef.value && inputRef.value.value !== value) {
-        inputRef.value.value = value;
+        // When the input is focused, correct the cursor position.
+        if (state.focused) {
+          let { selectionStart, selectionEnd } = inputRef.value;
+          inputRef.value.value = value;
+
+          if (isDef(selectionStart) && isDef(selectionEnd)) {
+            const valueLen = getStringLength(value);
+
+            if (limitDiffLen) {
+              selectionStart -= limitDiffLen;
+              selectionEnd -= limitDiffLen;
+            } else if (formatterDiffLen) {
+              selectionStart += formatterDiffLen;
+              selectionEnd += formatterDiffLen;
+            }
+
+            inputRef.value.setSelectionRange(
+              Math.min(selectionStart, valueLen),
+              Math.min(selectionEnd, valueLen),
+            );
+          }
+        } else {
+          inputRef.value.value = value;
+        }
       }
 
       if (value !== props.modelValue) {
@@ -340,25 +403,25 @@ export default defineComponent({
     };
 
     const onBlur = (event: Event) => {
+      state.focused = false;
+      updateValue(getModelValue(), 'onBlur');
+      emit('blur', event);
+
       if (getProp('readonly')) {
         return;
       }
 
-      state.focused = false;
-      updateValue(getModelValue(), 'onBlur');
-      emit('blur', event);
       validateWithTrigger('onBlur');
       nextTick(adjustTextareaSize);
       resetScroll();
     };
 
-    const onClickInput = (event: MouseEvent) => emit('click-input', event);
+    const onClickInput = (event: MouseEvent) => emit('clickInput', event);
 
-    const onClickLeftIcon = (event: MouseEvent) =>
-      emit('click-left-icon', event);
+    const onClickLeftIcon = (event: MouseEvent) => emit('clickLeftIcon', event);
 
     const onClickRightIcon = (event: MouseEvent) =>
-      emit('click-right-icon', event);
+      emit('clickRightIcon', event);
 
     const onClear = (event: TouchEvent) => {
       preventDefault(event);
@@ -377,7 +440,8 @@ export default defineComponent({
 
     const labelStyle = computed(() => {
       const labelWidth = getProp('labelWidth');
-      if (labelWidth) {
+      const labelAlign = getProp('labelAlign');
+      if (labelWidth && labelAlign !== 'top') {
         return { width: addUnit(labelWidth) };
       }
     });
@@ -433,7 +497,10 @@ export default defineComponent({
         autofocus: props.autofocus,
         placeholder: props.placeholder,
         autocomplete: props.autocomplete,
+        autocapitalize: props.autocapitalize,
+        autocorrect: props.autocorrect,
         enterkeyhint: props.enterkeyhint,
+        spellcheck: props.spellcheck,
         'aria-labelledby': props.label ? `${id}-label` : undefined,
         onBlur,
         onFocus,
@@ -514,6 +581,8 @@ export default defineComponent({
     };
 
     const renderLabel = () => {
+      const labelWidth = getProp('labelWidth');
+      const labelAlign = getProp('labelAlign');
       const colon = getProp('colon') ? ':' : '';
 
       if (slots.label) {
@@ -521,7 +590,20 @@ export default defineComponent({
       }
       if (props.label) {
         return (
-          <label id={`${id}-label`} for={getInputId()}>
+          <label
+            id={`${id}-label`}
+            for={slots.input ? undefined : getInputId()}
+            onClick={(event: MouseEvent) => {
+              // https://github.com/youzan/vant/issues/11831
+              preventDefault(event);
+              focus();
+            }}
+            style={
+              labelAlign === 'top' && labelWidth
+                ? { width: addUnit(labelWidth) }
+                : undefined
+            }
+          >
             {props.label + colon}
           </label>
         );
@@ -567,7 +649,7 @@ export default defineComponent({
         resetValidation();
         validateWithTrigger('onChange');
         nextTick(adjustTextareaSize);
-      }
+      },
     );
 
     onMounted(() => {
@@ -583,19 +665,25 @@ export default defineComponent({
     return () => {
       const disabled = getProp('disabled');
       const labelAlign = getProp('labelAlign');
-      const Label = renderLabel();
       const LeftIcon = renderLeftIcon();
+
+      const renderTitle = () => {
+        const Label = renderLabel();
+        if (labelAlign === 'top') {
+          return [LeftIcon, Label].filter(Boolean);
+        }
+        return Label || [];
+      };
 
       return (
         <Cell
           v-slots={{
-            icon: LeftIcon ? () => LeftIcon : null,
-            title: Label ? () => Label : null,
+            icon: LeftIcon && labelAlign !== 'top' ? () => LeftIcon : null,
+            title: renderTitle,
             value: renderFieldBody,
             extra: slots.extra,
           }}
           size={props.size}
-          icon={props.leftIcon}
           class={bem({
             error: showError.value,
             disabled,

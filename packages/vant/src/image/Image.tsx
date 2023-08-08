@@ -3,6 +3,7 @@ import {
   watch,
   computed,
   nextTick,
+  onMounted,
   onBeforeUnmount,
   defineComponent,
   getCurrentInstance,
@@ -38,12 +39,13 @@ export type ImagePosition =
   | 'left'
   | string;
 
-const imageProps = {
+export const imageProps = {
   src: String,
   alt: String,
   fit: String as PropType<ImageFit>,
   position: String as PropType<ImagePosition>,
   round: Boolean,
+  block: Boolean,
   width: numericProp,
   height: numericProp,
   radius: numericProp,
@@ -68,7 +70,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const error = ref(false);
     const loading = ref(true);
-    const imageRef = ref<HTMLElement>();
+    const imageRef = ref<HTMLImageElement>();
 
     const { $Lazyload } = getCurrentInstance()!.proxy!;
 
@@ -91,12 +93,23 @@ export default defineComponent({
       () => {
         error.value = false;
         loading.value = true;
-      }
+      },
     );
 
-    const onLoad = (event?: Event) => {
-      loading.value = false;
-      emit('load', event);
+    const onLoad = (event: Event) => {
+      if (loading.value) {
+        loading.value = false;
+        emit('load', event);
+      }
+    };
+
+    const triggerLoad = () => {
+      const loadEvent = new Event('load');
+      Object.defineProperty(loadEvent, 'target', {
+        value: imageRef.value,
+        enumerable: true,
+      });
+      onLoad(loadEvent);
     };
 
     const onError = (event?: Event) => {
@@ -155,14 +168,20 @@ export default defineComponent({
       }
 
       return (
-        <img src={props.src} onLoad={onLoad} onError={onError} {...attrs} />
+        <img
+          ref={imageRef}
+          src={props.src}
+          onLoad={onLoad}
+          onError={onError}
+          {...attrs}
+        />
       );
     };
 
     const onLazyLoaded = ({ el }: { el: HTMLElement }) => {
       const check = () => {
         if (el === imageRef.value && loading.value) {
-          onLoad();
+          triggerLoad();
         }
       };
       if (imageRef.value) {
@@ -190,8 +209,22 @@ export default defineComponent({
       });
     }
 
+    // In nuxt3, the image may not trigger load event,
+    // so the initial complete state should be checked.
+    // https://github.com/youzan/vant/issues/11335
+    onMounted(() => {
+      nextTick(() => {
+        if (imageRef.value?.complete && !props.lazyLoad) {
+          triggerLoad();
+        }
+      });
+    });
+
     return () => (
-      <div class={bem({ round: props.round })} style={style.value}>
+      <div
+        class={bem({ round: props.round, block: props.block })}
+        style={style.value}
+      >
         {renderImage()}
         {renderPlaceholder()}
         {slots.default?.()}

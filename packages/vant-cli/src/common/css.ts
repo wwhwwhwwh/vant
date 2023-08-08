@@ -1,5 +1,5 @@
-import { existsSync } from 'fs';
-import { join, isAbsolute } from 'path';
+import { existsSync } from 'node:fs';
+import { join, isAbsolute } from 'node:path';
 import { getVantConfig } from '../common/index.js';
 import { STYLE_DIR, SRC_DIR } from './constant.js';
 
@@ -39,6 +39,6 @@ const IMPORT_STYLE_RE = /import\s+?(?:(?:".*?")|(?:'.*?'))[\s]*?(?:;|$|)/g;
 // "import 'a.less';" => "import 'a.css';"
 export function replaceCSSImportExt(code: string) {
   return code.replace(IMPORT_STYLE_RE, (str) =>
-    str.replace(`.${CSS_LANG}`, '.css')
+    str.replace(`.${CSS_LANG}`, '.css'),
   );
 }

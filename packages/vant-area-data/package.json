@@ -1,6 +1,6 @@
 {
   "name": "@vant/area-data",
-  "version": "1.3.1",
+  "version": "1.5.0",
   "description": "Vant 省市区数据",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.mjs",
@@ -11,6 +11,7 @@
       "require": "./dist/index.cjs.js"
     }
   },
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -20,7 +21,7 @@
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "node ./build.js",
     "build": "pnpm clean && pnpm build:bundle && pnpm build:types",
-    "release": "pnpm build && release-it",
+    "release": "vant-cli release",
     "prepare": "pnpm build"
   },
   "publishConfig": {
@@ -36,14 +37,8 @@
   "author": "chenjiahan",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.14.29",
-    "release-it": "^15.1.1",
-    "typescript": "^4.7.4"
-  },
-  "release-it": {
-    "git": {
-      "tag": false,
-      "commitMessage": "release: @vant/area-data ${version}"
-    }
+    "esbuild": "^0.18.11",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
   }
 }

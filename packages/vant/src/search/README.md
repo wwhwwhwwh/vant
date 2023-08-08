@@ -53,13 +53,13 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const value = ref('');
-    const onSearch = (val) => Toast(val);
-    const onCancel = () => Toast('Cancel');
+    const onSearch = (val) => showToast(val);
+    const onCancel = () => showToast('Cancel');
     return {
       value,
       onSearch,
@@ -114,13 +114,13 @@ Use `action` slot to custom right button, `cancel` event will no longer be Emitt
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const value = ref('');
-    const onSearch = (val) => Toast(val);
-    const onClickButton = () => Toast(value.value);
+    const onSearch = (val) => showToast(val);
+    const onClickButton = () => showToast(value.value);
     return {
       value,
       onSearch,
@@ -138,14 +138,14 @@ export default {
 | --- | --- | --- | --- |
 | v-model | Input value | _number \| string_ | - |
 | label | Left side label | _string_ | - |
-| name `v3.2.3` | As the identifier when submitting the form | _string_ | - |
+| name | As the identifier when submitting the form | _string_ | - |
 | shape | Shape of field, can be set to `round` | _string_ | `square` |
-| id `v3.2.2` | Input id, the for attribute of the label also will be set | _string_ | `van-search-n-input` |
+| id | Input id, the for attribute of the label also will be set | _string_ | `van-search-n-input` |
 | background | Background color of field | _string_ | `#f2f2f2` |
 | maxlength | Max length of value | _number \| string_ | - |
 | placeholder | Placeholder | _string_ | - |
 | clearable | Whether to be clearable | _boolean_ | `true` |
-| clear-icon `v3.0.12` | Clear icon name | _string_ | `clear` |
+| clear-icon | Clear icon name | _string_ | `clear` |
 | clear-trigger | When to display the clear icon, `always` means to display the icon when value is not empty, `focus` means to display the icon when input is focused | _string_ | `focus` |
 | autofocus | Whether to auto focus, unsupported in iOS | _boolean_ | `false` |
 | show-action | Whether to show right action button | _boolean_ | `false` |
@@ -153,13 +153,13 @@ export default {
 | disabled | Whether to disable field | _boolean_ | `false` |
 | readonly | Whether to be readonly | _boolean_ | `false` |
 | error | Whether to mark the input content in red | _boolean_ | `false` |
-| error-message `v3.0.12` | Error message | _string_ | - |
-| formatter `v3.0.12` | Input value formatter | _(val: string) => string_ | - |
-| format-trigger `v3.0.12` | When to format value, can be set to `onBlur` | _string_ | `onChange` |
+| error-message | Error message | _string_ | - |
+| formatter | Input value formatter | _(val: string) => string_ | - |
+| format-trigger | When to format value, can be set to `onBlur` | _string_ | `onChange` |
 | input-align | Text align of field, can be set to `center` `right` | _string_ | `left` |
 | left-icon | Left icon name | _string_ | `search` |
 | right-icon | Right icon name | _string_ | - |
-| autocomplete `v3.2.3` | [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute of native input element | _string_ | - |
+| autocomplete | [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute of native input element | _string_ | - |
 
 ### Events
 
@@ -170,14 +170,14 @@ export default {
 | focus | Emitted when input is focused | _event: Event_ |
 | blur | Emitted when input is blurred | _event: Event_ |
 | click-input | Emitted when the input is clicked | _event: MouseEvent_ |
-| click-left-icon `v3.4.0` | Emitted when the left icon is clicked | _event: MouseEvent_ |
-| click-right-icon `v3.4.0` | Emitted when the right icon is clicked | _event: MouseEvent_ |
+| click-left-icon | Emitted when the left icon is clicked | _event: MouseEvent_ |
+| click-right-icon | Emitted when the right icon is clicked | _event: MouseEvent_ |
 | clear | Emitted when the clear icon is clicked | _event: MouseEvent_ |
 | cancel | Emitted when the cancel button is clicked | - |
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Search instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Search instance and call instance methods.
 
 | Name  | Description         | Attribute | Return value |
 | ----- | ------------------- | --------- | ------------ |
@@ -219,16 +219,16 @@ searchRef.value?.focus();
 
 The component provides the following CSS variables, which can be used to customize styles. Please refer to [ConfigProvider component](#/en-US/config-provider).
 
-| Name | Default Value | Description |
-| --- | --- | --- |
-| --van-search-padding | _10px var(--van-padding-sm)_ | - |
-| --van-search-background-color | _var(--van-background-color-light)_ | - |
-| --van-search-content-background-color | _var(--van-gray-1)_ | - |
-| --van-search-input-height | _34px_ | - |
-| --van-search-label-padding | _0 5px_ | - |
-| --van-search-label-color | _var(--van-text-color)_ | - |
-| --van-search-label-font-size | _var(--van-font-size-md)_ | - |
-| --van-search-left-icon-color | _var(--van-gray-6)_ | - |
-| --van-search-action-padding | _0 var(--van-padding-xs)_ | - |
-| --van-search-action-text-color | _var(--van-text-color)_ | - |
-| --van-search-action-font-size | _var(--van-font-size-md)_ | - |
+| Name                            | Default Value                | Description |
+| ------------------------------- | ---------------------------- | ----------- |
+| --van-search-padding            | _10px var(--van-padding-sm)_ | -           |
+| --van-search-background         | _var(--van-background-2)_    | -           |
+| --van-search-content-background | _var(--van-gray-1)_          | -           |
+| --van-search-input-height       | _34px_                       | -           |
+| --van-search-label-padding      | _0 5px_                      | -           |
+| --van-search-label-color        | _var(--van-text-color)_      | -           |
+| --van-search-label-font-size    | _var(--van-font-size-md)_    | -           |
+| --van-search-left-icon-color    | _var(--van-gray-6)_          | -           |
+| --van-search-action-padding     | _0 var(--van-padding-xs)_    | -           |
+| --van-search-action-text-color  | _var(--van-text-color)_      | -           |
+| --van-search-action-font-size   | _var(--van-font-size-md)_    | -           |

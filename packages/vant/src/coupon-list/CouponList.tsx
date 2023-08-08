@@ -31,7 +31,7 @@ import { Coupon, CouponInfo } from '../coupon';
 import { useRect } from '@vant/use';
 
 const [name, bem, t] = createNamespace('coupon-list');
-const couponListProps = {
+export const couponListProps = {
   code: makeStringProp(''),
   coupons: makeArrayProp<CouponInfo>(),
   currency: makeStringProp('¥'),
@@ -75,7 +75,7 @@ export default defineComponent({
         !props.exchangeButtonLoading &&
         (props.exchangeButtonDisabled ||
           !currentCode.value ||
-          currentCode.value.length < props.exchangeMinLength)
+          currentCode.value.length < props.exchangeMinLength),
     );
 
     const updateListHeight = () => {
@@ -120,7 +120,7 @@ export default defineComponent({
             />
             <Button
               plain
-              type="danger"
+              type="primary"
               class={bem('exchange')}
               text={props.exchangeButtonText || t('exchange')}
               loading={props.exchangeButtonLoading}
@@ -190,7 +190,7 @@ export default defineComponent({
       () => props.code,
       (value) => {
         currentCode.value = value;
-      }
+      },
     );
 
     watch(windowHeight, updateListHeight);
@@ -214,7 +214,7 @@ export default defineComponent({
             v-show={props.showCloseButton}
             round
             block
-            type="danger"
+            type="primary"
             class={bem('close')}
             text={props.closeButtonText || t('close')}
             onClick={() => emit('change', -1)}

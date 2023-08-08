@@ -8,6 +8,7 @@ import {
   type PropType,
   type CSSProperties,
   type ExtractPropTypes,
+  type TeleportProps,
 } from 'vue';
 
 // Utils
@@ -43,12 +44,13 @@ const [name, bem] = createNamespace('image-preview');
 
 const popupProps = [
   'show',
+  'teleport',
   'transition',
   'overlayStyle',
   'closeOnPopstate',
 ] as const;
 
-const imagePreviewProps = {
+export const imagePreviewProps = {
   show: Boolean,
   loop: truthProp,
   images: makeArrayProp<string>(),
@@ -67,7 +69,9 @@ const imagePreviewProps = {
   startPosition: makeNumericProp(0),
   showIndicators: Boolean,
   closeOnPopstate: truthProp,
+  closeOnClickOverlay: truthProp,
   closeIconPosition: makeStringProp<PopupCloseIconPosition>('top-right'),
+  teleport: [String, Object] as PropType<TeleportProps['to']>,
 };
 
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>;
@@ -77,7 +81,7 @@ export default defineComponent({
 
   props: imagePreviewProps,
 
-  emits: ['scale', 'close', 'closed', 'change', 'update:show'],
+  emits: ['scale', 'close', 'closed', 'change', 'longPress', 'update:show'],
 
   setup(props, { emit, slots }) {
     const swipeRef = ref<SwipeInstance>();
@@ -86,6 +90,7 @@ export default defineComponent({
       active: 0,
       rootWidth: 0,
       rootHeight: 0,
+      disableZoom: false,
     });
 
     const resize = () => {
@@ -134,6 +139,14 @@ export default defineComponent({
       }
     };
 
+    const onDragStart = () => {
+      state.disableZoom = true;
+    };
+
+    const onDragEnd = () => {
+      state.disableZoom = false;
+    };
+
     const renderImages = () => (
       <Swipe
         ref={swipeRef}
@@ -145,9 +158,14 @@ export default defineComponent({
         showIndicators={props.showIndicators}
         indicatorColor="white"
         onChange={setActive}
+        onDragEnd={onDragEnd}
+        onDragStart={onDragStart}
       >
-        {props.images.map((image) => (
+        {props.images.map((image, index) => (
           <ImagePreviewItem
+            v-slots={{
+              image: slots.image,
+            }}
             src={image}
             show={props.show}
             active={state.active}
@@ -155,8 +173,11 @@ export default defineComponent({
             minZoom={props.minZoom}
             rootWidth={state.rootWidth}
             rootHeight={state.rootHeight}
+            disableZoom={state.disableZoom}
+            closeOnClickOverlay={props.closeOnClickOverlay}
             onScale={emitScale}
             onClose={emitClose}
+            onLongPress={() => emit('longPress', { index })}
           />
         ))}
       </Swipe>
@@ -191,7 +212,7 @@ export default defineComponent({
 
     watch(
       () => props.startPosition,
-      (value) => setActive(+value)
+      (value) => setActive(+value),
     );
 
     watch(
@@ -210,7 +231,7 @@ export default defineComponent({
             url: images[state.active],
           });
         }
-      }
+      },
     );
 
     return () => (

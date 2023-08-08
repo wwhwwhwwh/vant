@@ -4,7 +4,7 @@ import VanButton from '../../button';
 import { ref } from 'vue';
 import { cdnURL, useTranslate } from '../../../docs/site';
 import { UploaderFileListItem } from '../types';
-import { Toast } from '../../toast';
+import { showToast } from '../../toast';
 
 const t = useTranslate({
   'zh-CN': {
@@ -25,6 +25,7 @@ const t = useTranslate({
     previewCover: '自定义预览样式',
     deleteMessage: '删除前置处理',
     customPreviewImage: '自定义单个图片预览',
+    reupload: '开启覆盖上传',
   },
   'en-US': {
     status: 'Upload Status',
@@ -44,6 +45,7 @@ const t = useTranslate({
     previewCover: 'Preview Cover',
     deleteMessage: 'Before Delete',
     customPreviewImage: 'Custom single preview image',
+    reupload: 'Enable Reupload',
   },
 });
 
@@ -63,7 +65,7 @@ const fileList5 = ref<UploaderFileListItem[]>([
     url: cdnURL('sand.jpeg'),
     deletable: true,
     beforeDelete: () => {
-      Toast(t('deleteMessage'));
+      showToast(t('deleteMessage'));
     },
   },
   {
@@ -105,7 +107,7 @@ const beforeRead = (file: File | File[]) => {
     return true;
   }
   if (file.type !== 'image/jpeg') {
-    Toast(t('invalidType'));
+    showToast(t('invalidType'));
     return false;
   }
   return true;
@@ -113,7 +115,7 @@ const beforeRead = (file: File | File[]) => {
 
 const afterRead = (
   file: UploaderFileListItem | UploaderFileListItem[],
-  detail: unknown
+  detail: unknown,
 ) => {
   console.log(file, detail);
 };
@@ -129,7 +131,7 @@ const setItemLoading = (item: UploaderFileListItem) => {
 };
 
 const afterReadFailed = (
-  item: UploaderFileListItem | UploaderFileListItem[]
+  item: UploaderFileListItem | UploaderFileListItem[],
 ) => {
   if (Array.isArray(item)) {
     item.forEach(setItemLoading);
@@ -140,8 +142,10 @@ const afterReadFailed = (
 
 const onOversize = (file: UploaderFileListItem, detail: unknown) => {
   console.log(file, detail);
-  Toast(t('overSizeTip'));
+  showToast(t('overSizeTip'));
 };
+
+const fileList6 = ref([{ url: cdnURL('leaf.jpeg') }]);
 </script>
 
 <template>
@@ -201,11 +205,15 @@ const onOversize = (file: UploaderFileListItem, detail: unknown) => {
   <demo-block :title="t('customPreviewImage')">
     <van-uploader v-model="fileList5" multiple accept="*" :deletable="false" />
   </demo-block>
+
+  <demo-block :title="t('reupload')">
+    <van-uploader v-model="fileList6" reupload max-count="2" />
+  </demo-block>
 </template>
 
 <style lang="less">
 .demo-uploader {
-  background-color: var(--van-background-color-light);
+  background-color: var(--van-background-2);
 
   .van-uploader {
     margin-left: var(--van-padding-md);

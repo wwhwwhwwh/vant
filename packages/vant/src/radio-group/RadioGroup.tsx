@@ -7,13 +7,16 @@ import {
 } from 'vue';
 import { unknownProp, numericProp, createNamespace } from '../utils';
 import { useChildren, useCustomFieldValue } from '@vant/use';
+
+import type { RadioShape } from '../radio';
 import type { CheckerDirection } from '../checkbox/Checker';
 
 const [name, bem] = createNamespace('radio-group');
 
 export type RadioGroupDirection = CheckerDirection;
 
-const radioGroupProps = {
+export const radioGroupProps = {
+  shape: String as PropType<RadioShape>,
   disabled: Boolean,
   iconSize: numericProp,
   direction: String as PropType<RadioGroupDirection>,
@@ -44,7 +47,7 @@ export default defineComponent({
 
     watch(
       () => props.modelValue,
-      (value) => emit('change', value)
+      (value) => emit('change', value),
     );
 
     linkChildren({

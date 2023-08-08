@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { execa } from 'execa';
 import { consola } from './logger.js';
 import { execSync } from 'child_process';
 import { getVantConfig } from './constant.js';
@@ -18,7 +18,7 @@ export function hasYarn() {
   return hasYarnCache;
 }
 
-function getPackageManager() {
+export function getPackageManager() {
   const { build } = getVantConfig();
 
   if (build?.packageManager) {

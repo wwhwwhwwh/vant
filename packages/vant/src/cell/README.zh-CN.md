@@ -58,14 +58,6 @@ app.use(CellGroup);
 <van-cell title="单元格" icon="location-o" />
 ```
 
-### 只设置 value
-
-只设置 `value` 时，内容会靠左对齐。
-
-```html
-<van-cell value="内容" />
-```
-
 ### 展示箭头
 
 设置 `is-link` 属性后会在单元格右侧显示箭头，并且可以通过 `arrow-direction` 属性控制箭头方向。
@@ -107,7 +99,7 @@ app.use(CellGroup);
   <!-- 使用 title 插槽来自定义标题 -->
   <template #title>
     <span class="custom-title">单元格</span>
-    <van-tag type="danger">标签</van-tag>
+    <van-tag type="primary">标签</van-tag>
   </template>
 </van-cell>
 
@@ -143,11 +135,11 @@ app.use(CellGroup);
 
 ### CellGroup Props
 
-| 参数           | 说明                   | 类型      | 默认值  |
-| -------------- | ---------------------- | --------- | ------- |
-| title          | 分组标题               | _string_  | `-`     |
-| inset `v3.1.0` | 是否展示为圆角卡片风格 | _boolean_ | `false` |
-| border         | 是否显示外边框         | _boolean_ | `true`  |
+| 参数   | 说明                   | 类型      | 默认值  |
+| ------ | ---------------------- | --------- | ------- |
+| title  | 分组标题               | _string_  | `-`     |
+| inset  | 是否展示为圆角卡片风格 | _boolean_ | `false` |
+| border | 是否显示外边框         | _boolean_ | `true`  |
 
 ### Cell Props
 
@@ -159,8 +151,9 @@ app.use(CellGroup);
 | size | 单元格大小，可选值为 `large` | _string_ | - |
 | icon | 左侧图标名称或图片链接，等同于 Icon 组件的 [name 属性](#/zh-CN/icon#props) | _string_ | - |
 | icon-prefix | 图标类名前缀，等同于 Icon 组件的 [class-prefix 属性](#/zh-CN/icon#props) | _string_ | `van-icon` |
+| tag | 根节点对应的 HTML 标签名 | _string_ | `div` |
 | url | 点击后跳转的链接地址 | _string_ | - |
-| to | 点击后跳转的目标路由对象，等同于 vue-router 的 [to 属性](https://router.vuejs.org/zh/api/#to) | _string \| object_ | - |
+| to | 点击后跳转的目标路由对象，等同于 Vue Router 的 [to 属性](https://router.vuejs.org/zh/api/interfaces/RouterLinkProps.html#Properties-to) | _string \| object_ | - |
 | border | 是否显示内边框 | _boolean_ | `true` |
 | replace | 是否在跳转时替换当前页面历史 | _boolean_ | `false` |
 | clickable | 是否开启点击反馈 | _boolean_ | `null` |
@@ -188,14 +181,14 @@ app.use(CellGroup);
 
 ### Cell Slots
 
-| 名称           | 说明                         |
-| -------------- | ---------------------------- |
-| title          | 自定义左侧标题               |
-| value `v3.1.1` | 自定义右侧内容               |
-| label          | 自定义标题下方的描述信息     |
-| icon           | 自定义左侧图标               |
-| right-icon     | 自定义右侧图标               |
-| extra          | 自定义单元格最右侧的额外内容 |
+| 名称       | 说明                         |
+| ---------- | ---------------------------- |
+| title      | 自定义左侧标题               |
+| value      | 自定义右侧内容               |
+| label      | 自定义标题下方的描述信息     |
+| icon       | 自定义左侧图标               |
+| right-icon | 自定义右侧图标               |
+| extra      | 自定义单元格最右侧的额外内容 |
 
 ### 类型定义
 
@@ -223,7 +216,7 @@ import type {
 | --van-cell-vertical-padding | _10px_ | - |
 | --van-cell-horizontal-padding | _var(--van-padding-md)_ | - |
 | --van-cell-text-color | _var(--van-text-color)_ | - |
-| --van-cell-background-color | _var(--van-background-color-light)_ | - |
+| --van-cell-background | _var(--van-background-2)_ | - |
 | --van-cell-border-color | _var(--van-border-color)_ | - |
 | --van-cell-active-color | _var(--van-active-color)_ | - |
 | --van-cell-required-color | _var(--van-danger-color)_ | - |
@@ -237,11 +230,11 @@ import type {
 | --van-cell-large-vertical-padding | _var(--van-padding-sm)_ | - |
 | --van-cell-large-title-font-size | _var(--van-font-size-lg)_ | - |
 | --van-cell-large-label-font-size | _var(--van-font-size-md)_ | - |
-| --van-cell-group-background-color | _var(--van-background-color-light)_ | - |
+| --van-cell-group-background | _var(--van-background-2)_ | - |
 | --van-cell-group-title-color | _var(--van-text-color-2)_ | - |
 | --van-cell-group-title-padding | _var(--van-padding-md) var(--van-padding-md) var(--van-padding-xs)_ | - |
 | --van-cell-group-title-font-size | _var(--van-font-size-md)_ | - |
 | --van-cell-group-title-line-height | _16px_ | - |
 | --van-cell-group-inset-padding | _0 var(--van-padding-md)_ | - |
-| --van-cell-group-inset-border-radius | _var(--van-border-radius-lg)_ | - |
+| --van-cell-group-inset-radius | _var(--van-radius-lg)_ | - |
 | --van-cell-group-inset-title-padding | _var(--van-padding-md) var(--van-padding-md) var(--van-padding-xs) var(--van-padding-xl)_ | - |

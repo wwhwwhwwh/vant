@@ -1,7 +1,7 @@
 import fse from 'fs-extra';
-import { sep, join } from 'path';
+import { sep, join } from 'node:path';
 import { SRC_DIR, getVantConfig } from './constant.js';
-import type { InlineConfig } from 'vite';
+import { InlineConfig, loadConfigFromFile, mergeConfig } from 'vite';
 
 const { lstatSync, existsSync, readdirSync, readFileSync, outputFileSync } =
   fse;
@@ -42,7 +42,7 @@ export function getComponents() {
         }
 
         return false;
-      })
+      }),
     );
 }
 
@@ -65,7 +65,7 @@ export function camelize(str: string): string {
 export function pascalize(str: string): string {
   return camelize(str).replace(
     pascalizeRE,
-    (_, c1, c2) => c1.toUpperCase() + c2
+    (_, c1, c2) => c1.toUpperCase() + c2,
   );
 }
 
@@ -114,13 +114,33 @@ export function smartOutputFile(filePath: string, content: string) {
   outputFileSync(filePath, content);
 }
 
-export function mergeCustomViteConfig(config: InlineConfig) {
+export async function mergeCustomViteConfig(
+  config: InlineConfig,
+  mode: 'production' | 'development',
+): Promise<InlineConfig> {
   const vantConfig = getVantConfig();
   const configureVite = vantConfig.build?.configureVite;
 
+  const userConfig = await loadConfigFromFile(
+    {
+      mode,
+      command: mode === 'development' ? 'serve' : 'build',
+    },
+    undefined,
+    process.cwd(),
+  );
+
   if (configureVite) {
-    return configureVite(config);
+    const ret = configureVite(config);
+    if (ret) {
+      config = ret;
+    }
   }
+
+  if (userConfig) {
+    return mergeConfig(config, userConfig.config);
+  }
+
   return config;
 }
 

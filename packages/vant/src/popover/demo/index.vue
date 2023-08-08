@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import VanPopover, { PopoverPlacement } from '..';
+import VanPopover, { type PopoverPlacement } from '..';
 import VanButton from '../../button';
 import VanField from '../../field';
 import VanPopup from '../../popup';
-import VanPicker from '../../picker';
+import VanPicker, {
+  PickerConfirmEventParams,
+  type PickerOption,
+} from '../../picker';
 import VanGrid from '../../grid';
 import VanGridItem from '../../grid-item';
-import { Toast } from '../../toast';
+import { showToast } from '../../toast';
 import { useTranslate } from '../../../docs/site';
 
 const t = useTranslate({
@@ -24,11 +27,15 @@ const t = useTranslate({
       { text: '选项二', disabled: true },
       { text: '选项三' },
     ],
+    actionsDirection: '排列方向',
+    horizontal: '水平排列',
+    vertical: '垂直排列',
     showIcon: '展示图标',
     placement: '弹出位置',
     darkTheme: '深色风格',
     lightTheme: '浅色风格',
     showPopover: '点击弹出气泡',
+    uncontrolled: '非受控模式',
     actionOptions: '选项配置',
     customContent: '自定义内容',
     disableAction: '禁用选项',
@@ -47,11 +54,15 @@ const t = useTranslate({
       { text: 'Option 2', disabled: true },
       { text: 'Option 3' },
     ],
+    actionsDirection: 'Actions Direction',
+    horizontal: 'Horizontal',
+    vertical: 'Vertical',
     showIcon: 'Show Icon',
     placement: 'Placement',
     darkTheme: 'Dark Theme',
     lightTheme: 'Light Theme',
     showPopover: 'Show Popover',
+    uncontrolled: 'Uncontrolled',
     actionOptions: 'Action Options',
     customContent: 'Custom Content',
     disableAction: 'Disable Action',
@@ -59,7 +70,7 @@ const t = useTranslate({
   },
 });
 
-const placements = [
+const placements: PickerOption[] = [
   'top',
   'top-start',
   'top-end',
@@ -72,9 +83,11 @@ const placements = [
   'bottom',
   'bottom-start',
   'bottom-end',
-];
+].map((item) => ({ text: item, value: item }));
 
 const show = ref({
+  horizontal: false,
+  vertical: false,
   showIcon: false,
   placement: false,
   darkTheme: false,
@@ -96,14 +109,14 @@ const onClickChoosePlacement = () => {
   }, 300);
 };
 
-const onPickerChange = (value: PopoverPlacement) => {
+const onPickerChange = (option: PickerConfirmEventParams) => {
   setTimeout(() => {
     show.value.placement = true;
-    currentPlacement.value = value;
+    currentPlacement.value = option.selectedValues[0] as PopoverPlacement;
   });
 };
 
-const onSelect = (action: { text: string }) => Toast(action.text);
+const onSelect = (action: { text: string }) => showToast(action.text);
 </script>
 
 <template>
@@ -120,6 +133,7 @@ const onSelect = (action: { text: string }) => Toast(action.text);
         </van-button>
       </template>
     </van-popover>
+
     <van-popover
       v-model:show="show.darkTheme"
       theme="dark"
@@ -168,6 +182,34 @@ const onSelect = (action: { text: string }) => Toast(action.text);
         @change="onPickerChange"
       />
     </van-popup>
+  </demo-block>
+
+  <demo-block :title="t('actionsDirection')">
+    <van-popover
+      v-model:show="show.horizontal"
+      :actions="t('actions')"
+      actions-direction="horizontal"
+      placement="bottom-start"
+      @select="onSelect"
+    >
+      <template #reference>
+        <van-button type="primary">
+          {{ t('horizontal') }}
+        </van-button>
+      </template>
+    </van-popover>
+
+    <van-popover
+      v-model:show="show.vertical"
+      :actions="t('actions')"
+      @select="onSelect"
+    >
+      <template #reference>
+        <van-button type="primary">
+          {{ t('vertical') }}
+        </van-button>
+      </template>
+    </van-popover>
   </demo-block>
 
   <demo-block :title="t('actionOptions')">
@@ -221,6 +263,20 @@ const onSelect = (action: { text: string }) => Toast(action.text);
       <template #reference>
         <van-button type="primary">
           {{ t('customContent') }}
+        </van-button>
+      </template>
+    </van-popover>
+  </demo-block>
+
+  <demo-block :title="t('uncontrolled')">
+    <van-popover
+      :actions="t('actions')"
+      placement="top-start"
+      @select="onSelect"
+    >
+      <template #reference>
+        <van-button type="primary">
+          {{ t('uncontrolled') }}
         </van-button>
       </template>
     </van-popover>

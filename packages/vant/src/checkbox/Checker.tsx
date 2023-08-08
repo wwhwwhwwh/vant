@@ -5,27 +5,30 @@ import {
   truthProp,
   numericProp,
   unknownProp,
-  makeStringProp,
   makeRequiredProp,
   type Numeric,
 } from '../utils';
 import { Icon } from '../icon';
+
+import type { RadioShape } from '../radio';
 
 export type CheckerShape = 'square' | 'round';
 export type CheckerDirection = 'horizontal' | 'vertical';
 export type CheckerLabelPosition = 'left' | 'right';
 export type CheckerParent = {
   props: {
+    max?: Numeric;
+    shape?: CheckerShape | RadioShape;
     disabled?: boolean;
     iconSize?: Numeric;
     direction?: CheckerDirection;
+    modelValue?: unknown | unknown[];
     checkedColor?: string;
   };
 };
 
 export const checkerProps = {
   name: unknownProp,
-  shape: makeStringProp<CheckerShape>('round'),
   disabled: Boolean,
   iconSize: numericProp,
   modelValue: unknownProp,
@@ -38,6 +41,7 @@ export default defineComponent({
   props: extend({}, checkerProps, {
     bem: makeRequiredProp(Function),
     role: String,
+    shape: String as PropType<CheckerShape | RadioShape>,
     parent: Object as PropType<CheckerParent | null>,
     checked: Boolean,
     bindGroup: truthProp,
@@ -54,9 +58,24 @@ export default defineComponent({
       }
     };
 
-    const disabled = computed(
-      () => getParentProp('disabled') || props.disabled
-    );
+    const disabled = computed(() => {
+      if (props.parent && props.bindGroup) {
+        const disabled = getParentProp('disabled') || props.disabled;
+
+        if (props.role === 'checkbox') {
+          const checkedCount = (getParentProp('modelValue') as unknown[])
+            .length;
+          const max = getParentProp('max');
+          const overlimit = max && checkedCount >= +max;
+
+          return disabled || (overlimit && !props.checked);
+        }
+
+        return disabled;
+      }
+
+      return props.disabled;
+    });
 
     const direction = computed(() => getParentProp('direction'));
 
@@ -71,6 +90,10 @@ export default defineComponent({
       }
     });
 
+    const shape = computed(() => {
+      return props.shape || getParentProp('shape') || 'round';
+    });
+
     const onClick = (event: MouseEvent) => {
       const { target } = event;
       const icon = iconRef.value;
@@ -83,19 +106,35 @@ export default defineComponent({
     };
 
     const renderIcon = () => {
-      const { bem, shape, checked } = props;
+      const { bem, checked } = props;
       const iconSize = props.iconSize || getParentProp('iconSize');
 
       return (
         <div
           ref={iconRef}
-          class={bem('icon', [shape, { disabled: disabled.value, checked }])}
-          style={{ fontSize: addUnit(iconSize) }}
+          class={bem('icon', [
+            shape.value,
+            { disabled: disabled.value, checked },
+          ])}
+          style={
+            shape.value !== 'dot'
+              ? { fontSize: addUnit(iconSize) }
+              : {
+                  width: addUnit(iconSize),
+                  height: addUnit(iconSize),
+                  borderColor: iconStyle.value?.borderColor,
+                }
+          }
         >
           {slots.icon ? (
             slots.icon({ checked, disabled: disabled.value })
-          ) : (
+          ) : shape.value !== 'dot' ? (
             <Icon name="success" style={iconStyle.value} />
+          ) : (
+            <div
+              class={bem('icon--dot__icon')}
+              style={{ backgroundColor: iconStyle.value?.backgroundColor }}
+            ></div>
           )}
         </div>
       );

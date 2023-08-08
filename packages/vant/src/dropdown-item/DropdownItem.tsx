@@ -32,7 +32,7 @@ import type { DropdownItemOption } from './types';
 
 const [name, bem] = createNamespace('dropdown-item');
 
-const dropdownItemProps = {
+export const dropdownItemProps = {
   title: String,
   options: makeArrayProp<DropdownItemOption>(),
   disabled: Boolean,
@@ -47,11 +47,13 @@ export type DropdownItemProps = ExtractPropTypes<typeof dropdownItemProps>;
 export default defineComponent({
   name,
 
+  inheritAttrs: false,
+
   props: dropdownItemProps,
 
   emits: ['open', 'opened', 'close', 'closed', 'change', 'update:modelValue'],
 
-  setup(props, { emit, slots }) {
+  setup(props, { emit, slots, attrs }) {
     const state = reactive({
       showPopup: false,
       transition: true,
@@ -63,7 +65,7 @@ export default defineComponent({
     if (!parent) {
       if (process.env.NODE_ENV !== 'production') {
         console.error(
-          '[Vant] <DropdownItem> must be a child component of <DropdownMenu>.'
+          '[Vant] <DropdownItem> must be a child component of <DropdownMenu>.',
         );
       }
       return;
@@ -88,7 +90,7 @@ export default defineComponent({
 
     const toggle = (
       show = !state.showPopup,
-      options: { immediate?: boolean } = {}
+      options: { immediate?: boolean } = {},
     ) => {
       if (show === state.showPopup) {
         return;
@@ -98,6 +100,7 @@ export default defineComponent({
       state.transition = !options.immediate;
 
       if (show) {
+        parent.updateOffset();
         state.showWrapper = true;
       }
     };
@@ -112,7 +115,7 @@ export default defineComponent({
       }
 
       const match = props.options.find(
-        (option) => option.value === props.modelValue
+        (option) => option.value === props.modelValue,
       );
 
       return match ? match.text : '';
@@ -174,6 +177,7 @@ export default defineComponent({
           style={style}
           class={bem([direction])}
           onClick={onClickWrapper}
+          {...attrs}
         >
           <Popup
             v-model:show={state.showPopup}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VanIcon from '../../icon';
 import VanLoading from '..';
 import { useTranslate } from '../../../docs/site';
 
@@ -10,6 +11,7 @@ const t = useTranslate({
     color: '自定义颜色',
     vertical: '垂直排列',
     textColor: '自定义文本颜色',
+    customIcon: '自定义图标',
   },
   'en-US': {
     type: 'Type',
@@ -18,6 +20,7 @@ const t = useTranslate({
     color: 'Color',
     vertical: 'Vertical',
     textColor: 'Text Color',
+    customIcon: 'Custom Icon',
   },
 });
 </script>
@@ -58,12 +61,19 @@ const t = useTranslate({
       {{ t('loading') }}
     </van-loading>
   </demo-block>
+
+  <demo-block :title="t('customIcon')">
+    <van-loading vertical>
+      <template #icon>
+        <van-icon name="star-o" size="30" />
+      </template>
+      {{ t('loading') }}
+    </van-loading>
+  </demo-block>
 </template>
 
 <style lang="less">
 .demo-loading {
-  background: var(--van-background-color-light);
-
   .van-loading {
     display: inline-block;
     margin: 5px 0 5px 20px;

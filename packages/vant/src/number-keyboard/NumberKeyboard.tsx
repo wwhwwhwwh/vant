@@ -41,7 +41,7 @@ type KeyConfig = {
   wider?: boolean;
 };
 
-const numberKeyboardProps = {
+export const numberKeyboardProps = {
   show: Boolean,
   title: String,
   theme: makeStringProp<NumberKeyboardTheme>('default'),
@@ -79,6 +79,8 @@ function shuffle(array: unknown[]) {
 export default defineComponent({
   name,
 
+  inheritAttrs: false,
+
   props: numberKeyboardProps,
 
   emits: [
@@ -91,7 +93,7 @@ export default defineComponent({
     'update:modelValue',
   ],
 
-  setup(props, { emit, slots }) {
+  setup(props, { emit, slots, attrs }) {
     const root = ref<HTMLElement>();
 
     const genBasicKeys = () => {
@@ -124,13 +126,13 @@ export default defineComponent({
       if (extraKeys.length === 1) {
         keys.push(
           { text: 0, wider: true },
-          { text: extraKeys[0], type: 'extra' }
+          { text: extraKeys[0], type: 'extra' },
         );
       } else if (extraKeys.length === 2) {
         keys.push(
           { text: extraKeys[0], type: 'extra' },
           { text: 0 },
-          { text: extraKeys[1], type: 'extra' }
+          { text: extraKeys[1], type: 'extra' },
         );
       }
 
@@ -138,7 +140,7 @@ export default defineComponent({
     };
 
     const keys = computed(() =>
-      props.theme === 'custom' ? genCustomKeys() : genDefaultKeys()
+      props.theme === 'custom' ? genCustomKeys() : genDefaultKeys(),
     );
 
     const onBlur = () => {
@@ -172,7 +174,7 @@ export default defineComponent({
         emit('update:modelValue', value.slice(0, value.length - 1));
       } else if (type === 'close') {
         onClose();
-      } else if (value.length < props.maxlength) {
+      } else if (value.length < +props.maxlength) {
         emit('input', text);
         emit('update:modelValue', value + text);
       }
@@ -261,7 +263,7 @@ export default defineComponent({
         if (!props.transition) {
           emit(value ? 'show' : 'hide');
         }
-      }
+      },
     );
 
     if (props.hideOnClickOutside) {
@@ -282,6 +284,7 @@ export default defineComponent({
             })}
             onAnimationend={onAnimationEnd}
             onTouchstartPassive={stopPropagation}
+            {...attrs}
           >
             {Title}
             <div class={bem('body')}>

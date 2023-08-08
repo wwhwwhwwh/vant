@@ -109,7 +109,7 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { closeToast, showLoadingToast } from 'vant';
 
 export default {
   setup() {
@@ -125,10 +125,10 @@ export default {
 
     const asyncValidator = (val) =>
       new Promise((resolve) => {
-        Toast.loading('Validating...');
+        showLoadingToast('Validating...');
 
         setTimeout(() => {
-          Toast.clear();
+          closeToast();
           resolve(val === '1234');
         }, 1000);
       });
@@ -157,7 +157,7 @@ export default {
 ```html
 <van-field name="switch" label="Switch">
   <template #input>
-    <van-switch v-model="checked" size="20" />
+    <van-switch v-model="checked" />
   </template>
 </van-field>
 ```
@@ -344,10 +344,16 @@ export default {
   setup() {
     const result = ref('');
     const showPicker = ref(false);
-    const columns = ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'];
+    const columns = [
+      { text: 'Delaware', value: 'Delaware' },
+      { text: 'Florida', value: 'Florida' },
+      { text: 'Georqia', value: 'Georqia' },
+      { text: 'Indiana', value: 'Indiana' },
+      { text: 'Maine', value: 'Maine' },
+    ];
 
-    const onConfirm = (value) => {
-      result.value = value;
+    const onConfirm = ({ selectedOptions }) => {
+      result.value = selectedOptions[0]?.text;
       showPicker.value = false;
     };
 
@@ -361,24 +367,20 @@ export default {
 };
 ```
 
-### Field Type - DatetimePicker
+### Field Type - DatePicker
 
 ```html
 <van-field
   v-model="result"
   is-link
   readonly
-  name="datetimePicker"
-  label="Datetime Picker"
-  placeholder="Select time"
+  name="datePicker"
+  label="Date Picker"
+  placeholder="Select date"
   @click="showPicker = true"
 />
 <van-popup v-model:show="showPicker" position="bottom">
-  <van-datetime-picker
-    type="time"
-    @confirm="onConfirm"
-    @cancel="showPicker = false"
-  />
+  <van-date-picker @confirm="onConfirm" @cancel="showPicker = false" />
 </van-popup>
 ```
 
@@ -389,9 +391,8 @@ export default {
   setup() {
     const result = ref('');
     const showPicker = ref(false);
-
-    const onConfirm = (value) => {
-      result.value = value;
+    const onConfirm = ({ selectedValues }) => {
+      result.value = selectedValues.join('/');
       showPicker.value = false;
     };
 
@@ -433,12 +434,9 @@ export default {
   setup() {
     const result = ref('');
     const showArea = ref(false);
-    const onConfirm = (areaValues) => {
+    const onConfirm = ({ selectedOptions }) => {
       showArea.value = false;
-      result.value = areaValues
-        .filter((item) => !!item)
-        .map((item) => item.name)
-        .join('/');
+      result.value = selectedOptions.map((item) => item.text).join('/');
     };
 
     return {
@@ -494,7 +492,7 @@ export default {
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
 | label-width | Field label width | _number \| string_ | `6.2em` |
-| label-align | Field label align, can be set to `center` `right` | _string_ | `left` |
+| label-align | Field label align, can be set to `center` `right` `top` | _string_ | `left` |
 | input-align | Field input align, can be set to `center` `right` | _string_ | `left` |
 | error-message-align | Error message align, can be set to `center` `right` | _string_ | `left` |
 | validate-trigger | When to validate the form, can be set to `onChange`、`onSubmit`, supports using array to set multiple values | _string \| string[]_ | `onBlur` |
@@ -517,7 +515,7 @@ export default {
 | pattern | Regexp pattern, if the regexp cannot match, means that the validation fails | _RegExp_ |
 | trigger | When to validate the form, priority is higher than the `validate-trigger` of the Form component, can be set to `onChange`, `onBlur`, `onSubmit` | _string \| string[]_ |
 | formatter | Format value before validate | _(value, rule) => any_ |
-| validateEmpty `v3.6.0` | Controls whether the `validator` and `pattern` options to verify empty values, the default value is `true`, you can set to `false` to disable this behavior | _boolean_ |
+| validateEmpty | Controls whether the `validator` and `pattern` options to verify empty values, the default value is `true`, you can set to `false` to disable this behavior | _boolean_ |
 
 ### validate-trigger
 
@@ -536,15 +534,15 @@ export default {
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Form instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Form instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
 | submit | Submit form | - | - |
-| getValues `v3.4.8` | Get current form values | - | _Record<string, unknown>_ |
+| getValues | Get current form values | - | _Record<string, unknown>_ |
 | validate | Validate form | _name?: string \| string[]_ | _Promise\<void\>_ |
 | resetValidation | Reset validation | _name?: string \| string[]_ | - |
-| getValidationStatus `v3.5.0` | Get validation status of all fields，status can be `passed`、`failed`、`unvalidated` | - | _Record\<string, FieldValidationStatus\>_ |
+| getValidationStatus | Get validation status of all fields，status can be `passed`、`failed`、`unvalidated` | - | _Record\<string, FieldValidationStatus\>_ |
 | scrollToField | Scroll to field | _name: string, alignToTop: boolean_ | - |
 
 ### Types

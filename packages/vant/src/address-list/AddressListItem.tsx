@@ -6,6 +6,7 @@ import {
   createNamespace,
   makeRequiredProp,
   type Numeric,
+  makeStringProp,
 } from '../utils';
 
 // Components
@@ -32,6 +33,7 @@ export default defineComponent({
     disabled: Boolean,
     switchable: Boolean,
     defaultTagText: String,
+    rightIcon: makeStringProp('edit'),
   },
 
   emits: ['edit', 'click', 'select'],
@@ -46,7 +48,7 @@ export default defineComponent({
 
     const renderRightIcon = () => (
       <Icon
-        name="edit"
+        name={props.rightIcon}
         class={bem('edit')}
         onClick={(event) => {
           event.stopPropagation();
@@ -62,7 +64,7 @@ export default defineComponent({
       }
       if (props.address.isDefault && props.defaultTagText) {
         return (
-          <Tag type="danger" round class={bem('tag')}>
+          <Tag type="primary" round class={bem('tag')}>
             {props.defaultTagText}
           </Tag>
         );
@@ -98,11 +100,11 @@ export default defineComponent({
         <div class={bem({ disabled })} onClick={onClick}>
           <Cell
             v-slots={{
-              value: renderContent,
+              title: renderContent,
               'right-icon': renderRightIcon,
             }}
             border={false}
-            valueClass={bem('value')}
+            titleClass={bem('title')}
           />
           {slots.bottom?.(extend({}, props.address, { disabled }))}
         </div>

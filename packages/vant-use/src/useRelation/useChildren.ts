@@ -37,16 +37,30 @@ export function flattenVNodes(children: VNodeNormalizedChildren) {
   return result;
 }
 
+const findVNodeIndex = (vnodes: VNode[], vnode: VNode) => {
+  const index = vnodes.indexOf(vnode);
+  if (index === -1) {
+    return vnodes.findIndex(
+      (item) =>
+        vnode.key !== undefined &&
+        vnode.key !== null &&
+        item.type === vnode.type &&
+        item.key === vnode.key,
+    );
+  }
+  return index;
+};
+
 // sort children instances by vnodes order
 export function sortChildren(
   parent: ComponentInternalInstance,
   publicChildren: ComponentPublicInstance[],
-  internalChildren: ComponentInternalInstance[]
+  internalChildren: ComponentInternalInstance[],
 ) {
   const vnodes = flattenVNodes(parent.subTree.children);
 
   internalChildren.sort(
-    (a, b) => vnodes.indexOf(a.vnode) - vnodes.indexOf(b.vnode)
+    (a, b) => findVNodeIndex(vnodes, a.vnode) - findVNodeIndex(vnodes, b.vnode),
   );
 
   const orderedPublicChildren = internalChildren.map((item) => item.proxy!);
@@ -61,7 +75,7 @@ export function sortChildren(
 export function useChildren<
   // eslint-disable-next-line
   Child extends ComponentPublicInstance = ComponentPublicInstance<{}, any>,
-  ProvideValue = never
+  ProvideValue = never,
 >(key: InjectionKey<ProvideValue>) {
   const publicChildren: Child[] = reactive([]);
   const internalChildren: ComponentInternalInstance[] = reactive([]);
@@ -91,8 +105,8 @@ export function useChildren<
           children: publicChildren,
           internalChildren,
         },
-        value
-      )
+        value,
+      ),
     );
   };
 

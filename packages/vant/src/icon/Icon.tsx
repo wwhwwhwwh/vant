@@ -18,7 +18,7 @@ const [name, bem] = createNamespace('icon');
 
 const isImage = (name?: string) => name?.includes('/');
 
-const iconProps = {
+export const iconProps = {
   dot: Boolean,
   tag: makeStringProp<keyof HTMLElementTagNameMap>('i'),
   name: String,
@@ -40,7 +40,7 @@ export default defineComponent({
     const config = inject(CONFIG_PROVIDER_KEY, null);
 
     const classPrefix = computed(
-      () => props.classPrefix || config?.iconPrefix || bem()
+      () => props.classPrefix || config?.iconPrefix || bem(),
     );
 
     return () => {

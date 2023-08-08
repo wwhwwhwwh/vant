@@ -2,7 +2,7 @@
 
 ### 介绍
 
-用于配置 Vant 组件的主题样式和全局属性，从 3.1.0 版本开始支持。
+用于全局配置 Vant 组件，提供深色模式、主题定制等能力。
 
 ### 引入
 
@@ -14,6 +14,49 @@ import { ConfigProvider } from 'vant';
 
 const app = createApp();
 app.use(ConfigProvider);
+```
+
+## 深色模式
+
+### 开启深色模式
+
+将 ConfigProvider 组件的 `theme` 属性设置为 `dark`，可以开启深色模式。
+
+深色模式会全局生效，使页面上的所有 Vant 组件变为深色风格。
+
+```html
+<van-config-provider theme="dark">...</van-config-provider>
+```
+
+值得注意的是，开启 Vant 的深色模式只会影响 Vant 组件的 UI，并不会影响全局的文字颜色或背景颜色，你可以参考以下 CSS 来设置一些全局样式：
+
+```css
+.van-theme-dark body {
+  color: #f5f5f5;
+  background-color: black;
+}
+```
+
+### 动态切换
+
+通过动态设置 `theme` 属性，可以在浅色风格和深色风格之间进行切换。
+
+```html
+<van-config-provider :theme="theme">...</van-config-provider>
+```
+
+```js
+export default {
+  setup() {
+    const theme = ref('light');
+
+    setTimeout(() => {
+      theme.value = 'dark';
+    }, 1000);
+
+    return { theme };
+  },
+};
 ```
 
 ## 定制主题
@@ -29,18 +72,18 @@ Vant 组件通过丰富的 [CSS 变量](https://developer.mozilla.org/zh-CN/docs
 ```css
 .van-button--primary {
   color: var(--van-button-primary-color);
-  background-color: var(--van-button-primary-background-color);
+  background-color: var(--van-button-primary-background);
 }
 ```
 
-这些变量的默认值被定义在 `root` 节点上，HTML 文档的任何节点都可以访问到这些变量：
+这些变量的默认值被定义在 `:root` 节点上，HTML 里的所有子节点都可以访问到这些变量：
 
 ```css
 :root {
   --van-white: #fff;
   --van-blue: #1989fa;
   --van-button-primary-color: var(--van-white);
-  --van-button-primary-background-color: var(--van-primary-color);
+  --van-button-primary-background: var(--van-primary-color);
 }
 ```
 
@@ -52,10 +95,14 @@ Vant 组件通过丰富的 [CSS 变量](https://developer.mozilla.org/zh-CN/docs
 
 ```css
 /* 添加这段样式后，Primary Button 会变成红色 */
-:root {
-  --van-button-primary-background-color: red;
+:root:root {
+  --van-button-primary-background: red;
 }
 ```
+
+> 注意：为什么要写两个重复的 `:root`？
+>
+> 由于 vant 中的主题变量也是在 `:root` 下声明的，所以在有些情况下会由于优先级的问题无法成功覆盖。通过 `:root:root` 可以显式地让你所写内容的优先级更高一些，从而确保主题变量的成功覆盖。
 
 #### 通过 ConfigProvider 覆盖
 
@@ -84,7 +131,7 @@ Vant 组件通过丰富的 [CSS 变量](https://developer.mozilla.org/zh-CN/docs
 ```
 
 ```js
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
 export default {
   setup() {
@@ -93,15 +140,15 @@ export default {
 
     // themeVars 内的值会被转换成对应 CSS 变量
     // 比如 sliderBarHeight 会转换成 `--van-slider-bar-height`
-    const themeVars = {
+    const themeVars = reactive({
       rateIconFullColor: '#07c160',
       sliderBarHeight: '4px',
       sliderButtonWidth: '20px',
       sliderButtonHeight: '20px',
-      sliderActiveBackgroundColor: '#07c160',
+      sliderActiveBackground: '#07c160',
+      buttonPrimaryBackground: '#07c160',
       buttonPrimaryBorderColor: '#07c160',
-      buttonPrimaryBackgroundColor: '#07c160',
-    };
+    });
 
     return {
       rate,
@@ -114,6 +161,59 @@ export default {
 
 > 注意：ConfigProvider 仅影响它的子组件的样式，不影响全局 root 节点。
 
+#### 在 TypeScript 中使用
+
+在 TypeScript 中定义 themeVars 时，建议使用 Vant 提供的 `ConfigProviderThemeVars` 类型，可以提供完善的类型提示：
+
+```ts
+import type { ConfigProviderThemeVars } from 'vant';
+
+const themeVars: ConfigProviderThemeVars = {
+  sliderBarHeight: '4px',
+};
+```
+
+### 结合深色模式与 CSS 变量
+
+如果需要单独定义深色模式或浅色模式下的 CSS 变量，可以使用 `theme-vars-dark` 和 `theme-vars-light` 属性。
+
+- `theme-vars-dark`: 仅在深色模式下生效的 CSS 变量，优先级高于 `theme-vars` 中定义的变量。
+- `theme-vars-light`: 仅在浅色模式下生效的 CSS 变量，优先级高于 `theme-vars` 中定义的变量。
+
+#### 示例
+
+以下方的 `buttonPrimaryBackground` 变量为例, 在深色模式下的值为 `blue`，在浅色模式下的值为 `green`。
+
+```html
+<van-config-provider
+  :theme-vars="themeVars"
+  :theme-vars-dark="themeVarsDark"
+  :theme-vars-light="themeVarsLight"
+>
+  ...
+</van-config-provider>
+```
+
+```js
+import { ref, reactive } from 'vue';
+
+export default {
+  setup() {
+    const themeVars = reactive({ buttonPrimaryBackground: 'red' });
+    const themeVarsDark = reactive({ buttonPrimaryBackground: 'blue' });
+    const themeVarsLight = reactive({ buttonPrimaryBackground: 'green' });
+
+    return {
+      themeVars,
+      themeVarsDark,
+      themeVarsLight,
+    };
+  },
+};
+```
+
+## 主题变量
+
 ### 基础变量
 
 Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变量会继承基础变量，因此在修改基础变量后，会影响所有相关的组件。
@@ -122,8 +222,10 @@ Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变�
 
 由于 CSS 变量继承机制的原因，两者的修改方式有一定差异：
 
-- 基础变量只能通过 `root 选择器` 修改，不能通过 `ConfigProvider 组件` 修改。
-- 组件变量可以通过 `root 选择器` 和 `ConfigProvider 组件` 修改。
+- 基础变量只能通过 `:root 选择器` 修改，不能通过 `ConfigProvider 组件` 修改。
+- 组件变量可以通过 `:root 选择器` 和 `ConfigProvider 组件` 修改。
+
+你也可以使用 `.van-theme-light` 和 `.van-theme-dark` 这两个类名选择器来单独修改浅色或深色模式下的基础变量和组件变量。
 
 #### 变量列表
 
@@ -160,12 +262,11 @@ Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变�
 --van-text-color: var(--van-gray-8);
 --van-text-color-2: var(--van-gray-6);
 --van-text-color-3: var(--van-gray-5);
---van-text-link-color: #576b95;
 --van-active-color: var(--van-gray-2);
 --van-active-opacity: 0.6;
 --van-disabled-opacity: 0.5;
---van-background-color: var(--van-gray-1);
---van-background-color-light: var(--van-white);
+--van-background: var(--van-gray-1);
+--van-background-2: var(--van-white);
 
 // Padding
 --van-padding-base: 4px;
@@ -180,30 +281,29 @@ Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变�
 --van-font-size-sm: 12px;
 --van-font-size-md: 14px;
 --van-font-size-lg: 16px;
---van-font-weight-bold: 500;
+--van-font-bold: 600;
 --van-line-height-xs: 14px;
 --van-line-height-sm: 18px;
 --van-line-height-md: 20px;
 --van-line-height-lg: 22px;
---van-base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-  Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB',
-  'Microsoft Yahei', sans-serif;
---van-price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue,
-  Arial, sans-serif;
+--van-base-font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+  Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
+  sans-serif;
+--van-price-font: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial, sans-serif;
 
 // Animation
---van-animation-duration-base: 0.3s;
---van-animation-duration-fast: 0.2s;
---van-animation-timing-function-enter: ease-out;
---van-animation-timing-function-leave: ease-in;
+--van-duration-base: 0.3s;
+--van-duration-fast: 0.2s;
+--van-ease-out: ease-out;
+--van-ease-in: ease-in;
 
 // Border
 --van-border-color: var(--van-gray-3);
---van-border-width-base: 1px;
---van-border-radius-sm: 2px;
---van-border-radius-md: 4px;
---van-border-radius-lg: 8px;
---van-border-radius-max: 999px;
+--van-border-width: 1px;
+--van-radius-sm: 2px;
+--van-radius-md: 4px;
+--van-radius-lg: 8px;
+--van-radius-max: 999px;
 ```
 
 你可以在各个组件文档底部的表格中查看组件变量。
@@ -214,15 +314,22 @@ Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变�
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| theme-vars | 自定义主题变量 | _object_ | - |
-| tag `v3.1.2` | 根节点对应的 HTML 标签名 | _string_ | `div` |
-| z-index `v3.6.0` | 设置所有弹窗类组件的 z-index，该属性对全局生效 | _number_ | `2000` |
-| icon-prefix `v3.1.3` | 所有图标的类名前缀，等同于 Icon 组件的 [class-prefix 属性](#/zh-CN/icon#props) | _string_ | `van-icon` |
+| theme | 主题风格，设置为 `dark` 来开启深色模式，全局生效 | _ConfigProviderTheme_ | `light` |
+| theme-vars | 自定义主题变量，局部生效 | _object_ | - |
+| theme-vars-dark | 仅在深色模式下生效的主题变量，优先级高于 `theme-vars` | _object_ | - |
+| theme-vars-light | 仅在浅色模式下生效的主题变量，优先级高于 `theme-vars` | _object_ | - |
+| tag | 根节点对应的 HTML 标签名 | _string_ | `div` |
+| z-index | 设置所有弹窗类组件的 z-index，该属性对全局生效 | _number_ | `2000` |
+| icon-prefix | 所有图标的类名前缀，等同于 Icon 组件的 [class-prefix 属性](#/zh-CN/icon#props) | _string_ | `van-icon` |
 
 ### 类型定义
 
 组件导出以下类型定义：
 
 ```ts
-import type { ConfigProviderProps } from 'vant';
+import type {
+  ConfigProviderProps,
+  ConfigProviderTheme,
+  ConfigProviderThemeVars,
+} from 'vant';
 ```

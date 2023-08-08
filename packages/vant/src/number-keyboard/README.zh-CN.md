@@ -34,13 +34,13 @@ app.use(NumberKeyboard);
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const show = ref(true);
-    const onInput = (value) => Toast(value);
-    const onDelete = () => Toast('删除');
+    const onInput = (value) => showToast(value);
+    const onDelete = () => showToast('删除');
 
     return {
       show,
@@ -187,9 +187,9 @@ export default {
 | delete-button-text | 删除按钮文字，空则展示删除图标 | _string_ | - |
 | close-button-loading | 是否将关闭按钮设置为加载中状态，仅在 `theme="custom"` 时有效 | _boolean_ | `false` |
 | show-delete-key | 是否展示删除图标 | _boolean_ | `true` |
-| blur-on-close `v3.0.6` | 是否在点击关闭按钮时触发 blur 事件 | _boolean_ | `true` |
+| blur-on-close | 是否在点击关闭按钮时触发 blur 事件 | _boolean_ | `true` |
 | hide-on-click-outside | 是否在点击外部时收起键盘 | _boolean_ | `true` |
-| teleport | 指定挂载的节点，等同于 Teleport 组件的 [to 属性](https://v3.cn.vuejs.org/api/built-in-components.html#teleport) | _string \| Element_ | - |
+| teleport | 指定挂载的节点，等同于 Teleport 组件的 [to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) | _string \| Element_ | - |
 | safe-area-inset-bottom | 是否开启[底部安全区适配](#/zh-CN/advanced-usage#di-bu-an-quan-qu-gua-pei) | _boolean_ | `true` |
 | random-key-order | 是否将通过随机顺序展示按键 | _boolean_ | `false` |
 
@@ -226,23 +226,23 @@ import type { NumberKeyboardProps, NumberKeyboardTheme } from 'vant';
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称 | 默认值 | 描述 |
-| --- | --- | --- |
-| --van-number-keyboard-background-color | _var(--van-gray-2)_ | - |
-| --van-number-keyboard-key-height | _48px_ | - |
-| --van-number-keyboard-key-font-size | _28px_ | - |
-| --van-number-keyboard-key-active-color | _var(--van-gray-3)_ | - |
-| --van-number-keyboard-key-background-color | _var(--van-white)_ | - |
-| --van-number-keyboard-delete-font-size | _var(--van-font-size-lg)_ | - |
-| --van-number-keyboard-title-color | _var(--van-gray-7)_ | - |
-| --van-number-keyboard-title-height | _34px_ | - |
-| --van-number-keyboard-title-font-size | _var(--van-font-size-lg)_ | - |
-| --van-number-keyboard-close-padding | _0 var(--van-padding-md)_ | - |
-| --van-number-keyboard-close-color | _var(--van-text-link-color)_ | - |
-| --van-number-keyboard-close-font-size | _var(--van-font-size-md)_ | - |
-| --van-number-keyboard-button-text-color | _var(--van-white)_ | - |
-| --van-number-keyboard-button-background-color | _var(--van-primary-color)_ | - |
-| --van-number-keyboard-z-index | _100_ | - |
+| 名称                                    | 默认值                     | 描述 |
+| --------------------------------------- | -------------------------- | ---- |
+| --van-number-keyboard-background        | _var(--van-gray-2)_        | -    |
+| --van-number-keyboard-key-height        | _48px_                     | -    |
+| --van-number-keyboard-key-font-size     | _28px_                     | -    |
+| --van-number-keyboard-key-active-color  | _var(--van-gray-3)_        | -    |
+| --van-number-keyboard-key-background    | _var(--van-white)_         | -    |
+| --van-number-keyboard-delete-font-size  | _var(--van-font-size-lg)_  | -    |
+| --van-number-keyboard-title-color       | _var(--van-gray-7)_        | -    |
+| --van-number-keyboard-title-height      | _34px_                     | -    |
+| --van-number-keyboard-title-font-size   | _var(--van-font-size-lg)_  | -    |
+| --van-number-keyboard-close-padding     | _0 var(--van-padding-md)_  | -    |
+| --van-number-keyboard-close-color       | _var(--van-primary-color)_ | -    |
+| --van-number-keyboard-close-font-size   | _var(--van-font-size-md)_  | -    |
+| --van-number-keyboard-button-text-color | _var(--van-white)_         | -    |
+| --van-number-keyboard-button-background | _var(--van-primary-color)_ | -    |
+| --van-number-keyboard-z-index           | _100_                      | -    |
 
 ## 常见问题
 

@@ -15,7 +15,7 @@ import {
   createNamespace,
   makeRequiredProp,
 } from '../utils';
-import { getMonthEndDay } from '../datetime-picker/utils';
+import { getMonthEndDay } from '../date-picker/utils';
 import {
   t,
   bem,
@@ -62,7 +62,7 @@ export default defineComponent({
 
   props: calendarMonthProps,
 
-  emits: ['click', 'update-height'],
+  emits: ['click'],
 
   setup(props, { emit, slots }) {
     const [visible, setVisible] = useToggle();
@@ -82,7 +82,7 @@ export default defineComponent({
     });
 
     const totalDay = computed(() =>
-      getMonthEndDay(props.date.getFullYear(), props.date.getMonth() + 1)
+      getMonthEndDay(props.date.getFullYear(), props.date.getMonth() + 1),
     );
 
     const shouldRender = computed(() => visible.value || !props.lazyRender);
@@ -92,7 +92,7 @@ export default defineComponent({
     const getMultipleDayType = (day: Date) => {
       const isSelected = (date: Date) =>
         (props.currentDate as Date[]).some(
-          (item) => compareDay(item, date) === 0
+          (item) => compareDay(item, date) === 0,
         );
 
       if (isSelected(day)) {
@@ -185,7 +185,16 @@ export default defineComponent({
 
     const renderTitle = () => {
       if (props.showMonthTitle) {
-        return <div class={bem('month-title')}>{title.value}</div>;
+        return (
+          <div class={bem('month-title')}>
+            {slots['month-title']
+              ? slots['month-title']({
+                  date: props.date,
+                  text: title.value,
+                })
+              : title.value}
+          </div>
+        );
       }
     };
 
@@ -227,7 +236,7 @@ export default defineComponent({
     });
 
     const disabledDays = computed(() =>
-      days.value.filter((day) => day.type === 'disabled')
+      days.value.filter((day) => day.type === 'disabled'),
     );
 
     const scrollToDate = (body: Element, targetDate: Date) => {
@@ -239,7 +248,7 @@ export default defineComponent({
 
         setScrollTop(
           body,
-          daysRect.top + rowOffset + body.scrollTop - useRect(body).top
+          daysRect.top + rowOffset + body.scrollTop - useRect(body).top,
         );
       }
     };

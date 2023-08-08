@@ -13,7 +13,7 @@ import { Badge, type BadgeProps } from '../badge';
 
 const [name, bem] = createNamespace('sidebar-item');
 
-const sidebarItemProps = extend({}, routeProps, {
+export const sidebarItemProps = extend({}, routeProps, {
   dot: Boolean,
   title: String,
   badge: numericProp,
@@ -37,7 +37,7 @@ export default defineComponent({
     if (!parent) {
       if (process.env.NODE_ENV !== 'production') {
         console.error(
-          '[Vant] <SidebarItem> must be a child component of <Sidebar>.'
+          '[Vant] <SidebarItem> must be a child component of <Sidebar>.',
         );
       }
       return;

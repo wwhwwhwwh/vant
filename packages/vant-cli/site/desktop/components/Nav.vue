@@ -1,5 +1,5 @@
 <template>
-  <div class="van-doc-nav" :style="style">
+  <div :class="['van-doc-nav', { 'van-doc-nav-fixed': isFixed }]">
     <div
       v-for="(group, index) in navConfig"
       class="van-doc-nav__group"
@@ -38,19 +38,11 @@ export default {
 
   data() {
     return {
-      top: 64,
-      bottom: 0,
+      isFixed: false,
     };
   },
 
   computed: {
-    style() {
-      return {
-        top: this.top + 'px',
-        bottom: this.bottom + 'px',
-      };
-    },
-
     base() {
       return this.lang ? `/${this.lang}/` : '/';
     },
@@ -64,31 +56,34 @@ export default {
   methods: {
     onScroll() {
       const { pageYOffset: offset } = window;
-      this.top = Math.max(0, 64 - offset);
+      this.isFixed = offset > 64;
     },
   },
 };
 </script>
 
 <style lang="less">
-@import '../../common/style/var';
-
 .van-doc-nav {
-  position: fixed;
+  position: absolute;
   left: 0;
+  top: var(--van-doc-header-top-height);
+  bottom: 0;
   z-index: 1;
-  min-width: @van-doc-nav-width;
-  max-width: @van-doc-nav-width;
-  padding: @van-doc-padding 0;
+  min-width: var(--van-doc-nav-width);
+  max-width: var(--van-doc-nav-width);
+  padding: 8px 0;
   overflow-y: scroll;
-  background-color: #fff;
-  box-shadow: 0 8px 12px #ebedf0;
+  background-color: var(--van-doc-background-2);
 
-  @media (min-width: @van-doc-row-max-width) {
+  @media (min-width: var(--van-doc-row-max-width)) {
     left: 50%;
-    margin-left: -(@van-doc-row-max-width / 2);
+    margin-left: calc((var(--van-doc-row-max-width) / 2 * -1));
   }
 
+  &.van-doc-nav-fixed {
+    position: fixed;
+    top: 0;
+  }
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -110,32 +105,30 @@ export default {
   }
 
   &__title {
-    padding: 8px 0 8px @van-doc-padding;
-    color: #455a64;
+    padding: 24px 0 0 var(--van-doc-padding);
+    color: var(--van-doc-text-color-2);
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 28px;
   }
 
   &__item {
     a {
       display: block;
-      margin: 8px 0;
-      padding: 8px 0 8px @van-doc-padding;
-      color: #455a64;
+      margin: 4px 0;
+      padding: 6px 0 6px var(--van-doc-padding);
+      color: var(--van-doc-text-color-3);
       font-size: 14px;
       line-height: 20px;
       transition: color 0.2s;
 
       &:hover,
       &.active {
-        color: @van-doc-green;
+        color: var(--van-doc-link-color);
       }
 
       &.active {
         font-weight: 600;
-        background-color: #ebfff0;
-        border-radius: 999px;
       }
 
       span {

@@ -22,7 +22,7 @@ const CircularIcon = (
 
 export type LoadingType = 'circular' | 'spinner';
 
-const loadingProps = {
+export const loadingProps = {
   size: numericProp,
   type: makeStringProp<LoadingType>('circular'),
   color: String,
@@ -40,8 +40,17 @@ export default defineComponent({
 
   setup(props, { slots }) {
     const spinnerStyle = computed(() =>
-      extend({ color: props.color }, getSizeStyle(props.size))
+      extend({ color: props.color }, getSizeStyle(props.size)),
     );
+
+    const renderIcon = () => {
+      const DefaultIcon = props.type === 'spinner' ? SpinIcon : CircularIcon;
+      return (
+        <span class={bem('spinner', props.type)} style={spinnerStyle.value}>
+          {slots.icon ? slots.icon() : DefaultIcon}
+        </span>
+      );
+    };
 
     const renderText = () => {
       if (slots.default) {
@@ -67,9 +76,7 @@ export default defineComponent({
           aria-live="polite"
           aria-busy={true}
         >
-          <span class={bem('spinner', type)} style={spinnerStyle.value}>
-            {type === 'spinner' ? SpinIcon : CircularIcon}
-          </span>
+          {renderIcon()}
           {renderText()}
         </div>
       );

@@ -22,6 +22,7 @@ import {
 
 // Composables
 import { useId } from '../composables/use-id';
+import { useExpose } from '../composables/use-expose';
 import {
   useRect,
   useChildren,
@@ -35,7 +36,7 @@ import type { DropdownMenuProvide, DropdownMenuDirection } from './types';
 
 const [name, bem] = createNamespace('dropdown-menu');
 
-const dropdownMenuProps = {
+export const dropdownMenuProps = {
   overlay: truthProp,
   zIndex: numericProp,
   duration: makeNumericProp(0.2),
@@ -64,7 +65,7 @@ export default defineComponent({
     const scrollParent = useScrollParent(root);
 
     const opened = computed(() =>
-      children.some((item) => item.state.showWrapper)
+      children.some((item) => item.state.showWrapper),
     );
 
     const barStyle = computed<CSSProperties | undefined>(() => {
@@ -75,11 +76,15 @@ export default defineComponent({
       }
     });
 
+    const close = () => {
+      children.forEach((item) => {
+        item.toggle(false);
+      });
+    };
+
     const onClickAway = () => {
       if (props.closeOnClickOutside) {
-        children.forEach((item) => {
-          item.toggle(false);
-        });
+        close();
       }
     };
 
@@ -103,7 +108,6 @@ export default defineComponent({
     const toggleItem = (active: number) => {
       children.forEach((item, index) => {
         if (index === active) {
-          updateOffset();
           item.toggle();
         } else if (item.state.showPopup) {
           item.toggle(false, { immediate: true });
@@ -143,7 +147,8 @@ export default defineComponent({
       );
     };
 
-    linkChildren({ id, props, offset });
+    useExpose({ close });
+    linkChildren({ id, props, offset, updateOffset });
     useClickAway(root, onClickAway);
     useEventListener('scroll', onScroll, {
       target: scrollParent,

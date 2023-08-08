@@ -64,7 +64,7 @@ export default {
   .colon {
     display: inline-block;
     margin: 0 4px;
-    color: #ee0a24;
+    color: #1989fa;
   }
   .block {
     display: inline-block;
@@ -72,7 +72,7 @@ export default {
     color: #fff;
     font-size: 12px;
     text-align: center;
-    background-color: #ee0a24;
+    background-color: #1989fa;
   }
 </style>
 ```
@@ -96,7 +96,7 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
@@ -111,7 +111,7 @@ export default {
     const reset = () => {
       countDown.value.reset();
     };
-    const onFinish = () => Toast('Finished');
+    const onFinish = () => showToast('Finished');
 
     return {
       start,
@@ -173,7 +173,7 @@ export default {
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get CountDown instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get CountDown instance and call instance methods.
 
 | Name  | Description      | Attribute | Return value |
 | ----- | ---------------- | --------- | ------------ |

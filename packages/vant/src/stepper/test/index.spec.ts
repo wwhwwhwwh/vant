@@ -1,6 +1,7 @@
 import { nextTick } from 'vue';
 import { Stepper } from '..';
 import { mount, later } from '../../../test';
+import { LONG_PRESS_START_TIME } from '../../utils';
 
 test('should disable buttons and input when using disabled prop', () => {
   const wrapper = mount(Stepper, {
@@ -126,9 +127,9 @@ test('should update value after long pressing', async () => {
   expect(wrapper.emitted('update:modelValue')![0]).toEqual([2]);
 
   await plus.trigger('touchstart');
-  await later(1000);
+  await later(LONG_PRESS_START_TIME + 500);
   await plus.trigger('touchend');
-  expect(wrapper.emitted('update:modelValue')).toEqual([[2], [3], [4]]);
+  expect(wrapper.emitted('update:modelValue')).toEqual([[2], [3], [4], [5]]);
 });
 
 test('should allow to disable long press', async () => {
@@ -247,6 +248,26 @@ test('should format input value when stepper blurred', async () => {
   expect(wrapper.emitted('update:modelValue')![1]).toEqual([3]);
   await nextTick();
   expect(wrapper.emitted('blur')).toBeTruthy();
+});
+
+test('should not format input value when stepper blurred if set auto-fixed to false', async () => {
+  const wrapper = mount(Stepper, {
+    props: {
+      min: 5,
+      max: 8,
+      autoFixed: false,
+    },
+  });
+
+  const input = wrapper.find('input');
+
+  input.element.value = '2';
+  await input.trigger('blur');
+  expect(wrapper.emitted('update:modelValue')![1]).toEqual([2]);
+
+  input.element.value = '10';
+  await input.trigger('blur');
+  expect(wrapper.emitted('update:modelValue')![2]).toEqual([10]);
 });
 
 test('should update input width when using input-width prop', () => {

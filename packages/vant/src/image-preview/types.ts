@@ -27,6 +27,7 @@ export type ImagePreviewOptions = {
   showIndicators?: boolean;
   closeOnPopstate?: boolean;
   closeIconPosition?: PopupCloseIconPosition;
+  closeOnClickOverlay?: boolean;
   onClose?(): void;
   onScale?(args: { scale: number; index: number }): void;
   onChange?(index: number): void;
@@ -45,3 +46,15 @@ export type ImagePreviewInstance = ComponentPublicInstance<
   ImagePreviewProps,
   ImagePreviewExpose
 >;
+
+export type ImagePreviewThemeVars = {
+  imagePreviewIndexTextColor?: string;
+  imagePreviewIndexFontSize?: string;
+  imagePreviewIndexLineHeight?: number | string;
+  imagePreviewIndexTextShadow?: string;
+  imagePreviewOverlayBackground?: string;
+  imagePreviewCloseIconSize?: string;
+  imagePreviewCloseIconColor?: string;
+  imagePreviewCloseIconMargin?: string;
+  imagePreviewCloseIconZIndex?: number | string;
+};

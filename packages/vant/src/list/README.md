@@ -175,7 +175,9 @@ export default {
 | finished-text | Finished text | _string_ | - |
 | error-text | Error loaded text | _string_ | - |
 | immediate-check | Whether to check loading position immediately after mounted | _boolean_ | `true` |
+| disabled | Whether to disable the load event | _boolean_ | `false` |
 | direction | Scroll direction, can be set to `up` | _string_ | `down` |
+| scroller `v4.6.4` | Specifies the node that needs to listen for scroll events, defaults to the nearest parent scroll node | _Element_ | - |
 
 ### Events
 
@@ -185,7 +187,7 @@ export default {
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get List instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get List instance and call instance methods.
 
 | Name  | Description           | Attribute | Return value |
 | ----- | --------------------- | --------- | ------------ |

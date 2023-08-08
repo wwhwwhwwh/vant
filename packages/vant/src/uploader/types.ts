@@ -8,12 +8,14 @@ export type UploaderResultType = 'dataUrl' | 'text' | 'file';
 export type UploaderFileListItem = {
   url?: string;
   file?: File;
+  objectUrl?: string;
   content?: string;
   isImage?: boolean;
   status?: '' | 'uploading' | 'done' | 'failed';
   message?: string;
   imageFit?: ImageFit;
   deletable?: boolean;
+  reupload?: boolean;
   previewSize?: Numeric;
   beforeDelete?: Interceptor;
 };
@@ -25,7 +27,7 @@ export type UploaderBeforeRead = (
   detail: {
     name: Numeric;
     index: number;
-  }
+  },
 ) => boolean | undefined | Promise<File | File[] | undefined>;
 
 export type UploaderAfterRead = (
@@ -33,7 +35,7 @@ export type UploaderAfterRead = (
   detail: {
     name: Numeric;
     index: number;
-  }
+  },
 ) => void;
 
 export type UploaderExpose = {
@@ -45,3 +47,31 @@ export type UploaderInstance = ComponentPublicInstance<
   UploaderProps,
   UploaderExpose
 >;
+
+export type UploaderThemeVars = {
+  uploaderSize?: string;
+  uploaderIconSize?: string;
+  uploaderIconColor?: string;
+  uploaderTextColor?: string;
+  uploaderTextFontSize?: string;
+  uploaderUploadBackground?: string;
+  uploaderUploadActiveColor?: string;
+  uploaderDeleteColor?: string;
+  uploaderDeleteIconSize?: string;
+  uploaderDeleteBackground?: string;
+  uploaderFileBackground?: string;
+  uploaderFileIconSize?: string;
+  uploaderFileIconColor?: string;
+  uploaderFileNamePadding?: string;
+  uploaderFileNameMarginTop?: string;
+  uploaderFileNameFontSize?: string;
+  uploaderFileNameTextColor?: string;
+  uploaderMaskTextColor?: string;
+  uploaderMaskBackground?: string;
+  uploaderMaskIconSize?: string;
+  uploaderMaskMessageFontSize?: string;
+  uploaderMaskMessageLineHeight?: number | string;
+  uploaderLoadingIconSize?: string;
+  uploaderLoadingIconColor?: string;
+  uploaderDisabledOpacity?: number | string;
+};

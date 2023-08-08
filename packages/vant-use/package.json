@@ -1,12 +1,13 @@
 {
   "name": "@vant/use",
-  "version": "1.4.2",
+  "version": "1.5.2",
   "description": "Vant Composition API",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.mjs",
   "typings": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.mjs",
       "require": "./dist/index.cjs.js"
     }
@@ -21,7 +22,7 @@
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "node ./build.js",
     "build": "pnpm clean && pnpm build:bundle && pnpm build:types",
-    "release": "pnpm build && release-it",
+    "release": "vant-cli release",
     "prepare": "pnpm build"
   },
   "publishConfig": {
@@ -37,15 +38,12 @@
   "author": "chenjiahan",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.14.29",
-    "release-it": "^15.1.1",
-    "typescript": "^4.7.4",
-    "vue": "^3.2.27"
+    "esbuild": "^0.18.11",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4",
+    "vue": "^3.3.4"
   },
-  "release-it": {
-    "git": {
-      "tag": false,
-      "commitMessage": "release: @vant/use ${version}"
-    }
+  "peerDependencies": {
+    "vue": "^3.0.0"
   }
 }

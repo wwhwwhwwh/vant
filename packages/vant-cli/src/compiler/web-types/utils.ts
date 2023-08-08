@@ -2,7 +2,7 @@
 export function toKebabCase(input: string): string {
   return input.replace(
     /[A-Z]/g,
-    (val, index) => (index === 0 ? '' : '-') + val.toLowerCase()
+    (val, index) => (index === 0 ? '' : '-') + val.toLowerCase(),
   );
 }
 
@@ -19,10 +19,4 @@ export function formatType(type: string) {
 
 export function normalizePath(path: string): string {
   return path.replace(/\\/g, '/');
-}
-
-// `default` `primary` -> ['default', 'primary']
-export function formatOptions(options?: string) {
-  if (!options) return [];
-  return options.replace(/`/g, '').split(' ');
 }

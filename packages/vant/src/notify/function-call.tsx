@@ -1,16 +1,9 @@
-import { App } from 'vue';
-import {
-  extend,
-  isObject,
-  inBrowser,
-  withInstall,
-  type ComponentInstance,
-} from '../utils';
+import { extend, isObject, inBrowser, type ComponentInstance } from '../utils';
 import { mountComponent, usePopupState } from '../utils/mount-component';
 import VanNotify from './Notify';
 import type { NotifyMessage, NotifyOptions } from './types';
 
-let timer: number;
+let timer: ReturnType<typeof setTimeout>;
 let instance: ComponentInstance;
 
 const parseOptions = (message: NotifyMessage | NotifyOptions) =>
@@ -23,27 +16,6 @@ function initInstance() {
       return () => <VanNotify {...state} onUpdate:show={toggle} />;
     },
   }));
-}
-
-function Notify(options: NotifyMessage | NotifyOptions) {
-  if (!inBrowser) {
-    return;
-  }
-
-  if (!instance) {
-    initInstance();
-  }
-
-  options = extend({}, Notify.currentOptions, parseOptions(options));
-
-  instance.open(options);
-  clearTimeout(timer);
-
-  if (options.duration! > 0) {
-    timer = window.setTimeout(Notify.clear, options.duration);
-  }
-
-  return instance;
 }
 
 const getDefaultOptions = (): NotifyOptions => ({
@@ -60,27 +32,38 @@ const getDefaultOptions = (): NotifyOptions => ({
   background: undefined,
 });
 
-Notify.clear = () => {
+let currentOptions = getDefaultOptions();
+
+export const closeNotify = () => {
   if (instance) {
     instance.toggle(false);
   }
 };
 
-Notify.currentOptions = getDefaultOptions();
+export function showNotify(options: NotifyMessage | NotifyOptions) {
+  if (!inBrowser) {
+    return;
+  }
 
-Notify.setDefaultOptions = (options: NotifyOptions) => {
-  extend(Notify.currentOptions, options);
+  if (!instance) {
+    initInstance();
+  }
+
+  options = extend({}, currentOptions, parseOptions(options));
+
+  instance.open(options);
+  clearTimeout(timer);
+
+  if (options.duration! > 0) {
+    timer = setTimeout(closeNotify, options.duration);
+  }
+
+  return instance;
+}
+
+export const setNotifyDefaultOptions = (options: NotifyOptions) =>
+  extend(currentOptions, options);
+
+export const resetNotifyDefaultOptions = () => {
+  currentOptions = getDefaultOptions();
 };
-
-Notify.resetDefaultOptions = () => {
-  Notify.currentOptions = getDefaultOptions();
-};
-
-Notify.Component = withInstall(VanNotify);
-
-Notify.install = (app: App) => {
-  app.use(Notify.Component);
-  app.config.globalProperties.$notify = Notify;
-};
-
-export { Notify };

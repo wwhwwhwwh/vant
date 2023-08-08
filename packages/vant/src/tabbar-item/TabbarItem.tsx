@@ -20,7 +20,7 @@ import { Badge, type BadgeProps } from '../badge';
 
 const [name, bem] = createNamespace('tabbar-item');
 
-const tabbarItemProps = extend({}, routeProps, {
+export const tabbarItemProps = extend({}, routeProps, {
   dot: Boolean,
   icon: String,
   name: numericProp,
@@ -46,7 +46,7 @@ export default defineComponent({
     if (!parent) {
       if (process.env.NODE_ENV !== 'production') {
         console.error(
-          '[Vant] <TabbarItem> must be a child component of <Tabbar>.'
+          '[Vant] <TabbarItem> must be a child component of <Tabbar>.',
         );
       }
       return;

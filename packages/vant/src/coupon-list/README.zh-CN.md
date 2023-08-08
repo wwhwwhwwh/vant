@@ -105,8 +105,8 @@ export default {
 | --- | --- | --- | --- |
 | v-model:code | 当前输入的兑换码 | _string_ | - |
 | chosen-coupon | 当前选中优惠券的索引 | _number_ | `-1` |
-| coupons | 可用优惠券列表 | _Coupon[]_ | `[]` |
-| disabled-coupons | 不可用优惠券列表 | _Coupon[]_ | `[]` |
+| coupons | 可用优惠券列表 | _CouponInfo[]_ | `[]` |
+| disabled-coupons | 不可用优惠券列表 | _CouponInfo[]_ | `[]` |
 | enabled-title | 可用优惠券列表标题 | _string_ | `可使用优惠券` |
 | disabled-title | 不可用优惠券列表标题 | _string_ | `不可使用优惠券` |
 | exchange-button-text | 兑换按钮文字 | _string_ | `兑换` |
@@ -131,12 +131,12 @@ export default {
 
 ### CouponList Slots
 
-| 名称                           | 说明                 |
-| ------------------------------ | -------------------- |
-| list-footer `v3.0.18`          | 优惠券列表底部       |
-| disabled-list-footer `v3.0.18` | 不可用优惠券列表底部 |
+| 名称                 | 说明                 |
+| -------------------- | -------------------- |
+| list-footer          | 优惠券列表底部       |
+| disabled-list-footer | 不可用优惠券列表底部 |
 
-### Coupon 数据结构
+### CouponInfo 数据结构
 
 | 键名        | 说明                            | 类型     |
 | ----------- | ------------------------------- | -------- |
@@ -156,7 +156,7 @@ export default {
 组件导出以下类型定义：
 
 ```ts
-import type { CouponCellProps, CouponListProps } from 'vant';
+import type { CouponCellProps, CouponListProps, CouponInfo } from 'vant';
 ```
 
 ## 主题定制
@@ -171,10 +171,10 @@ import type { CouponCellProps, CouponListProps } from 'vant';
 | --van-coupon-content-height | _84px_ | - |
 | --van-coupon-content-padding | _14px 0_ | - |
 | --van-coupon-content-text-color | _var(--van-text-color)_ | - |
-| --van-coupon-background-color | _var(--van-background-color-light)_ | - |
-| --van-coupon-active-background-color | _var(--van-active-color)_ | - |
-| --van-coupon-border-radius | _var(--van-border-radius-lg)_ | - |
-| --van-coupon-box-shadow | _0 0 4px rgba(0, 0, 0, 0.1)_ | - |
+| --van-coupon-background | _var(--van-background-2)_ | - |
+| --van-coupon-active-background | _var(--van-active-color)_ | - |
+| --van-coupon-radius | _var(--van-radius-lg)_ | - |
+| --van-coupon-shadow | _0 0 4px rgba(0, 0, 0, 0.1)_ | - |
 | --van-coupon-head-width | _96px_ | - |
 | --van-coupon-amount-color | _var(--van-danger-color)_ | - |
 | --van-coupon-amount-font-size | _30px_ | - |
@@ -183,8 +183,8 @@ import type { CouponCellProps, CouponListProps } from 'vant';
 | --van-coupon-disabled-text-color | _var(--van-text-color-2)_ | - |
 | --van-coupon-description-padding | _var(--van-padding-xs) var(--van-padding-md)_ | - |
 | --van-coupon-description-border-color | _var(--van-border-color)_ | - |
-| --van-coupon-corner-checkbox-icon-color | _var(--van-danger-color)_ | - |
-| --van-coupon-list-background-color | _var(--van-background-color)_ | - |
+| --van-coupon-checkbox-color | _var(--van-danger-color)_ | - |
+| --van-coupon-list-background | _var(--van-background)_ | - |
 | --van-coupon-list-field-padding | _5px 0 5px var(--van-padding-md)_ | - |
 | --van-coupon-list-exchange-button-height | _32px_ | - |
 | --van-coupon-list-close-button-height | _40px_ | - |

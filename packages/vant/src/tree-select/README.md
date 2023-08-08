@@ -41,15 +41,18 @@ export default {
         children: [
           { text: 'Delaware', id: 1 },
           { text: 'Florida', id: 2 },
+          { text: 'Georqia', id: 3, disabled: true },
         ],
       },
       {
         text: 'Group 2',
         children: [
-          { text: 'Alabama', id: 5 },
-          { text: 'Kansas', id: 6 },
+          { text: 'Alabama', id: 4 },
+          { text: 'Kansas', id: 5 },
+          { text: 'Louisiana', id: 6 },
         ],
       },
+      { text: 'Group 3', disabled: true },
     ];
 
     return {
@@ -84,15 +87,18 @@ export default {
         children: [
           { text: 'Delaware', id: 1 },
           { text: 'Florida', id: 2 },
+          { text: 'Georqia', id: 3, disabled: true },
         ],
       },
       {
         text: 'Group 2',
         children: [
-          { text: 'Alabama', id: 5 },
-          { text: 'Kansas', id: 6 },
+          { text: 'Alabama', id: 4 },
+          { text: 'Kansas', id: 5 },
+          { text: 'Louisiana', id: 6 },
         ],
       },
+      { text: 'Group 3', disabled: true },
     ];
 
     return {
@@ -158,8 +164,24 @@ export default {
     return {
       activeIndex,
       items: [
-        { text: 'Group 1', children: [], dot: true },
-        { text: 'Group 2', children: [], badge: 5 },
+        {
+          text: 'Group 1',
+          children: [
+            { text: 'Delaware', id: 1 },
+            { text: 'Florida', id: 2 },
+            { text: 'Georqia', id: 3, disabled: true },
+          ],
+          dot: true,
+        },
+        {
+          text: 'Group 2',
+          children: [
+            { text: 'Alabama', id: 4 },
+            { text: 'Kansas', id: 5 },
+            { text: 'Louisiana', id: 6 },
+          ],
+          badge: 5,
+        },
       ],
     };
   },
@@ -172,10 +194,10 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
+| v-model:main-active-index | The index of selected parent node | _number \| string_ | `0` |
+| v-model:active-id | Id of selected item | _number \| string \|<br>(number \| string)[]_ | `0` |
 | items | Required datasets for the component | _TreeSelectItem[]_ | `[]` |
 | height | Height | _number \| string_ | `300` |
-| main-active-index | The index of selected parent node | _number \| string_ | `0` |
-| active-id | Id of selected item | _number \| string \|<br>(number \| string)[]_ | `0` |
 | max | Maximum number of selected items | _number \| string_ | `Infinity` |
 | selected-icon | Selected icon | _string_ | `success` |
 
@@ -188,9 +210,10 @@ export default {
 
 ### Slots
 
-| Name    | Description          |
-| ------- | -------------------- |
-| content | Custom right content |
+| Name              | Description                    | SlotProps               |
+| ----------------- | ------------------------------ | ----------------------- |
+| nav-text `v4.1.0` | Custom name of the parent node | _item: TreeSelectChild_ |
+| content           | Custom right content           | -                       |
 
 ### Data Structure of TreeSelectItem
 
@@ -245,10 +268,10 @@ The component provides the following CSS variables, which can be used to customi
 | Name | Default Value | Description |
 | --- | --- | --- |
 | --van-tree-select-font-size | _var(--van-font-size-md)_ | - |
-| --van-tree-select-nav-background-color | _var(--van-background-color)_ | - |
-| --van-tree-select-content-background-color | _var(--van-background-color-light)_ | - |
+| --van-tree-select-nav-background | _var(--van-background)_ | - |
+| --van-tree-select-content-background | _var(--van-background-2)_ | - |
 | --van-tree-select-nav-item-padding | _14px var(--van-padding-sm)_ | - |
 | --van-tree-select-item-height | _48px_ | - |
-| --van-tree-select-item-active-color | _var(--van-danger-color)_ | - |
+| --van-tree-select-item-active-color | _var(--van-primary-color)_ | - |
 | --van-tree-select-item-disabled-color | _var(--van-gray-5)_ | - |
 | --van-tree-select-item-selected-size | _16px_ | - |

@@ -241,6 +241,39 @@ Use `input-align` prop to align the input value.
 </van-cell-group>
 ```
 
+### Label Align
+
+Use `label-align` prop to align the input value, can be set to `center`, `right` or `top`.
+
+```html
+<van-cell-group inset>
+  <van-field
+    v-model="value"
+    label="Label"
+    placeholder="Align Top"
+    label-align="top"
+  />
+  <van-field
+    v-model="value2"
+    label="Label"
+    placeholder="Align Left"
+    label-align="left"
+  />
+  <van-field
+    v-model="value3"
+    label="Label"
+    placeholder="Align Center"
+    label-align="center"
+  />
+  <van-field
+    v-model="value4"
+    label="Label"
+    placeholder="Align Right"
+    label-align="right"
+  />
+</van-cell-group>
+```
+
 ## API
 
 ### Props
@@ -250,7 +283,7 @@ Use `input-align` prop to align the input value.
 | v-model | Input value | _number \| string_ | - |
 | label | Left side label | _string_ | - |
 | name | As the identifier when submitting the form | _string_ | - |
-| id `v3.2.2` | Input id, the for attribute of the label also will be set | _string_ | `van-field-n-input` |
+| id | Input id, the for attribute of the label also will be set | _string_ | `van-field-n-input` |
 | type | Input type, support all [native types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types) and `digit` type | _FieldType_ | `text` |
 | size | Size, can be set to `large` | _string_ | - |
 | maxlength | Max length of value | _number \| string_ | - |
@@ -262,7 +295,7 @@ Use `input-align` prop to align the input value.
 | required | Whether to show required mark | _boolean_ | `false` |
 | center | Whether to center content vertically | _boolean_ | `true` |
 | clearable | Whether to be clearable | _boolean_ | `false` |
-| clear-icon `v3.0.12` | Clear icon name | _string_ | `clear` |
+| clear-icon | Clear icon name | _string_ | `clear` |
 | clear-trigger | When to display the clear icon, `always` means to display the icon when value is not empty, `focus` means to display the icon when input is focused | _FieldClearTrigger_ | `focus` |
 | clickable | Whether to show click feedback when clicked | _boolean_ | `false` |
 | is-link | Whether to show link icon | _boolean_ | `false` |
@@ -276,15 +309,18 @@ Use `input-align` prop to align the input value.
 | arrow-direction | Can be set to `left` `up` `down` | _string_ | `right` |
 | label-class | Label className | _string \| Array \| object_ | - |
 | label-width | Label width | _number \| string_ | `6.2em` |
-| label-align | Label align, can be set to `center` `right` | _FieldTextAlign_ | `left` |
+| label-align | Label align, can be set to `center` `right` `top` | _FieldTextAlign_ | `left` |
 | input-align | Input align, can be set to `center` `right` | _FieldTextAlign_ | `left` |
 | autosize | Textarea auto resize, can accept an object,<br>e.g. { maxHeight: 100, minHeight: 50 } | _boolean \| FieldAutosizeConfig_ | `false` |
 | left-icon | Left side icon name | _string_ | - |
 | right-icon | Right side icon name | _string_ | - |
 | icon-prefix | Icon className prefix | _string_ | `van-icon` |
 | rules | Form validation rules | _FieldRule[]_ | - |
-| autocomplete `v3.0.3` | HTML native attribute, see [MDN - autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) | _string_ | - |
-| enterkeyhint `v3.4.8` | HTML native attribute, see [MDN - enterkeyhint](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint)<br> | _string_ | - |
+| autocomplete | HTML native attribute, see [MDN - autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) | _string_ | - |
+| autocapitalize `v4.6.2` | HTML native attribute, see [MDN - autocapitalize](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize)<br> | _string_ | - |
+| enterkeyhint | HTML native attribute, see [MDN - enterkeyhint](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint)<br> | _string_ | - |
+| spellcheck `v4.6.2` | HTML native attribute, see [MDN - spellcheck](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck)<br> | _boolean_ | - |
+| autocorrect `v4.6.2` | Safari only, see [MDN - autocorrect](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#autocorrect)<br> | _string_ | - |
 
 ### Events
 
@@ -298,12 +334,12 @@ Use `input-align` prop to align the input value.
 | click-input | Emitted when the input is clicked | _event: MouseEvent_ |
 | click-left-icon | Emitted when the left icon is clicked | _event: MouseEvent_ |
 | click-right-icon | Emitted when the right icon is clicked | _event: MouseEvent_ |
-| start-validate `v3.5.1` | Emitted when start validation | - |
-| end-validate `v3.5.1` | Emitted when end validation | _{ status: string }_ |
+| start-validate | Emitted when start validation | - |
+| end-validate | Emitted when end validation | _{ status: string, message: string }_ |
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Field instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Field instance and call instance methods.
 
 | Name  | Description         | Attribute | Return value |
 | ----- | ------------------- | --------- | ------------ |
@@ -325,7 +361,7 @@ import type {
   FieldClearTrigger,
   FieldFormatTrigger,
   FieldRuleValidator,
-  FiledRuleFormatter,
+  FieldRuleFormatter,
   FieldValidateError,
   FieldAutosizeConfig,
   FieldValidateTrigger,
@@ -346,15 +382,15 @@ fieldRef.value?.focus();
 
 ### Slots
 
-| Name                   | Description                 | SlotProps             |
-| ---------------------- | --------------------------- | --------------------- |
-| label                  | Custom label                | -                     |
-| input                  | Custom input                | -                     |
-| left-icon              | Custom left icon            | -                     |
-| right-icon             | Custom right icon           | -                     |
-| button                 | Insert button               | -                     |
-| error-message `v3.2.5` | Custom error message        | _{ message: string }_ |
-| extra                  | Custom content on the right | -                     |
+| Name          | Description                 | SlotProps             |
+| ------------- | --------------------------- | --------------------- |
+| label         | Custom label                | -                     |
+| input         | Custom input                | -                     |
+| left-icon     | Custom left icon            | -                     |
+| right-icon    | Custom right icon           | -                     |
+| button        | Insert button               | -                     |
+| error-message | Custom error message        | _{ message: string }_ |
+| extra         | Custom content on the right | -                     |
 
 ## Theming
 
@@ -365,14 +401,14 @@ The component provides the following CSS variables, which can be used to customi
 | Name | Default Value | Description |
 | --- | --- | --- |
 | --van-field-label-width | _6.2em_ | - |
-| --van-field-label-color | _var(--van-gray-7)_ | - |
+| --van-field-label-color | _var(--van-text-color)_ | - |
 | --van-field-label-margin-right | _var(--van-padding-sm)_ | - |
 | --van-field-input-text-color | _var(--van-text-color)_ | - |
 | --van-field-input-error-text-color | _var(--van-danger-color)_ | - |
 | --van-field-input-disabled-text-color | _var(--van-text-color-3)_ | - |
 | --van-field-placeholder-text-color | _var(--van-text-color-3)_ | - |
-| --van-field-icon-size | _16px_ | - |
-| --van-field-clear-icon-size | _16px_ | - |
+| --van-field-icon-size | _18px_ | - |
+| --van-field-clear-icon-size | _18px_ | - |
 | --van-field-clear-icon-color | _var(--van-gray-5)_ | - |
 | --van-field-right-icon-color | _var(--van-gray-6)_ | - |
 | --van-field-error-message-color | _var(--van-danger-color)_ | - |

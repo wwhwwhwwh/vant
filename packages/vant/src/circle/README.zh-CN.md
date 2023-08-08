@@ -49,7 +49,7 @@ export default {
 
 ### 宽度定制
 
-通过 `stroke-width` 属性来控制进度条宽度。
+通过 `stroke-width` 属性来控制进度条宽度，`stroke-width` 指的是 SVG 中 `path` 的宽度，默认值为 `40`。
 
 ```html
 <van-circle
@@ -58,6 +58,19 @@ export default {
   :stroke-width="60"
   text="宽度定制"
 />
+```
+
+`stroke-width` 的单位不是 `px`，如果你想知道 `stroke-width` 与 `px` 的换算关系，可以通过如下公式计算：
+
+```js
+// SVG 的 viewBox 大小
+const viewBox = 1000 + strokeWidth;
+
+// Circle 组件的宽度，默认为 100px
+const circleWidth = 100;
+
+// 最终渲染出来的进度条宽度（px）
+const pxWidth = (strokeWidth * circleWidth) / viewBox;
 ```
 
 ### 颜色定制
@@ -139,7 +152,7 @@ export default {
 <van-circle
   v-model:current-rate="currentRate"
   :rate="rate"
-  :text="左侧"
+  text="左侧"
   start-position="left"
 />
 <van-circle
@@ -173,7 +186,7 @@ export default {
 | stroke-width | 进度条宽度 | _number \| string_ | `40` |
 | stroke-linecap | 进度条端点的形状，可选值为 `square` `butt` | _string_ | `round` |
 | clockwise | 是否顺时针增加 | _boolean_ | `true` |
-| start-position `v3.2.1` | 进度起始位置，可选值为 `left`、`right`、`bottom` | _CircleStartPosition_ | `top` |
+| start-position | 进度起始位置，可选值为 `left`、`right`、`bottom` | _CircleStartPosition_ | `top` |
 
 ### Slots
 
@@ -195,12 +208,12 @@ import type { CircleProps, CircleStartPosition } from 'vant';
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称                          | 默认值                        | 描述 |
-| ----------------------------- | ----------------------------- | ---- |
-| --van-circle-size             | _100px_                       | -    |
-| --van-circle-color            | _var(--van-primary-color)_    | -    |
-| --van-circle-layer-color      | _var(--van-white)_            | -    |
-| --van-circle-text-color       | _var(--van-text-color)_       | -    |
-| --van-circle-text-font-weight | _var(--van-font-weight-bold)_ | -    |
-| --van-circle-text-font-size   | _var(--van-font-size-md)_     | -    |
-| --van-circle-text-line-height | _var(--van-line-height-md)_   | -    |
+| 名称                          | 默认值                      | 描述 |
+| ----------------------------- | --------------------------- | ---- |
+| --van-circle-size             | _100px_                     | -    |
+| --van-circle-color            | _var(--van-primary-color)_  | -    |
+| --van-circle-layer-color      | _var(--van-white)_          | -    |
+| --van-circle-text-color       | _var(--van-text-color)_     | -    |
+| --van-circle-text-font-weight | _var(--van-font-bold)_      | -    |
+| --van-circle-text-font-size   | _var(--van-font-size-md)_   | -    |
+| --van-circle-text-line-height | _var(--van-line-height-md)_ | -    |

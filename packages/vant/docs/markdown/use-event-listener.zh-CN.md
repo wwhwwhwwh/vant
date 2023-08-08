@@ -26,8 +26,27 @@ export default {
       () => {
         console.log('click body');
       },
-      { target: document.body }
+      { target: document.body },
     );
+  },
+};
+```
+
+### 取消事件监听
+
+`useEventListener` 会返回一个 `cleanup` 函数，调用该函数可以取消事件监听。
+
+```js
+import { ref } from 'vue';
+import { useEventListener } from '@vant/use';
+
+export default {
+  setup() {
+    const cleanup = useEventListener('resize', () => {
+      console.log('window resize');
+    });
+
+    cleanup();
   },
 };
 ```
@@ -46,8 +65,8 @@ type Options = {
 function useEventListener(
   type: string,
   listener: EventListener,
-  options?: Options
-): void;
+  options?: Options,
+): () => void;
 ```
 
 ### 参数

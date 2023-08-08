@@ -47,6 +47,8 @@ export default {
 
 ### Custom Width
 
+The width of the progress bar is controlled by the `stroke-width` prop, `stroke-width` refers to the width of `path` in SVG, and the default value is `40`.
+
 ```html
 <van-circle
   v-model:current-rate="currentRate"
@@ -54,6 +56,19 @@ export default {
   :stroke-width="60"
   text="Custom Width"
 />
+```
+
+The unit of `stroke-width` is not `px`, if you want to know the relationship between `stroke-width` and `px`, you can use the following formula to calculate:
+
+```js
+// viewBox size for SVG
+const viewBox = 1000 + strokeWidth;
+
+// The width of the Circle component, the default is 100px
+const circleWidth = 100;
+
+// Final rendered progress bar width (px)
+const pxWidth = (strokeWidth * circleWidth) / viewBox;
 ```
 
 ### Custom Color
@@ -125,7 +140,7 @@ export default {
 <van-circle
   v-model:current-rate="currentRate"
   :rate="rate"
-  :text="Left"
+  text="Left"
   start-position="left"
 />
 <van-circle
@@ -159,7 +174,7 @@ export default {
 | stroke-width | Stroke width | _number \| string_ | `40` |
 | stroke-linecap | Stroke linecap, can be set to `square` `butt` | _string_ | `round` |
 | clockwise | Whether to be clockwise | _boolean_ | `true` |
-| start-position `v3.2.1` | Progress start position, can be set to `left`、`right`、`bottom` | _CircleStartPosition_ | `top` |
+| start-position | Progress start position, can be set to `left`、`right`、`bottom` | _CircleStartPosition_ | `top` |
 
 ### Slots
 
@@ -181,12 +196,12 @@ import type { CircleProps, CircleStartPosition } from 'vant';
 
 The component provides the following CSS variables, which can be used to customize styles. Please refer to [ConfigProvider component](#/en-US/config-provider).
 
-| Name                          | Default Value                 | Description |
-| ----------------------------- | ----------------------------- | ----------- |
-| --van-circle-size             | _100px_                       | -           |
-| --van-circle-color            | _var(--van-primary-color)_    | -           |
-| --van-circle-layer-color      | _var(--van-white)_            | -           |
-| --van-circle-text-color       | _var(--van-text-color)_       | -           |
-| --van-circle-text-font-weight | _var(--van-font-weight-bold)_ | -           |
-| --van-circle-text-font-size   | _var(--van-font-size-md)_     | -           |
-| --van-circle-text-line-height | _var(--van-line-height-md)_   | -           |
+| Name                          | Default Value               | Description |
+| ----------------------------- | --------------------------- | ----------- |
+| --van-circle-size             | _100px_                     | -           |
+| --van-circle-color            | _var(--van-primary-color)_  | -           |
+| --van-circle-layer-color      | _var(--van-white)_          | -           |
+| --van-circle-text-color       | _var(--van-text-color)_     | -           |
+| --van-circle-text-font-weight | _var(--van-font-bold)_      | -           |
+| --van-circle-text-font-size   | _var(--van-font-size-md)_   | -           |
+| --van-circle-text-line-height | _var(--van-line-height-md)_ | -           |

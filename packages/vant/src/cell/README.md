@@ -59,14 +59,6 @@ app.use(CellGroup);
 </van-cell-group>
 ```
 
-### Value only
-
-```html
-<van-cell-group>
-  <van-cell value="Content" />
-</van-cell-group>
-```
-
 ### Link
 
 ```html
@@ -104,7 +96,7 @@ app.use(CellGroup);
   <!-- Use the title slot to customize the title -->
   <template #title>
     <span class="custom-title">Title</span>
-    <van-tag type="danger">Tag</van-tag>
+    <van-tag type="primary">Tag</van-tag>
   </template>
 </van-cell>
 
@@ -138,11 +130,11 @@ app.use(CellGroup);
 
 ### CellGroup Props
 
-| Attribute      | Description                  | Type      | Default |
-| -------------- | ---------------------------- | --------- | ------- |
-| title          | Group title                  | _string_  | -       |
-| inset `v3.1.0` | Whether to be inset grouped  | _boolean_ | `false` |
-| border         | Whether to show outer border | _boolean_ | `true`  |
+| Attribute | Description                  | Type      | Default |
+| --------- | ---------------------------- | --------- | ------- |
+| title     | Group title                  | _string_  | -       |
+| inset     | Whether to be inset grouped  | _boolean_ | `false` |
+| border    | Whether to show outer border | _boolean_ | `true`  |
 
 ### Cell Props
 
@@ -154,11 +146,12 @@ app.use(CellGroup);
 | size | Size, can be set to `large` | _string_ | - |
 | icon | Left Icon | _string_ | - |
 | icon-prefix | Icon className prefix | _string_ | `van-icon` |
+| tag | Custom element tag | _string_ | `div` |
+| url | Link URL | _string_ | - |
+| to | The target route should navigate to when clicked on, same as the [to prop](https://router.vuejs.org/api/interfaces/RouterLinkProps.html#Properties-to) of Vue Router | _string \| object_ | - |
+| replace | If true, the navigation will not leave a history record | _boolean_ | `false` |
 | border | Whether to show inner border | _boolean_ | `true` |
 | center | Whether to center content vertically | _boolean_ | `false` |
-| url | Link URL | _string_ | - |
-| to | Target route of the link, same as to of vue-router | _string \| object_ | - |
-| replace | If true, the navigation will not leave a history record | _boolean_ | `false` |
 | clickable | Whether to show click feedback when clicked | _boolean_ | `null` |
 | is-link | Whether to show link icon | _boolean_ | `false` |
 | required | Whether to show required mark | _boolean_ | `false` |
@@ -183,14 +176,14 @@ app.use(CellGroup);
 
 ### Cell Slots
 
-| Name           | Description                       |
-| -------------- | --------------------------------- |
-| title          | Custom title                      |
-| value `v3.1.1` | Custom value                      |
-| label          | Custom label                      |
-| icon           | Custom left icon                  |
-| right-icon     | Custom right icon                 |
-| extra          | Custom extra content on the right |
+| Name       | Description                       |
+| ---------- | --------------------------------- |
+| title      | Custom title                      |
+| value      | Custom value                      |
+| label      | Custom label                      |
+| icon       | Custom left icon                  |
+| right-icon | Custom right icon                 |
+| extra      | Custom extra content on the right |
 
 ### Types
 
@@ -218,7 +211,7 @@ The component provides the following CSS variables, which can be used to customi
 | --van-cell-vertical-padding | _10px_ | - |
 | --van-cell-horizontal-padding | _var(--van-padding-md)_ | - |
 | --van-cell-text-color | _var(--van-text-color)_ | - |
-| --van-cell-background-color | _var(--van-background-color-light)_ | - |
+| --van-cell-background | _var(--van-background-2)_ | - |
 | --van-cell-border-color | _var(--van-border-color)_ | - |
 | --van-cell-active-color | _var(--van-active-color)_ | - |
 | --van-cell-required-color | _var(--van-danger-color)_ | - |
@@ -232,11 +225,11 @@ The component provides the following CSS variables, which can be used to customi
 | --van-cell-large-vertical-padding | _var(--van-padding-sm)_ | - |
 | --van-cell-large-title-font-size | _var(--van-font-size-lg)_ | - |
 | --van-cell-large-label-font-size | _var(--van-font-size-md)_ | - |
-| --van-cell-group-background-color | _var(--van-background-color-light)_ | - |
+| --van-cell-group-background | _var(--van-background-2)_ | - |
 | --van-cell-group-title-color | _var(--van-text-color-2)_ | - |
 | --van-cell-group-title-padding | _var(--van-padding-md) var(--van-padding-md) var(--van-padding-xs)_ | - |
 | --van-cell-group-title-font-size | _var(--van-font-size-md)_ | - |
 | --van-cell-group-title-line-height | _16px_ | - |
 | --van-cell-group-inset-padding | _0 var(--van-padding-md)_ | - |
-| --van-cell-group-inset-border-radius | _var(--van-border-radius-lg)_ | - |
+| --van-cell-group-inset-radius | _var(--van-radius-lg)_ | - |
 | --van-cell-group-inset-title-padding | _var(--van-padding-md) var(--van-padding-md) var(--van-padding-xs) var(--van-padding-xl)_ | - |

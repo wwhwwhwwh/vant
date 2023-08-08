@@ -243,6 +243,7 @@ test('should render label-width prop correctly', () => {
         <Form labelWidth="5rem">
           <Field label="Label" />
           <Field label="Label" labelWidth="10vw" />
+          <Field label="Label" labelWidth="10vw" labelAlign="top" />
         </Form>
       );
     },
@@ -408,7 +409,7 @@ test('should allow to custom trigger in rules', async () => {
   await wrapper.setData({ valueA: '' });
   await later();
   expect(
-    wrapper.element.querySelectorAll('.van-field__error-message').length
+    wrapper.element.querySelectorAll('.van-field__error-message').length,
   ).toEqual(2);
 });
 

@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { execa } from 'execa';
 import { consola, createSpinner } from '../common/logger.js';
 import { SCRIPT_EXTS } from '../common/constant.js';
 
@@ -11,14 +11,14 @@ type RunCommandMessages = {
 function runCommand(
   cmd: string,
   options: string[],
-  messages: RunCommandMessages
+  messages: RunCommandMessages,
 ) {
   const spinner = createSpinner(messages.start).start();
 
   return new Promise((resolve) => {
     execa(cmd, options, {
       preferLocal: true,
-      env: { FORCE_COLOR: true },
+      env: { FORCE_COLOR: 'true' },
     })
       .then(() => {
         spinner.success({ text: messages.succeed });
@@ -40,7 +40,7 @@ function eslint() {
       start: 'Running eslint...',
       succeed: 'ESLint Passed.',
       failed: 'ESLint failed!',
-    }
+    },
   );
 }
 

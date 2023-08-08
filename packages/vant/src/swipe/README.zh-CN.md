@@ -80,11 +80,11 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
-    const onChange = (index) => Toast('当前 Swipe 索引：' + index);
+    const onChange = (index) => showToast('当前 Swipe 索引：' + index);
     return { onChange };
   },
 };
@@ -166,9 +166,11 @@ export default {
 
 ### Swipe Events
 
-| 事件名 | 说明                 | 回调参数            |
-| ------ | -------------------- | ------------------- |
-| change | 每一页轮播结束后触发 | index, 当前页的索引 |
+| 事件名              | 说明                         | 回调参数            |
+| ------------------- | ---------------------------- | ------------------- |
+| change              | 每一页轮播结束后触发         | _index: number_     |
+| drag-start `v4.0.9` | 当用户开始拖动轮播组件时触发 | _{ index: number }_ |
+| drag-end `v4.0.9`   | 当用户结束拖动轮播组件时触发 | _{ index: number }_ |
 
 ### SwipeItem Events
 
@@ -214,10 +216,10 @@ swipeRef.value?.next();
 
 ### Swipe Slots
 
-| 名称               | 说明         | 参数                                |
-| ------------------ | ------------ | ----------------------------------- |
-| default            | 轮播内容     | -                                   |
-| indicator `v3.4.0` | 自定义指示器 | _{ active: number, total: number }_ |
+| 名称      | 说明         | 参数                                |
+| --------- | ------------ | ----------------------------------- |
+| default   | 轮播内容     | -                                   |
+| indicator | 自定义指示器 | _{ active: number, total: number }_ |
 
 ## 主题定制
 
@@ -231,8 +233,8 @@ swipeRef.value?.next();
 | --van-swipe-indicator-margin | _var(--van-padding-sm)_ | - |
 | --van-swipe-indicator-active-opacity | _1_ | - |
 | --van-swipe-indicator-inactive-opacity | _0.3_ | - |
-| --van-swipe-indicator-active-background-color | _var(--van-primary-color)_ | - |
-| --van-swipe-indicator-inactive-background-color | _var(--van-border-color)_ | - |
+| --van-swipe-indicator-active-background | _var(--van-primary-color)_ | - |
+| --van-swipe-indicator-inactive-background | _var(--van-border-color)_ | - |
 
 ## 常见问题
 

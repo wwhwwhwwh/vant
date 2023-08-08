@@ -1,5 +1,5 @@
 import fse from 'fs-extra';
-import path from 'path';
+import path from 'node:path';
 import hash from 'hash-sum';
 import {
   parse,
@@ -87,11 +87,6 @@ export async function compileSfc(filePath: string): Promise<any> {
       new Promise((resolve) => {
         let script = '';
 
-        // the generated render fn lacks type definitions
-        if (lang === 'ts') {
-          script += '// @ts-nocheck\n';
-        }
-
         let bindingMetadata;
         if (descriptor.scriptSetup) {
           const { bindings, content } = compileScript(descriptor, {
@@ -125,8 +120,14 @@ export async function compileSfc(filePath: string): Promise<any> {
 
         script += `\n${EXPORT} ${VUEIDS}`;
 
+        // ts-nocheck should be placed on the first line
+        // the generated render fn lacks type definitions
+        if (lang === 'ts') {
+          script = '// @ts-nocheck\n' + script;
+        }
+
         outputFile(scriptFilePath, script).then(resolve);
-      })
+      }),
     );
   }
 
@@ -149,7 +150,7 @@ export async function compileSfc(filePath: string): Promise<any> {
       // }
 
       return outputFile(cssFilePath, styleSource);
-    })
+    }),
   );
 
   return Promise.all(tasks);

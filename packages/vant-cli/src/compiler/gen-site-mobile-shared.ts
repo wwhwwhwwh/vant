@@ -1,5 +1,5 @@
-import { join } from 'path';
-import { existsSync, readdirSync } from 'fs';
+import { join } from 'node:path';
+import { existsSync, readdirSync } from 'node:fs';
 import { SRC_DIR } from '../common/constant.js';
 import {
   pascalize,
@@ -38,7 +38,7 @@ function genConfig(demos: DemoItem[]) {
   function demoFilter(nav: any[]) {
     return nav.filter((group) => {
       group.items = group.items.filter((item: any) =>
-        demoNames.includes(item.path)
+        demoNames.includes(item.path),
       );
       return group.items.length;
     });

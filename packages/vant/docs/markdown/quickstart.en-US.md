@@ -32,12 +32,12 @@ The easiest way to use Vant is to include a CDN link in the HTML file, after whi
 <!-- import style -->
 <link
   rel="stylesheet"
-  href="https://fastly.jsdelivr.net/npm/vant@3/lib/index.css"
+  href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css"
 />
 
 <!-- import script -->
 <script src="https://fastly.jsdelivr.net/npm/vue@3"></script>
-<script src="https://fastly.jsdelivr.net/npm/vant@3/lib/vant.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 
 <script>
   // Render the Button component
@@ -50,7 +50,7 @@ The easiest way to use Vant is to include a CDN link in the HTML file, after whi
   app.use(vant.Lazyload);
 
   // Call function component
-  vant.Toast('Message');
+  vant.showToast('Message');
 
   app.mount('#app');
 </script>
@@ -195,41 +195,66 @@ Some components of Vant are provided as function, including `Toast`, `Dialog`, `
 
 ```js
 // Toast
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 import 'vant/es/toast/style';
 
 // Dialog
-import { Dialog } from 'vant';
+import { showDialog } from 'vant';
 import 'vant/es/dialog/style';
 
 // Notify
-import { Notify } from 'vant';
+import { showNotify } from 'vant';
 import 'vant/es/notify/style';
 
 // ImagePreview
-import { ImagePreview } from 'vant';
+import { showImagePreview } from 'vant';
 import 'vant/es/image-preview/style';
 ```
 
 > Tip: "Full Import" and "On-demand Import" should not be used at the same time, otherwise it will lead to problems such as code duplication and style overrides.
 
+#### Tips
+
+- "Full Import" and "On-demand Import" should not be used at the same time, otherwise it will lead to problems such as code duplication and style overrides.
+- unplugin-vue-components is not officially maintained by Vant. If you encounter issues when using this plugin, please feedback to [antfu/unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) repository.
+
 ## With Frameworks
 
 ### Use Vant in Nuxt 3
 
-When using Vant in Nuxt 3, you should add `/vant/` to the `build.transpile`:
+When using Vant in Nuxt 3, you can use [vant-nuxt](https://github.com/vant-ui/vant-nuxt), this module can help you to auto importing components and reduce CSS file size.
 
-```ts
-import { defineNuxtConfig } from 'nuxt';
+#### 1. Install Module
 
+```bash
+# with npm
+npm i @vant/nuxt -D
+
+# with yarn
+yarn add @vant/nuxt -D
+
+# with pnpm
+pnpm add @vant/nuxt -D
+```
+
+#### 2. Add Module
+
+add the module in the `nuxt.config.js` file:
+
+```js
 export default defineNuxtConfig({
-  experimental: {
-    externalVue: true,
-  },
+  modules: ['@vant/nuxt'],
 });
 ```
 
-Reference:
+#### 3. Using Components
 
-- [nuxt/framework#6761](https://github.com/nuxt/framework/issues/6761)
-- [nuxt/framework#4084](https://github.com/nuxt/framework/issues/4084)
+Then you can using components from Vant in the template, Go to the [Nuxt documentation](https://nuxt.com/docs/guide/directory-structure/components) to learn more.
+
+```html
+<template>
+  <van-button type="primary" @click="showToast('toast')">button</van-button>
+  <VanButton type="success" @click="showNotify('notify')">button</VanButton>
+  <LazyVanButton type="default">lazy button</LazyVanButton>
+</template>
+```

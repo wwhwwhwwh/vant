@@ -77,7 +77,7 @@ app.use(SwipeCell);
 ```
 
 ```js
-import { Dialog } from 'vant';
+import { showConfirmDialog } from 'vant';
 
 export default {
   setup() {
@@ -89,7 +89,7 @@ export default {
           return true;
         case 'right':
           return new Promise((resolve) => {
-            Dialog.confirm({
+            showConfirmDialog({
               title: 'Are you sure to delete?',
             }).then(resolve);
           });
@@ -139,7 +139,7 @@ export default {
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get SwipeCell instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get SwipeCell instance and call instance methods.
 
 | Name  | Description     | Attribute                 | Return value |
 | ----- | --------------- | ------------------------- | ------------ |

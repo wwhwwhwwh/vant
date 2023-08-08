@@ -32,12 +32,12 @@ app.use(ActionBarButton);
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
-    const onClickIcon = () => Toast('点击图标');
-    const onClickButton = () => Toast('点击按钮');
+    const onClickIcon = () => showToast('点击图标');
+    const onClickButton = () => showToast('点击按钮');
     return {
       onClickIcon,
       onClickButton,
@@ -94,7 +94,7 @@ export default {
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | safe-area-inset-bottom | 是否开启[底部安全区适配](#/zh-CN/advanced-usage#di-bu-an-quan-qu-gua-pei) | _boolean_ | `true` |
-| placeholder `v3.5.1` | 是否在标签位置生成一个等高的占位元素 | _boolean_ | `false` |
+| placeholder | 是否在标签位置生成一个等高的占位元素 | _boolean_ | `false` |
 
 ### ActionBarIcon Props
 
@@ -104,12 +104,12 @@ export default {
 | icon | 图标 | _string_ | - |
 | color | 图标颜色 | _string_ | `#323233` |
 | icon-class | 图标额外类名 | _string \| Array \| object_ | - |
-| icon-prefix `v3.0.17` | 图标类名前缀，等同于 Icon 组件的 [class-prefix 属性](#/zh-CN/icon#props) | _string_ | `van-icon` |
+| icon-prefix | 图标类名前缀，等同于 Icon 组件的 [class-prefix 属性](#/zh-CN/icon#props) | _string_ | `van-icon` |
 | dot | 是否显示图标右上角小红点 | _boolean_ | `false` |
 | badge | 图标右上角徽标的内容 | _number \| string_ | - |
-| badge-props `v3.2.8` | 自定义徽标的属性，传入的对象会被透传给 [Badge 组件的 props](#/zh-CN/badge#props) | _BadgeProps_ | - |
+| badge-props | 自定义徽标的属性，传入的对象会被透传给 [Badge 组件的 props](#/zh-CN/badge#props) | _BadgeProps_ | - |
 | url | 点击后跳转的链接地址 | _string_ | - |
-| to | 点击后跳转的目标路由对象，等同于 vue-router 的 [to 属性](https://router.vuejs.org/zh/api/#to) | _string \| object_ | - |
+| to | 点击后跳转的目标路由对象，等同于 Vue Router 的 [to 属性](https://router.vuejs.org/zh/api/interfaces/RouterLinkProps.html#Properties-to) | _string \| object_ | - |
 | replace | 是否在跳转时替换当前页面历史 | _boolean_ | `false` |
 
 ### ActionBarButton Props
@@ -117,13 +117,13 @@ export default {
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | text | 按钮文字 | _string_ | - |
-| type | 按钮类型，可选值为 `primary` `info` `warning` `danger` | _string_ | `default` |
+| type | 按钮类型，可选值为 `default` `primary` `success` `warning` `danger` | _string_ | `default` |
 | color | 按钮颜色，支持传入 `linear-gradient` 渐变色 | _string_ | - |
 | icon | 左侧图标名称或图片链接，等同于 Icon 组件的 [name 属性](#/zh-CN/icon#props) | _string_ | - |
 | disabled | 是否禁用按钮 | _boolean_ | `false` |
 | loading | 是否显示为加载状态 | _boolean_ | `false` |
 | url | 点击后跳转的链接地址 | _string_ | - |
-| to | 点击后跳转的目标路由对象，等同于 vue-router 的 [to 属性](https://router.vuejs.org/zh/api/#to) | _string \| object_ | - |
+| to | 点击后跳转的目标路由对象，等同于 Vue Router 的 [to 属性](https://router.vuejs.org/zh/api/interfaces/RouterLinkProps.html#Properties-to) | _string \| object_ | - |
 | replace | 是否在跳转时替换当前页面历史 | _boolean_ | `false` |
 
 ### ActionBarIcon Slots
@@ -157,18 +157,18 @@ import type {
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称 | 默认值 | 描述 |
-| --- | --- | --- |
-| --van-action-bar-background-color | _var(--van-background-color-light)_ | - |
-| --van-action-bar-height | _50px_ | - |
-| --van-action-bar-icon-width | _48px_ | - |
-| --van-action-bar-icon-height | _100%_ | - |
-| --van-action-bar-icon-color | _var(--van-text-color)_ | - |
-| --van-action-bar-icon-size | _18px_ | - |
-| --van-action-bar-icon-font-size | _var(--van-font-size-xs)_ | - |
-| --van-action-bar-icon-active-color | _var(--van-active-color)_ | - |
-| --van-action-bar-icon-text-color | _var(--van-gray-7)_ | - |
-| --van-action-bar-icon-background-color | _var(--van-background-color-light)_ | - |
-| --van-action-bar-button-height | _40px_ | - |
-| --van-action-bar-button-warning-color | _var(--van-gradient-orange)_ | - |
-| --van-action-bar-button-danger-color | _var(--van-gradient-red)_ | - |
+| 名称                                  | 默认值                       | 描述 |
+| ------------------------------------- | ---------------------------- | ---- |
+| --van-action-bar-background           | _var(--van-background-2)_    | -    |
+| --van-action-bar-height               | _50px_                       | -    |
+| --van-action-bar-icon-width           | _48px_                       | -    |
+| --van-action-bar-icon-height          | _100%_                       | -    |
+| --van-action-bar-icon-color           | _var(--van-text-color)_      | -    |
+| --van-action-bar-icon-size            | _18px_                       | -    |
+| --van-action-bar-icon-font-size       | _var(--van-font-size-xs)_    | -    |
+| --van-action-bar-icon-active-color    | _var(--van-active-color)_    | -    |
+| --van-action-bar-icon-text-color      | _var(--van-text-color)_      | -    |
+| --van-action-bar-icon-background      | _var(--van-background-2)_    | -    |
+| --van-action-bar-button-height        | _40px_                       | -    |
+| --van-action-bar-button-warning-color | _var(--van-gradient-orange)_ | -    |
+| --van-action-bar-button-danger-color  | _var(--van-gradient-red)_    | -    |

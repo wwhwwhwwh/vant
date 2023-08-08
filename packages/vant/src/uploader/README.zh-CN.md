@@ -143,13 +143,13 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const onOversize = (file) => {
       console.log(file);
-      Toast('文件大小不能超过 500kb');
+      showToast('文件大小不能超过 500kb');
     };
 
     return {
@@ -166,8 +166,6 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
-
 export default {
   setup() {
     const isOverSize = (file) => {
@@ -243,14 +241,14 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     // 返回布尔值
     const beforeRead = (file) => {
       if (file.type !== 'image/jpeg') {
-        Toast('请上传 jpg 格式图片');
+        showToast('请上传 jpg 格式图片');
         return false;
       }
       return true;
@@ -260,7 +258,7 @@ export default {
     const asyncBeforeRead = (file) =>
       new Promise((resolve, reject) => {
         if (file.type !== 'image/jpeg') {
-          Toast('请上传 jpg 格式图片');
+          showToast('请上传 jpg 格式图片');
           reject();
         } else {
           const img = new File(['foo'], 'bar.jpg', {
@@ -296,7 +294,7 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
@@ -305,13 +303,33 @@ export default {
         url: 'https://fastly.jsdelivr.net/npm/@vant/assets/sand.jpeg',
         deletable: true,
         beforeDelete: () => {
-          Toast('删除前置处理');
+          showToast('删除前置处理');
         },
       },
       {
         url: 'https://fastly.jsdelivr.net/npm/@vant/assets/tree.jpeg',
         imageFit: 'contain',
       },
+    ]);
+
+    return { fileList };
+  },
+};
+```
+
+### 开启覆盖上传
+
+```html
+<van-uploader v-model="fileList" reupload max-count="2" />
+```
+
+```ts
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const fileList = ref([
+      { url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' },
     ]);
 
     return { fileList };
@@ -334,15 +352,16 @@ export default {
 | preview-options | 全屏图片预览的配置项，可选值见 [ImagePreview](#/zh-CN/image-preview) | _object_ | - |
 | multiple | 是否开启图片多选，部分安卓机型不支持 | _boolean_ | `false` |
 | disabled | 是否禁用文件上传 | _boolean_ | `false` |
-| readonly `v3.1.5` | 是否将上传区域设置为只读状态 | _boolean_ | `false` |
+| readonly | 是否将上传区域设置为只读状态 | _boolean_ | `false` |
 | deletable | 是否展示删除按钮 | _boolean_ | `true` |
+| reupload `v4.4.0` | 是否开启覆盖上传，开启后会关闭图片预览 | _boolean_ | `false` |
 | show-upload | 是否展示上传区域 | _boolean_ | `true` |
 | lazy-load | 是否开启图片懒加载，须配合 [Lazyload](#/zh-CN/lazyload) 组件使用 | _boolean_ | `false` |
 | capture | 图片选取模式，可选值为 `camera` (直接调起摄像头) | _string_ | - |
 | after-read | 文件读取完成后的回调函数 | _Function_ | - |
 | before-read | 文件读取前的回调函数，返回 `false` 可终止文件读取，<br>支持返回 `Promise` | _Function_ | - |
 | before-delete | 文件删除前的回调函数，返回 `false` 可终止文件读取，<br>支持返回 `Promise` | _Function_ | - |
-| max-size `v3.0.17` | 文件大小限制，单位为 `byte` | _number \| string \| (file: File) => boolean_ | `Infinity` |
+| max-size | 文件大小限制，单位为 `byte` | _number \| string \| (file: File) => boolean_ | `Infinity` |
 | max-count | 文件上传数量限制 | _number \| string_ | `Infinity` |
 | result-type | 文件读取结果类型，可选值为 `file` `text` | _string_ | `dataUrl` |
 | upload-text | 上传区域文字提示 | _string_ | - |
@@ -353,21 +372,22 @@ export default {
 
 ### Events
 
-| 事件名                | 说明                   | 回调参数            |
-| --------------------- | ---------------------- | ------------------- |
-| oversize              | 文件大小超过限制时触发 | 同 `after-read`     |
-| click-upload `v3.1.5` | 点击上传区域时触发     | _event: MouseEvent_ |
-| click-preview         | 点击预览图时触发       | 同 `after-read`     |
-| close-preview         | 关闭全屏图片预览时触发 | -                   |
-| delete                | 删除文件预览时触发     | 同 `after-read`     |
+| 事件名         | 说明                   | 回调参数            |
+| -------------- | ---------------------- | ------------------- |
+| oversize       | 文件大小超过限制时触发 | 同 `after-read`     |
+| click-upload   | 点击上传区域时触发     | _event: MouseEvent_ |
+| click-preview  | 点击预览图时触发       | 同 `after-read`     |
+| click-reupload | 点击覆盖上传时触发     | 同 `after-read`     |
+| close-preview  | 关闭全屏图片预览时触发 | -                   |
+| delete         | 删除文件预览时触发     | 同 `after-read`     |
 
 ### Slots
 
-| 名称 | 说明 | 参数 |
-| --- | --- | --- |
-| default | 自定义上传区域 | - |
-| preview-delete `v3.5.0` | 自定义删除按钮 | - |
-| preview-cover | 自定义覆盖在预览区域上方的内容 | _item: FileListItem_ |
+| 名称           | 说明                           | 参数                 |
+| -------------- | ------------------------------ | -------------------- |
+| default        | 自定义上传区域                 | -                    |
+| preview-delete | 自定义删除按钮                 | -                    |
+| preview-cover  | 自定义覆盖在预览区域上方的内容 | _item: FileListItem_ |
 
 ### 回调参数
 
@@ -434,12 +454,12 @@ uploaderRef.value?.chooseFile();
 | --van-uploader-icon-color | _var(--van-gray-4)_ | - |
 | --van-uploader-text-color | _var(--van-text-color-2)_ | - |
 | --van-uploader-text-font-size | _var(--van-font-size-sm)_ | - |
-| --van-uploader-upload-background-color | _var(--van-gray-1)_ | - |
+| --van-uploader-upload-background | _var(--van-gray-1)_ | - |
 | --van-uploader-upload-active-color | _var(--van-active-color)_ | - |
 | --van-uploader-delete-color | _var(--van-white)_ | - |
 | --van-uploader-delete-icon-size | _14px_ | - |
-| --van-uploader-delete-background-color | _rgba(0, 0, 0, 0.7)_ | - |
-| --van-uploader-file-background-color | _var(--van-background-color)_ | - |
+| --van-uploader-delete-background | _rgba(0, 0, 0, 0.7)_ | - |
+| --van-uploader-file-background | _var(--van-background)_ | - |
 | --van-uploader-file-icon-size | _20px_ | - |
 | --van-uploader-file-icon-color | _var(--van-gray-7)_ | - |
 | --van-uploader-file-name-padding | _0 var(--van-padding-base)_ | - |
@@ -447,7 +467,7 @@ uploaderRef.value?.chooseFile();
 | --van-uploader-file-name-font-size | _var(--van-font-size-sm)_ | - |
 | --van-uploader-file-name-text-color | _var(--van-gray-7)_ | - |
 | --van-uploader-mask-text-color | _var(--van-white)_ | - |
-| --van-uploader-mask-background-color | _fade(var(--van-gray-8), 88%)_ | - |
+| --van-uploader-mask-background | _fade(var(--van-gray-8), 88%)_ | - |
 | --van-uploader-mask-icon-size | _22px_ | - |
 | --van-uploader-mask-message-font-size | _var(--van-font-size-sm)_ | - |
 | --van-uploader-mask-message-line-height | _var(--van-line-height-xs)_ | - |

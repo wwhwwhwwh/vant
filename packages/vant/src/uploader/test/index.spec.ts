@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { cdnURL } from '../../../docs/site';
 import Uploader, { type UploaderFileListItem } from '..';
-import { mount, later, triggerDrag } from '../../../test';
+import { mount, later, triggerDrag, trigger } from '../../../test';
 import type { Numeric } from '../../utils';
 
 const mockFileDataUrl = 'data:image/test';
@@ -59,7 +59,7 @@ test('result-type as text', (done) => {
       resultType: 'text',
       afterRead(readFile: UploaderFileListItem | UploaderFileListItem[]) {
         expect((readFile as UploaderFileListItem).content).toEqual(
-          mockFileDataUrl
+          mockFileDataUrl,
         );
         done();
       },
@@ -98,14 +98,14 @@ test('set input name', (done) => {
       name: 'uploader',
       beforeRead: (
         file: File | File[],
-        detail: { name: Numeric; index: number }
+        detail: { name: Numeric; index: number },
       ) => {
         expect(detail.name).toEqual('uploader');
         return true;
       },
       afterRead: (
         readFile: UploaderFileListItem | UploaderFileListItem[],
-        detail: { name: Numeric; index: number }
+        detail: { name: Numeric; index: number },
       ) => {
         expect(detail.name).toEqual('uploader');
         done();
@@ -356,7 +356,7 @@ test('max-count prop', async () => {
   input.trigger('change');
   await later();
   expect(
-    wrapper.emitted<[File | File[]]>('update:modelValue')![0][0]
+    wrapper.emitted<[File | File[]]>('update:modelValue')![0][0],
   ).toHaveLength(1);
 });
 
@@ -496,7 +496,7 @@ test('click to preview image', async () => {
   expect(document.querySelector('.van-image-preview')).toBeTruthy();
 
   const images = document.querySelectorAll<HTMLImageElement>(
-    '.van-image-preview .van-image-preview__image'
+    '.van-image-preview .van-image-preview__image',
   );
   expect(images).toHaveLength(1);
 });
@@ -528,14 +528,14 @@ test('closeImagePreview method', async () => {
 
   await nextTick();
   await (wrapper.vm as Record<string, any>).closeImagePreview();
-  expect(wrapper.emitted('close-preview')).toBeFalsy();
+  expect(wrapper.emitted('closePreview')).toBeFalsy();
 
   wrapper.find('.van-image').trigger('click');
   await (wrapper.vm as Record<string, any>).closeImagePreview();
-  expect(wrapper.emitted('close-preview')).toBeTruthy();
+  expect(wrapper.emitted('closePreview')).toBeTruthy();
 });
 
-test('click-preview event', () => {
+test('clickPreview event', () => {
   const wrapper = mount(Uploader, {
     props: {
       previewFullImage: false,
@@ -544,20 +544,20 @@ test('click-preview event', () => {
   });
 
   wrapper.find('.van-image').trigger('click');
-  expect(wrapper.emitted<[File]>('click-preview')![0][0]).toEqual({
+  expect(wrapper.emitted<[File]>('clickPreview')![0][0]).toEqual({
     url: IMAGE,
   });
   expect(
     wrapper.emitted<[File, { name: string; index: number }]>(
-      'click-preview'
-    )![0][1]
+      'clickPreview',
+    )![0][1],
   ).toEqual({
     name: '',
     index: 0,
   });
 });
 
-test('close-preview event', async () => {
+test('closePreview event', async () => {
   const wrapper = mount(Uploader, {
     props: {
       modelValue: [{ url: IMAGE }],
@@ -569,12 +569,12 @@ test('close-preview event', async () => {
 
   const preview = document.querySelector<HTMLDivElement>('.van-image-preview');
   const swipe = preview?.querySelector<HTMLDivElement>(
-    '.van-swipe-item'
+    '.van-swipe-item',
   ) as HTMLDivElement;
   triggerDrag(swipe, 0, 0);
 
   await later(300);
-  expect(wrapper.emitted('close-preview')).toBeTruthy();
+  expect(wrapper.emitted('closePreview')).toBeTruthy();
 });
 
 test('show-upload prop', async () => {
@@ -582,7 +582,7 @@ test('show-upload prop', async () => {
 
   expect(wrapper.find('.van-uploader__upload').exists()).toBeTruthy();
   await wrapper.setProps({ showUpload: false });
-  expect(wrapper.find('.van-uploader__upload').exists()).toBeFalsy();
+  expect(wrapper.find('.van-uploader__upload').style.display).toBe('none');
 });
 
 test('file message should be reactive', (done) => {
@@ -651,7 +651,7 @@ test('should render preview-delete slot correctly', async () => {
   });
 
   expect(
-    wrapper.find('.van-uploader__preview-delete').html()
+    wrapper.find('.van-uploader__preview-delete').html(),
   ).toMatchSnapshot();
 });
 
@@ -665,8 +665,34 @@ test('should not render upload input when using readonly prop', async () => {
   expect(wrapper.html()).toMatchSnapshot();
 });
 
-test('should emit click-upload event when upload area is clicked', async () => {
+test('should emit clickUpload event when upload area is clicked', async () => {
   const wrapper = mount(Uploader);
   wrapper.find('.van-uploader__upload').trigger('click');
-  expect(wrapper.emitted('click-upload')).toBeTruthy();
+  expect(wrapper.emitted('clickUpload')).toBeTruthy();
+});
+
+test('should emit clickReUpload event when props reupload true', async () => {
+  const wrapper = mount(Uploader, {
+    props: {
+      maxCount: 1,
+      modelValue: [{ url: IMAGE }],
+    },
+  });
+
+  expect(wrapper.find('.van-uploader__upload').exists()).toBeFalsy();
+  await wrapper.setProps({ reupload: true });
+  expect(wrapper.find('.van-uploader__upload').style.display).toBe('none');
+
+  const previewItem = wrapper.find<HTMLDivElement>(
+    '.van-uploader__preview-image',
+  );
+  await trigger(previewItem, 'click');
+  expect(wrapper.emitted('clickReupload')).toBeTruthy();
+
+  const input = wrapper.find<HTMLInputElement>('.van-uploader__input');
+  Object.defineProperty(input.element, 'files', {
+    get: jest.fn().mockReturnValue([mockFile]),
+  });
+  await trigger(input, 'change');
+  expect(wrapper.emitted('update:modelValue')?.[0][0]).toHaveLength(1);
 });

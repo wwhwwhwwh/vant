@@ -23,7 +23,7 @@ exports[`should render error-message slot correctly 1`] = `
 
 exports[`should render extra slot correctly 1`] = `
 <div class="van-cell van-field">
-  <div class="van-cell__value van-cell__value--alone van-field__value">
+  <div class="van-cell__value van-field__value">
     <div class="van-field__body">
       <input type="text"
              id="van-field-input"
@@ -41,15 +41,50 @@ exports[`should render input slot correctly 1`] = `
 </div>
 `;
 
+exports[`should render label correctly when dynamically set empty label 1`] = `
+<div class="van-cell__title van-field__label">
+  <label id="van-field-label"
+         for="van-field-input"
+  >
+    abc
+  </label>
+</div>
+`;
+
 exports[`should render label slot correctly 1`] = `
 <div class="van-cell__title van-field__label">
   Custom Label
 </div>
 `;
 
+exports[`should render left icon inside label when label-align is top 1`] = `
+<div class="van-cell van-field van-field--label-top">
+  <div class="van-cell__title van-field__label van-field__label--top">
+    <div class="van-field__left-icon">
+      <i class="van-badge__wrapper van-icon van-icon-success">
+      </i>
+    </div>
+    <label id="van-field-label"
+           for="van-field-input"
+    >
+      Label
+    </label>
+  </div>
+  <div class="van-cell__value van-field__value">
+    <div class="van-field__body">
+      <input type="text"
+             id="van-field-input"
+             class="van-field__control"
+             aria-labelledby="van-field-label"
+      >
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should render textarea when type is textarea 1`] = `
 <div class="van-cell van-field">
-  <div class="van-cell__value van-cell__value--alone van-field__value">
+  <div class="van-cell__value van-field__value">
     <div class="van-field__body">
       <textarea id="van-field-input"
                 class="van-field__control"
@@ -72,7 +107,7 @@ exports[`should render word limit correctly 1`] = `
 
 exports[`should render word limit correctly when modelValue is null 1`] = `
 <div class="van-cell van-field">
-  <div class="van-cell__value van-cell__value--alone van-field__value">
+  <div class="van-cell__value van-field__value">
     <div class="van-field__body">
       <input type="text"
              id="van-field-input"
@@ -91,7 +126,7 @@ exports[`should render word limit correctly when modelValue is null 1`] = `
 
 exports[`should render word limit correctly when modelValue is undefined 1`] = `
 <div class="van-cell van-field">
-  <div class="van-cell__value van-cell__value--alone van-field__value">
+  <div class="van-cell__value van-field__value">
     <div class="van-field__body">
       <input type="text"
              id="van-field-input"

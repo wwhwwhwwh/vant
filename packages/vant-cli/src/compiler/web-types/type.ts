@@ -1,4 +1,4 @@
-import { PathLike } from 'fs';
+import { PathLike } from 'node:fs';
 
 export type VueSlot = {
   name: string;
@@ -20,7 +20,6 @@ export type VueAttribute = {
   name: string;
   default: string;
   description: string;
-  options: string[];
   value: {
     kind: 'expression';
     type: string;

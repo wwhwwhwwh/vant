@@ -50,7 +50,7 @@ export default {
 <van-sidebar v-model="active">
   <van-sidebar-item title="标签名称" dot />
   <van-sidebar-item title="标签名称" badge="5" />
-  <van-sidebar-item title="标签名称" badge="20" />
+  <van-sidebar-item title="标签名称" />
 </van-sidebar>
 ```
 
@@ -80,12 +80,12 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const active = ref(0);
-    const onChange = (index) => Toast(`标签名 ${index + 1}`);
+    const onChange = (index) => showToast(`标签名 ${index + 1}`);
     return {
       active,
       onChange,
@@ -115,10 +115,10 @@ export default {
 | title | 内容 | _string_ | `''` |
 | dot | 是否显示右上角小红点 | _boolean_ | `false` |
 | badge | 图标右上角徽标的内容 | _number \| string_ | - |
-| badge-props `v3.2.8` | 自定义徽标的属性，传入的对象会被透传给 [Badge 组件的 props](#/zh-CN/badge#props) | _BadgeProps_ | - |
+| badge-props | 自定义徽标的属性，传入的对象会被透传给 [Badge 组件的 props](#/zh-CN/badge#props) | _BadgeProps_ | - |
 | disabled | 是否禁用该项 | _boolean_ | `false` |
 | url | 点击后跳转的链接地址 | _string_ | - |
-| to | 点击后跳转的目标路由对象，等同于 vue-router 的 [to 属性](https://router.vuejs.org/zh/api/#to) | _string \| object_ | - |
+| to | 点击后跳转的目标路由对象，等同于 Vue Router 的 [to 属性](https://router.vuejs.org/zh/api/interfaces/RouterLinkProps.html#Properties-to) | _string \| object_ | - |
 | replace | 是否在跳转时替换当前页面历史 | _boolean_ | `false` |
 
 ### SidebarItem Events
@@ -147,19 +147,19 @@ import type { SidebarProps, SidebarItemProps } from 'vant';
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称 | 默认值 | 描述 |
-| --- | --- | --- |
-| --van-sidebar-width | _80px_ | - |
-| --van-sidebar-font-size | _var(--van-font-size-md)_ | - |
-| --van-sidebar-line-height | _var(--van-line-height-md)_ | - |
-| --van-sidebar-text-color | _var(--van-text-color)_ | - |
-| --van-sidebar-disabled-text-color | _var(--van-text-color-3)_ | - |
-| --van-sidebar-padding | _20px var(--van-padding-sm)_ | - |
-| --van-sidebar-active-color | _var(--van-active-color)_ | - |
-| --van-sidebar-background-color | _var(--van-background-color)_ | - |
-| --van-sidebar-selected-font-weight | _var(--van-font-weight-bold)_ | - |
-| --van-sidebar-selected-text-color | _var(--van-text-color)_ | - |
-| --van-sidebar-selected-border-width | _4px_ | - |
-| --van-sidebar-selected-border-height | _16px_ | - |
-| --van-sidebar-selected-border-color | _var(--van-danger-color)_ | - |
-| --van-sidebar-selected-background-color | _var(--van-background-color-light)_ | - |
+| 名称                                 | 默认值                       | 描述 |
+| ------------------------------------ | ---------------------------- | ---- |
+| --van-sidebar-width                  | _80px_                       | -    |
+| --van-sidebar-font-size              | _var(--van-font-size-md)_    | -    |
+| --van-sidebar-line-height            | _var(--van-line-height-md)_  | -    |
+| --van-sidebar-text-color             | _var(--van-text-color)_      | -    |
+| --van-sidebar-disabled-text-color    | _var(--van-text-color-3)_    | -    |
+| --van-sidebar-padding                | _20px var(--van-padding-sm)_ | -    |
+| --van-sidebar-active-color           | _var(--van-active-color)_    | -    |
+| --van-sidebar-background             | _var(--van-background)_      | -    |
+| --van-sidebar-selected-font-weight   | _var(--van-font-bold)_       | -    |
+| --van-sidebar-selected-text-color    | _var(--van-text-color)_      | -    |
+| --van-sidebar-selected-border-width  | _4px_                        | -    |
+| --van-sidebar-selected-border-height | _16px_                       | -    |
+| --van-sidebar-selected-border-color  | _var(--van-primary-color)_   | -    |
+| --van-sidebar-selected-background    | _var(--van-background-2)_    | -    |

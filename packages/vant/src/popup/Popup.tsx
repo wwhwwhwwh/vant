@@ -40,7 +40,7 @@ import { Overlay } from '../overlay';
 // Types
 import type { PopupPosition, PopupCloseIconPosition } from './types';
 
-const popupProps = extend({}, popupSharedProps, {
+export const popupProps = extend({}, popupSharedProps, {
   round: Boolean,
   position: makeStringProp<PopupPosition>('center'),
   closeIcon: makeStringProp('cross'),
@@ -71,8 +71,8 @@ export default defineComponent({
     'closed',
     'keydown',
     'update:show',
-    'click-overlay',
-    'click-close-icon',
+    'clickOverlay',
+    'clickCloseIcon',
   ],
 
   setup(props, { emit, attrs, slots }) {
@@ -124,7 +124,7 @@ export default defineComponent({
     };
 
     const onClickOverlay = (event: MouseEvent) => {
-      emit('click-overlay', event);
+      emit('clickOverlay', event);
 
       if (props.closeOnClickOverlay) {
         close();
@@ -150,7 +150,7 @@ export default defineComponent({
     };
 
     const onClickCloseIcon = (event: MouseEvent) => {
-      emit('click-close-icon', event);
+      emit('clickCloseIcon', event);
       close();
     };
 
@@ -172,7 +172,14 @@ export default defineComponent({
       }
     };
 
-    const onOpened = () => emit('opened');
+    // see: https://github.com/youzan/vant/issues/11901
+    let timer: ReturnType<typeof setTimeout> | null;
+    const onOpened = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        emit('opened');
+      });
+    };
     const onClosed = () => emit('closed');
     const onKeydown = (event: KeyboardEvent) => emit('keydown', event);
 
@@ -237,7 +244,7 @@ export default defineComponent({
           opened = false;
           emit('close');
         }
-      }
+      },
     );
 
     useExpose({ popupRef });

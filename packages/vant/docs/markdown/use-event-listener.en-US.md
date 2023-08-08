@@ -25,8 +25,27 @@ export default {
       () => {
         console.log('click body');
       },
-      { target: document.body }
+      { target: document.body },
     );
+  },
+};
+```
+
+### Remove Event Listener
+
+`useEventListener` will return a `cleanup` function，you can call it to remove the event listener.
+
+```js
+import { ref } from 'vue';
+import { useEventListener } from '@vant/use';
+
+export default {
+  setup() {
+    const cleanup = useEventListener('resize', () => {
+      console.log('window resize');
+    });
+
+    cleanup();
   },
 };
 ```
@@ -45,8 +64,8 @@ type Options = {
 function useEventListener(
   type: string,
   listener: EventListener,
-  options?: Options
-): void;
+  options?: Options,
+): () => void;
 ```
 
 ### Params

@@ -30,7 +30,7 @@ app.use(Popover);
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
@@ -40,7 +40,7 @@ export default {
       { text: 'Option 2' },
       { text: 'Option 3' },
     ];
-    const onSelect = (action) => Toast(action.text);
+    const onSelect = (action) => showToast(action.text);
 
     return {
       actions,
@@ -59,6 +59,42 @@ Using the `theme` prop to change the style of Popover.
 <van-popover v-model:show="showPopover" theme="dark" :actions="actions">
   <template #reference>
     <van-button type="primary">Dark Theme</van-button>
+  </template>
+</van-popover>
+```
+
+```js
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const showPopover = ref(false);
+    const actions = [
+      { text: 'Option 1' },
+      { text: 'Option 2' },
+      { text: 'Option 3' },
+    ];
+
+    return {
+      actions,
+      showPopover,
+    };
+  },
+};
+```
+
+### Horizontal
+
+After setting the `actions-direction` prop to `horizontal`, the actions will be arranged horizontally.
+
+```html
+<van-popover
+  v-model:show="showPopover"
+  :actions="actions"
+  actions-direction="horizontal"
+>
+  <template #reference>
+    <van-button type="primary">Horizontal</van-button>
   </template>
 </van-popover>
 ```
@@ -204,6 +240,41 @@ export default {
 };
 ```
 
+### Uncontrolled
+
+You can use Popover as a controlled or uncontrolled component:
+
+- When binding `v-model:show`, Popover is a controlled component, and the display of the component is completely controlled by the value of `v-model:show`.
+- When `v-model:show` is not used, Popover is an uncontrolled component. You can pass in a default value through the `show` prop, and the display is controlled by the component itself.
+
+```html
+<van-popover :actions="actions" position="top-start" @select="onSelect">
+  <template #reference>
+    <van-button type="primary">Uncontrolled</van-button>
+  </template>
+</van-popover>
+```
+
+```js
+import { ref } from 'vue';
+import { showToast } from 'vant';
+
+export default {
+  setup() {
+    const actions = [
+      { text: 'Option 1' },
+      { text: 'Option 2' },
+      { text: 'Option 3' },
+    ];
+    const onSelect = (action) => showToast(action.text);
+    return {
+      actions,
+      onSelect,
+    };
+  },
+};
+```
+
 ## API
 
 ### Props
@@ -212,20 +283,21 @@ export default {
 | --- | --- | --- | --- |
 | v-model:show | Whether to show Popover | _boolean_ | `false` |
 | actions | Actions | _PopoverAction[]_ | `[]` |
+| actions-direction `v4.4.1` | Direction of actions, can be set to `horizontal` | _PopoverActionsDirection_ | `vertical` |
 | placement | Placement | _PopoverPlacement_ | `bottom` |
 | theme | Theme, can be set to `dark` | _PopoverTheme_ | `light` |
 | trigger | Trigger mode, can be set to `manual` | _PopoverTrigger_ | `click` |
 | duration | Transition duration, unit second | _number \| string_ | `0.3` |
 | offset | Distance to reference | _[number, number]_ | `[0, 8]` |
 | overlay | Whether to show overlay | _boolean_ | `false` |
-| overlay-class `v3.0.10` | Custom overlay class | _string \| Array \| object_ | - |
-| overlay-style `v3.0.10` | Custom overlay style | _object_ | - |
-| show-arrow `v3.2.2` | Whether to show arrow | _boolean_ | `true` |
+| overlay-class | Custom overlay class | _string \| Array \| object_ | - |
+| overlay-style | Custom overlay style | _object_ | - |
+| show-arrow | Whether to show arrow | _boolean_ | `true` |
 | close-on-click-action | Whether to close when clicking action | _boolean_ | `true` |
 | close-on-click-outside | Whether to close when clicking outside | _boolean_ | `true` |
-| close-on-click-overlay `v3.0.10` | Whether to close when clicking overlay | _boolean_ | `true` |
+| close-on-click-overlay | Whether to close when clicking overlay | _boolean_ | `true` |
 | teleport | Specifies a target element where Popover will be mounted | _string \| Element_ | `body` |
-| icon-prefix `v3.0.17` | Icon className prefix | _string_ | `van-icon` |
+| icon-prefix | Icon className prefix | _string_ | `van-icon` |
 
 ### Data Structure of PopoverAction
 
@@ -254,7 +326,7 @@ export default {
 | --- | --- | --- |
 | default | Custom content | - |
 | reference | Reference Element | - |
-| action `v3.4.0` | Custom the content of option | _{ action: PopoverAction, index: number }_ |
+| action | Custom the content of option | _{ action: PopoverAction, index: number }_ |
 
 ### Types
 
@@ -265,6 +337,7 @@ import type {
   PopoverProps,
   PopoverTheme,
   PopoverAction,
+  PopoverActionsDirection,
   PopoverTrigger,
   PopoverPlacement,
 } from 'vant';
@@ -279,15 +352,17 @@ The component provides the following CSS variables, which can be used to customi
 | Name | Default Value | Description |
 | --- | --- | --- |
 | --van-popover-arrow-size | _6px_ | - |
-| --van-popover-border-radius | _var(--van-border-radius-lg)_ | - |
+| --van-popover-radius | _var(--van-radius-lg)_ | - |
 | --van-popover-action-width | _128px_ | - |
 | --van-popover-action-height | _44px_ | - |
 | --van-popover-action-font-size | _var(--van-font-size-md)_ | - |
 | --van-popover-action-line-height | _var(--van-line-height-md)_ | - |
 | --van-popover-action-icon-size | _20px_ | - |
+| --van-popover-horizontal-action-height | _34px_ | - |
+| --van-popover-horizontal-action-icon-size | _16px_ | - |
 | --van-popover-light-text-color | _var(--van-text-color)_ | - |
-| --van-popover-light-background-color | _var(--van-background-color-light)_ | - |
+| --van-popover-light-background | _var(--van-background-2)_ | - |
 | --van-popover-light-action-disabled-text-color | _var(--van-text-color-3)_ | - |
 | --van-popover-dark-text-color | _var(--van-white)_ | - |
-| --van-popover-dark-background-color | _#4a4a4a_ | - |
+| --van-popover-dark-background | _#4a4a4a_ | - |
 | --van-popover-dark-action-disabled-text-color | _var(--van-text-color-2)_ | - |

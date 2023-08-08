@@ -13,7 +13,7 @@ export type DropdownItemExpose = {
     show?: boolean,
     options?: {
       immediate?: boolean;
-    }
+    },
   ) => void;
   /** @private */
   state: {
@@ -29,3 +29,7 @@ export type DropdownItemInstance = ComponentPublicInstance<
   DropdownItemProps,
   DropdownItemExpose
 >;
+
+export type DropdownItemThemeVars = {
+  dropdownItemZIndex?: number | string;
+};

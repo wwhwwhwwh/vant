@@ -12,13 +12,11 @@ import {
   HAPTICS_FEEDBACK,
 } from '../utils';
 import { Icon } from '../icon';
+import type { TagType, TagSize } from './types';
 
 const [name, bem] = createNamespace('tag');
 
-export type TagSize = 'large' | 'medium';
-export type TagType = 'default' | 'primary' | 'success' | 'warning' | 'danger';
-
-const tagProps = {
+export const tagProps = {
   size: String as PropType<TagSize>,
   mark: Boolean,
   show: truthProp,

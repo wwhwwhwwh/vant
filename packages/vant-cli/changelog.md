@@ -1,14 +1,70 @@
 # 更新日志
 
-## v5.0.0 (未发布)
+## v6.2.0
+
+`2023-07-29`
+
+- 支持替换 dynamic import 中的文件后缀
+- 升级 vite v4.4
+- 升级 esbuild v0.18
+- 升级 prettier v3
+
+## v6.1.0
+
+`2023-03-19`
+
+- 升级 typescript v5
+- 升级 esbuild v0.17
+- 升级 vite v4.2
+- 优化 tsc 错误日志的格式
+
+## v6.0.1
+
+`2023-03-11`
+
+- 修复编译 `mjs` 或者 `cjs` 时， 替换 vue 文件导入出现重复后缀的问题
+
+## v6.0.0
+
+`2023-02-26`
+
+- vite: 由 v3 升级至 v4
+- @vitejs/plugin-vue: 由 v3 升级至 v4
+- @vitejs/plugin-vue-jsx: 由 v2 升级至 v3
+- 移除 `site.searchConfig` 配置项
+- 修复 build 时解析 markdown 可能报错的问题
+
+## v5.1.0
+
+`2022-11-05`
+
+- 支持读取 `vite.config.ts` 文件来自定义 vite 配置
+- 修复设置 vite 的 `server.port` 配置项不生效的问题
+
+## v5.0.2
+
+`2022-10-07`
+
+- 修复首次运行 dev 时 vite 引入了两份 Vue 代码导致渲染失败的问题
+
+## v5.0.1
+
+`2022-10-06`
+
+- 修复 jest 版本未正确升级的问题
+
+## v5.0.0
 
 ### 依赖升级
 
+`2022-10-06`
+
 对以下依赖进行了大版本升级：
 
-- vite v3
-- @vitejs/plugin-vue v3
-- @vitejs/plugin-vue-jsx v2
+- vite: 由 v2 升级至 v3
+- jest: 由 v27 升级至 v29
+- @vitejs/plugin-vue: 由 v2 升级至 v3
+- @vitejs/plugin-vue-jsx: 由 v1 升级至 v2
 
 ### 依赖精简
 
@@ -30,6 +86,12 @@ yarn add stylelint@13 @vant/stylelint-config
 由于 Vue 3 推荐使用 volar 而不是 vetur，因此移除了 vetur 相关的配置文件。
 
 现在会默认生成 WebStorm 所需的 web-types.json 文件到 `lib/web-types.json` 目录下。
+
+## v4.0.4
+
+`2022-07-02`
+
+- 修复构建 sfc 文件的类型定义时报错的问题
 
 ## v4.0.3
 

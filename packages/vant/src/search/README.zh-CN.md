@@ -55,13 +55,13 @@ Search 组件提供了 `search` 和 `cancel` 事件，`search` 事件在点击�
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const value = ref('');
-    const onSearch = (val) => Toast(val);
-    const onCancel = () => Toast('取消');
+    const onSearch = (val) => showToast(val);
+    const onCancel = () => showToast('取消');
     return {
       value,
       onSearch,
@@ -126,13 +126,13 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const value = ref('');
-    const onSearch = (val) => Toast(val);
-    const onClickButton = () => Toast(value.value);
+    const onSearch = (val) => showToast(val);
+    const onClickButton = () => showToast(value.value);
     return {
       value,
       onSearch,
@@ -150,14 +150,14 @@ export default {
 | --- | --- | --- | --- |
 | v-model | 当前输入的值 | _number \| string_ | - |
 | label | 搜索框左侧文本 | _string_ | - |
-| name `v3.2.3` | 名称，作为提交表单时的标识符 | _string_ | - |
+| name | 名称，作为提交表单时的标识符 | _string_ | - |
 | shape | 搜索框形状，可选值为 `round` | _string_ | `square` |
-| id `v3.2.2` | 搜索框 id，同时会设置 label 的 for 属性 | _string_ | `van-search-n-input` |
+| id | 搜索框 id，同时会设置 label 的 for 属性 | _string_ | `van-search-n-input` |
 | background | 搜索框外部背景色 | _string_ | `#f2f2f2` |
 | maxlength | 输入的最大字符数 | _number \| string_ | - |
 | placeholder | 占位提示文字 | _string_ | - |
 | clearable | 是否启用清除图标，点击清除图标后会清空输入框 | _boolean_ | `true` |
-| clear-icon `v3.0.12` | 清除图标名称或图片链接，等同于 Icon 组件的 [name 属性](#/zh-CN/icon#props) | _string_ | `clear` |
+| clear-icon | 清除图标名称或图片链接，等同于 Icon 组件的 [name 属性](#/zh-CN/icon#props) | _string_ | `clear` |
 | clear-trigger | 显示清除图标的时机，`always` 表示输入框不为空时展示，<br>`focus` 表示输入框聚焦且不为空时展示 | _string_ | `focus` |
 | autofocus | 是否自动聚焦，iOS 系统不支持该属性 | _boolean_ | `false` |
 | show-action | 是否在搜索框右侧显示取消按钮 | _boolean_ | `false` |
@@ -166,12 +166,12 @@ export default {
 | readonly | 是否将输入框设为只读状态，只读状态下无法输入内容 | _boolean_ | `false` |
 | error | 是否将输入内容标红 | _boolean_ | `false` |
 | error-message | 底部错误提示文案，为空时不展示 | _string_ | - |
-| formatter `v3.0.12` | 输入内容格式化函数 | _(val: string) => string_ | - |
-| format-trigger `v3.0.12` | 格式化函数触发的时机，可选值为 `onBlur` | _string_ | `onChange` |
+| formatter | 输入内容格式化函数 | _(val: string) => string_ | - |
+| format-trigger | 格式化函数触发的时机，可选值为 `onBlur` | _string_ | `onChange` |
 | input-align | 输入框内容对齐方式，可选值为 `center` `right` | _string_ | `left` |
 | left-icon | 输入框左侧图标名称或图片链接，等同于 Icon 组件的 [name 属性](#/zh-CN/icon#props) | _string_ | `search` |
 | right-icon | 输入框右侧图标名称或图片链接，等同于 Icon 组件的 [name 属性](#/zh-CN/icon#props) | _string_ | - |
-| autocomplete `v3.2.3` | input 标签原生的[自动完成属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) | _string_ | - |
+| autocomplete | input 标签原生的[自动完成属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) | _string_ | - |
 
 ### Events
 
@@ -182,7 +182,7 @@ export default {
 | focus | 输入框获得焦点时触发 | _event: Event_ |
 | blur | 输入框失去焦点时触发 | _event: Event_ |
 | click-input | 点击输入区域时触发 | _event: MouseEvent_ |
-| click-left-icon `v3.4.0` | 点击左侧图标时触发 | _event: MouseEvent_ |
+| click-left-icon | 点击左侧图标时触发 | _event: MouseEvent_ |
 | click-right-icon `3.4.0` | 点击右侧图标时触发 | _event: MouseEvent_ |
 | clear | 点击清除按钮后触发 | _event: MouseEvent_ |
 | cancel | 点击取消按钮时触发 | - |
@@ -231,19 +231,19 @@ searchRef.value?.focus();
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称 | 默认值 | 描述 |
-| --- | --- | --- |
-| --van-search-padding | _10px var(--van-padding-sm)_ | - |
-| --van-search-background-color | _var(--van-background-color-light)_ | - |
-| --van-search-content-background-color | _var(--van-gray-1)_ | - |
-| --van-search-input-height | _34px_ | - |
-| --van-search-label-padding | _0 5px_ | - |
-| --van-search-label-color | _var(--van-text-color)_ | - |
-| --van-search-label-font-size | _var(--van-font-size-md)_ | - |
-| --van-search-left-icon-color | _var(--van-gray-6)_ | - |
-| --van-search-action-padding | _0 var(--van-padding-xs)_ | - |
-| --van-search-action-text-color | _var(--van-text-color)_ | - |
-| --van-search-action-font-size | _var(--van-font-size-md)_ | - |
+| 名称                            | 默认值                       | 描述 |
+| ------------------------------- | ---------------------------- | ---- |
+| --van-search-padding            | _10px var(--van-padding-sm)_ | -    |
+| --van-search-background         | _var(--van-background-2)_    | -    |
+| --van-search-content-background | _var(--van-gray-1)_          | -    |
+| --van-search-input-height       | _34px_                       | -    |
+| --van-search-label-padding      | _0 5px_                      | -    |
+| --van-search-label-color        | _var(--van-text-color)_      | -    |
+| --van-search-label-font-size    | _var(--van-font-size-md)_    | -    |
+| --van-search-left-icon-color    | _var(--van-gray-6)_          | -    |
+| --van-search-action-padding     | _0 var(--van-padding-xs)_    | -    |
+| --van-search-action-text-color  | _var(--van-text-color)_      | -    |
+| --van-search-action-font-size   | _var(--van-font-size-md)_    | -    |
 
 ## 常见问题
 

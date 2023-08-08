@@ -3,9 +3,10 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "pnpm --dir ./packages/vant dev",
-    "lint": "pnpm --dir ./packages/vant lint",
+    "lint": "eslint ./packages/**/src ./packages/**/test --ext .js,.ts,.tsx,.vue,.mjs,.cjs",
     "test": "pnpm --dir ./packages/vant test",
     "test:watch": "pnpm --dir ./packages/vant test:watch",
+    "test:update": "pnpm --dir ./packages/vant test:update",
     "build": "pnpm --dir ./packages/vant build",
     "build:site": "pnpm --dir ./packages/vant build:site"
   },
@@ -14,24 +15,16 @@
     "*.{ts,tsx,js,vue,less}": "prettier --write",
     "*.{ts,tsx,js,vue}": "eslint --fix"
   },
-  "packageManager": "pnpm@7.1.6",
+  "engines": {
+    "pnpm": ">= 8.0.0"
+  },
+  "packageManager": "pnpm@8.6.5",
   "devDependencies": {
     "@vant/cli": "workspace:*",
     "@vant/eslint-config": "workspace:*",
-    "eslint": "^8.2.0",
+    "eslint": "^8.46.0",
     "husky": "^8.0.1",
     "nano-staged": "^0.8.0",
-    "prettier": "^2.5.0",
-    "rimraf": "^3.0.2"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search",
-        "@types/react",
-        "react",
-        "react-dom"
-      ]
-    }
+    "prettier": "^3.0.0"
   }
 }

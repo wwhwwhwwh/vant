@@ -110,11 +110,11 @@ Tabs styled as cards.
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
-    const onClickTab = ({ title }) => Toast(title);
+    const onClickTab = ({ title }) => showToast(title);
     return {
       onClickTab,
     };
@@ -239,7 +239,7 @@ export default {
 | --- | --- | --- | --- |
 | v-model:active | Index of active tab | _number \| string_ | `0` |
 | type | Can be set to `line` `card` | _string_ | `line` |
-| color | Tab color | _string_ | `#ee0a24` |
+| color | Tab color | _string_ | `#1989fa` |
 | background | Background color | _string_ | `white` |
 | duration | Toggle tab's animation time | _number \| string_ | `0.3` |
 | line-width | Width of tab line | _number \| string_ | `40px` |
@@ -248,7 +248,7 @@ export default {
 | border | Whether to show border when `type="line"` | _boolean_ | `false` |
 | ellipsis | Whether to ellipsis too long title | _boolean_ | `true` |
 | sticky | Whether to use sticky mode | _boolean_ | `false` |
-| shrink `v3.2.8` | Whether to shrink the the tabs to the left | _boolean_ | `false` |
+| shrink | Whether to shrink the the tabs to the left | _boolean_ | `false` |
 | swipeable | Whether to enable gestures to slide left and right | _boolean_ | `false` |
 | lazy-render | Whether to enable tab content lazy render | _boolean_ | `true` |
 | scrollspy | Whether to use scrollspy mode | _boolean_ | `false` |
@@ -268,26 +268,24 @@ export default {
 | badge | Content of the badge on the title | _number \| string_ | - |
 | name | Identifier | _number \| string_ | Index of tab |
 | url | Link | _string_ | - |
-| to | Target route of the link, same as to of vue-router | _string \| object_ | - |
+| to | The target route should navigate to when clicked on, same as the [to prop](https://router.vuejs.org/api/interfaces/RouterLinkProps.html#Properties-to) of Vue Router | _string \| object_ | - |
 | replace | If true, the navigation will not leave a history record | _boolean_ | `false` |
 | title-style | Custom title style | _string \| Array \| object_ | - |
 | title-class | Custom title class name | _string \| Array \| object_ | - |
-| show-zero-badge `v3.2.2` | Whether to show badge when the value is zero | _boolean_ | `true` |
+| show-zero-badge | Whether to show badge when the value is zero | _boolean_ | `true` |
 
 ### Tabs Events
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| click-tab `v3.1.4` | Emitted when a tab is clicked | _{ name: string \| number, title: string, event: MouseEvent, disabled: boolean }_ |
+| click-tab | Emitted when a tab is clicked | _{ name: string \| number, title: string, event: MouseEvent, disabled: boolean }_ |
 | change | Emitted when active tab changed | _name: string \| number, title: string_ |
 | rendered | Emitted when content first rendered in lazy-render mode | _name: string \| number, title: string_ |
 | scroll | Emitted when tab scrolling in sticky mode | _{ scrollTop: number, isFixed: boolean }_ |
 
-> Tips: click and disabled event is deprecated, place use click-tab event instead.
-
 ### Tabs Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Tabs instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Tabs instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
@@ -315,11 +313,11 @@ tabsRef.value?.scrollTo(0);
 
 ### Tabs Slots
 
-| Name                | Description               |
-| ------------------- | ------------------------- |
-| nav-left            | Custom nav left content   |
-| nav-right           | Custom nav right content  |
-| nav-bottom `v3.1.1` | Custom nav bottom content |
+| Name       | Description               |
+| ---------- | ------------------------- |
+| nav-left   | Custom nav left content   |
+| nav-right  | Custom nav right content  |
+| nav-bottom | Custom nav bottom content |
 
 ### Tab Slots
 
@@ -334,17 +332,17 @@ tabsRef.value?.scrollTo(0);
 
 The component provides the following CSS variables, which can be used to customize styles. Please refer to [ConfigProvider component](#/en-US/config-provider).
 
-| Name | Default Value | Description |
-| --- | --- | --- |
-| --van-tab-text-color | _var(--van-gray-7)_ | - |
-| --van-tab-active-text-color | _var(--van-text-color)_ | - |
-| --van-tab-disabled-text-color | _var(--van-text-color-3)_ | - |
-| --van-tab-font-size | _var(--van-font-size-md)_ | - |
-| --van-tab-line-height | _var(--van-line-height-md)_ | - |
-| --van-tabs-default-color | _var(--van-danger-color)_ | - |
-| --van-tabs-line-height | _44px_ | - |
-| --van-tabs-card-height | _30px_ | - |
-| --van-tabs-nav-background-color | _var(--van-background-color-light)_ | - |
-| --van-tabs-bottom-bar-width | _40px_ | - |
-| --van-tabs-bottom-bar-height | _3px_ | - |
-| --van-tabs-bottom-bar-color | _var(--van-danger-color)_ | - |
+| Name                          | Default Value               | Description |
+| ----------------------------- | --------------------------- | ----------- |
+| --van-tab-text-color          | _var(--van-gray-7)_         | -           |
+| --van-tab-active-text-color   | _var(--van-text-color)_     | -           |
+| --van-tab-disabled-text-color | _var(--van-text-color-3)_   | -           |
+| --van-tab-font-size           | _var(--van-font-size-md)_   | -           |
+| --van-tab-line-height         | _var(--van-line-height-md)_ | -           |
+| --van-tabs-default-color      | _var(--van-primary-color)_  | -           |
+| --van-tabs-line-height        | _44px_                      | -           |
+| --van-tabs-card-height        | _30px_                      | -           |
+| --van-tabs-nav-background     | _var(--van-background-2)_   | -           |
+| --van-tabs-bottom-bar-width   | _40px_                      | -           |
+| --van-tabs-bottom-bar-height  | _3px_                       | -           |
+| --van-tabs-bottom-bar-color   | _var(--van-primary-color)_  | -           |

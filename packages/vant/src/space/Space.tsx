@@ -1,10 +1,12 @@
 import {
   computed,
+  Comment,
   CSSProperties,
   defineComponent,
   ExtractPropTypes,
   Fragment,
   PropType,
+  Text,
   type VNode,
 } from 'vue';
 import { createNamespace } from '../utils';
@@ -14,7 +16,7 @@ const [name, bem] = createNamespace('space');
 export type SpaceSize = number | string;
 export type SpaceAlign = 'start' | 'end' | 'center' | 'baseline';
 
-const spaceProps = {
+export const spaceProps = {
   align: String as PropType<SpaceAlign>,
   direction: {
     type: String as PropType<'vertical' | 'horizontal'>,
@@ -47,10 +49,10 @@ function filterEmpty(children: VNode[] = []) {
     (c) =>
       !(
         c &&
-        ((typeof Comment !== 'undefined' && c.type === Comment) ||
+        (c.type === Comment ||
           (c.type === Fragment && c.children?.length === 0) ||
           (c.type === Text && (c.children as string).trim() === ''))
-      )
+      ),
   );
 }
 
@@ -59,7 +61,7 @@ export default defineComponent({
   props: spaceProps,
   setup(props, { slots }) {
     const mergedAlign = computed(
-      () => props.align ?? (props.direction === 'horizontal' ? 'center' : '')
+      () => props.align ?? (props.direction === 'horizontal' ? 'center' : ''),
     );
 
     const getMargin = (size: SpaceSize) => {
@@ -72,10 +74,10 @@ export default defineComponent({
       const style: CSSProperties = {};
 
       const marginRight = `${getMargin(
-        Array.isArray(props.size) ? props.size[0] : props.size
+        Array.isArray(props.size) ? props.size[0] : props.size,
       )}`;
       const marginBottom = `${getMargin(
-        Array.isArray(props.size) ? props.size[1] : props.size
+        Array.isArray(props.size) ? props.size[1] : props.size,
       )}`;
 
       if (isLast) {

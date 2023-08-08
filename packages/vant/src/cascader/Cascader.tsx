@@ -17,6 +17,9 @@ import {
   type Numeric,
 } from '../utils';
 
+// Composables
+import { useRefs } from '../composables/use-refs';
+
 // Components
 import { Tab } from '../tab';
 import { Tabs } from '../tabs';
@@ -28,7 +31,7 @@ import type { CascaderTab, CascaderOption, CascaderFieldNames } from './types';
 
 const [name, bem, t] = createNamespace('cascader');
 
-const cascaderProps = {
+export const cascaderProps = {
   title: String,
   options: makeArrayProp<CascaderOption>(),
   closeable: truthProp,
@@ -48,11 +51,13 @@ export default defineComponent({
 
   props: cascaderProps,
 
-  emits: ['close', 'change', 'finish', 'click-tab', 'update:modelValue'],
+  emits: ['close', 'change', 'finish', 'clickTab', 'update:modelValue'],
 
   setup(props, { slots, emit }) {
     const tabs = ref<CascaderTab[]>([]);
     const activeTab = ref(0);
+    const [selectedElementRefs, setSelectedElementRefs] =
+      useRefs<HTMLElement>();
 
     const {
       text: textKey,
@@ -64,12 +69,12 @@ export default defineComponent({
         value: 'value',
         children: 'children',
       },
-      props.fieldNames
+      props.fieldNames,
     );
 
     const getSelectedOptionsByValue = (
       options: CascaderOption[],
-      value: Numeric
+      value: Numeric,
     ): CascaderOption[] | undefined => {
       for (const option of options) {
         if (option[valueKey] === value) {
@@ -79,7 +84,7 @@ export default defineComponent({
         if (option[childrenKey]) {
           const selectedOptions = getSelectedOptionsByValue(
             option[childrenKey],
-            value
+            value,
           );
           if (selectedOptions) {
             return [option, ...selectedOptions];
@@ -104,7 +109,7 @@ export default defineComponent({
             };
 
             const next = optionsCursor.find(
-              (item) => item[valueKey] === option[valueKey]
+              (item) => item[valueKey] === option[valueKey],
             );
             if (next) {
               optionsCursor = next[childrenKey];
@@ -185,7 +190,7 @@ export default defineComponent({
     const onClose = () => emit('close');
 
     const onClickTab = ({ name, title }: TabsClickTabEventParams) =>
-      emit('click-tab', name, title);
+      emit('clickTab', name, title);
 
     const renderHeader = () =>
       props.showHeader ? (
@@ -206,7 +211,7 @@ export default defineComponent({
     const renderOption = (
       option: CascaderOption,
       selectedOption: CascaderOption | null,
-      tabIndex: number
+      tabIndex: number,
     ) => {
       const { disabled } = option;
       const selected = !!(
@@ -222,6 +227,7 @@ export default defineComponent({
 
       return (
         <li
+          ref={selected ? setSelectedElementRefs(tabIndex) : undefined}
           role="menuitemradio"
           class={[bem('option', { selected, disabled }), option.className]}
           style={{ color }}
@@ -241,11 +247,11 @@ export default defineComponent({
     const renderOptions = (
       options: CascaderOption[],
       selectedOption: CascaderOption | null,
-      tabIndex: number
+      tabIndex: number,
     ) => (
       <ul role="menu" class={bem('options')}>
         {options.map((option) =>
-          renderOption(option, selectedOption, tabIndex)
+          renderOption(option, selectedOption, tabIndex),
         )}
       </ul>
     );
@@ -277,13 +283,26 @@ export default defineComponent({
         class={bem('tabs')}
         color={props.activeColor}
         swipeable={props.swipeable}
-        onClick-tab={onClickTab}
+        onClickTab={onClickTab}
       >
         {tabs.value.map(renderTab)}
       </Tabs>
     );
 
+    const scrollIntoView = (el: HTMLElement) => {
+      const scrollParent = el.parentElement;
+
+      if (scrollParent) {
+        scrollParent.scrollTop =
+          el.offsetTop - (scrollParent.offsetHeight - el.offsetHeight) / 2;
+      }
+    };
+
     updateTabs();
+    watch(activeTab, (value) => {
+      const el = selectedElementRefs.value[value];
+      if (el) scrollIntoView(el);
+    });
     watch(() => props.options, updateTabs, { deep: true });
     watch(
       () => props.modelValue,
@@ -295,7 +314,7 @@ export default defineComponent({
           }
         }
         updateTabs();
-      }
+      },
     );
 
     return () => (

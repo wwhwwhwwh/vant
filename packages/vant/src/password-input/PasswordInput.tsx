@@ -12,7 +12,7 @@ import {
 
 const [name, bem] = createNamespace('password-input');
 
-const passwordInputProps = {
+export const passwordInputProps = {
   info: String,
   mask: truthProp,
   value: makeStringProp(''),
@@ -39,7 +39,8 @@ export default defineComponent({
 
     const renderPoints = () => {
       const Points: JSX.Element[] = [];
-      const { mask, value, length, gutter, focused } = props;
+      const { mask, value, gutter, focused } = props;
+      const length = +props.length;
 
       for (let i = 0; i < length; i++) {
         const char = value[i];
@@ -65,7 +66,7 @@ export default defineComponent({
               char
             )}
             {showCursor && <div class={bem('cursor')} />}
-          </li>
+          </li>,
         );
       }
 

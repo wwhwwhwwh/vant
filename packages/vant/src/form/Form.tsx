@@ -24,7 +24,7 @@ import type { FormExpose } from './types';
 
 const [name, bem] = createNamespace('form');
 
-const formProps = {
+export const formProps = {
   colon: Boolean,
   disabled: Boolean,
   readonly: Boolean,
@@ -81,7 +81,7 @@ export default defineComponent({
                   });
                 }
               }),
-            Promise.resolve()
+            Promise.resolve(),
           )
           .then(() => {
             if (errors.length) {
@@ -150,7 +150,7 @@ export default defineComponent({
 
     const scrollToField = (
       name: string,
-      options?: boolean | ScrollIntoViewOptions
+      options?: boolean | ScrollIntoViewOptions,
     ) => {
       children.some((item) => {
         if (item.name === name) {
@@ -163,7 +163,9 @@ export default defineComponent({
 
     const getValues = () =>
       children.reduce<Record<string, unknown>>((form, field) => {
-        form[field.name] = field.formValue.value;
+        if (field.name !== undefined) {
+          form[field.name] = field.formValue.value;
+        }
         return form;
       }, {});
 

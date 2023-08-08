@@ -73,7 +73,7 @@ export default {
 | class-name | ClassName | _string_ | - |
 | custom-class | Custom style | _object_ | - |
 | lock-scroll | Whether to lock background scroll | _boolean_ | `true` |
-| lazy-render `v3.4.2` | Whether to lazy render util appeared | _boolean_ | `true` |
+| lazy-render | Whether to lazy render util appeared | _boolean_ | `true` |
 
 ### Events
 
@@ -101,7 +101,7 @@ import type { OverlayProps } from 'vant';
 
 The component provides the following CSS variables, which can be used to customize styles. Please refer to [ConfigProvider component](#/en-US/config-provider).
 
-| Name                           | Default Value        | Description |
-| ------------------------------ | -------------------- | ----------- |
-| --van-overlay-z-index          | _1_                  | -           |
-| --van-overlay-background-color | _rgba(0, 0, 0, 0.7)_ | -           |
+| Name                     | Default Value        | Description |
+| ------------------------ | -------------------- | ----------- |
+| --van-overlay-z-index    | _1_                  | -           |
+| --van-overlay-background | _rgba(0, 0, 0, 0.7)_ | -           |

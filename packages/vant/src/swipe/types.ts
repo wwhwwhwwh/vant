@@ -31,3 +31,12 @@ export type SwipeProvide = {
 };
 
 export type SwipeInstance = ComponentPublicInstance<SwipeProps, SwipeExpose>;
+
+export type SwipeThemeVars = {
+  swipeIndicatorSize?: string;
+  swipeIndicatorMargin?: string;
+  swipeIndicatorActiveOpacity?: number | string;
+  swipeIndicatorInactiveOpacity?: number | string;
+  swipeIndicatorActiveBackground?: string;
+  swipeIndicatorInactiveBackground?: string;
+};

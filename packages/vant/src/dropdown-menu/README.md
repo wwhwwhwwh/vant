@@ -59,21 +59,21 @@ export default {
 ### Custom Content
 
 ```html
-<van-dropdown-menu>
+<van-dropdown-menu ref="menuRef">
   <van-dropdown-item v-model="value" :options="options" />
   <van-dropdown-item title="Title" ref="item">
     <van-cell center title="Title">
       <template #right-icon>
-        <van-switch v-model="switch1" size="24" active-color="#ee0a24" />
+        <van-switch v-model="switch1" />
       </template>
     </van-cell>
     <van-cell center title="Title">
       <template #right-icon>
-        <van-switch v-model="switch2" size="24" active-color="#ee0a24" />
+        <van-switch v-model="switch2" />
       </template>
     </van-cell>
     <div style="padding: 5px 16px;">
-      <van-button type="danger" block round @click="onConfirm">
+      <van-button type="primary" block round @click="onConfirm">
         Confirm
       </van-button>
     </div>
@@ -86,7 +86,8 @@ import { ref } from 'vue';
 
 export default {
   setup() {
-    const item = ref(null);
+    const menuRef = ref(null);
+    const itemRef = ref(null);
     const value = ref(0);
     const switch1 = ref(false);
     const switch2 = ref(false);
@@ -97,10 +98,13 @@ export default {
     ];
     const onConfirm = () => {
       item.value.toggle();
+      // or
+      // menuRef.value.close();
     };
 
     return {
-      item,
+      menuRef,
+      itemRef,
       value,
       switch1,
       switch2,
@@ -116,7 +120,7 @@ export default {
 Use `active-color` prop to custom active color of the title and options.
 
 ```html
-<van-dropdown-menu active-color="#1989fa">
+<van-dropdown-menu active-color="#ee0a24">
   <van-dropdown-item v-model="value1" :options="option1" />
   <van-dropdown-item v-model="value2" :options="option2" />
 </van-dropdown-menu>
@@ -146,7 +150,7 @@ Use `active-color` prop to custom active color of the title and options.
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| active-color | Active color of title and option | _string_ | `#ee0a24` |
+| active-color | Active color of title and option | _string_ | `#1989fa` |
 | direction | Expand direction, can be set to `up` | _string_ | `down` |
 | z-index | z-index of menu item | _number \| string_ | `10` |
 | duration | Transition duration, unit second | _number \| string_ | `0.2` |
@@ -183,9 +187,17 @@ Use `active-color` prop to custom active color of the title and options.
 | default | Content      |
 | title   | Custom title |
 
+### DropdownMenu Methods
+
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get DropdownMenu instance and call instance methods.
+
+| Name  | Description              | Attribute | Return value |
+| ----- | ------------------------ | --------- | ------------ |
+| close | Close all dropdown items | -         | -            |
+
 ### DropdownItem Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get DropdownItem instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get DropdownItem instance and call instance methods.
 
 | Name   | Description    | Attribute        | Return value |
 | ------ | -------------- | ---------------- | ------------ |
@@ -201,18 +213,21 @@ import type {
   DropdownItemProps,
   DropdownItemOption,
   DropdownItemInstance,
+  DropdownMenuInstance,
   DropdownMenuDirection,
 } from 'vant';
 ```
 
-`DropdownItemInstance` is the type of component instance:
+`DropdownMenuInstance` and `DropdownItemInstance` are the types of component instances:
 
 ```ts
 import { ref } from 'vue';
-import type { DropdownItemInstance } from 'vant';
+import type { DropdownMenuInstance, DropdownItemInstance } from 'vant';
 
+const dropdownMenuRef = ref<DropdownMenuInstance>();
 const dropdownItemRef = ref<DropdownItemInstance>();
 
+dropdownMenuRef.value?.close();
 dropdownItemRef.value?.toggle();
 ```
 
@@ -233,14 +248,14 @@ The component provides the following CSS variables, which can be used to customi
 | Name | Default Value | Description |
 | --- | --- | --- |
 | --van-dropdown-menu-height | _48px_ | - |
-| --van-dropdown-menu-background-color | _var(--van-background-color-light)_ | - |
-| --van-dropdown-menu-box-shadow | _0 2px 12px fade(var(--van-gray-7), 12)_ | - |
+| --van-dropdown-menu-background | _var(--van-background-2)_ | - |
+| --van-dropdown-menu-shadow | _0 2px 12px fade(var(--van-gray-7), 12)_ | - |
 | --van-dropdown-menu-title-font-size | _15px_ | - |
 | --van-dropdown-menu-title-text-color | _var(--van-text-color)_ | - |
-| --van-dropdown-menu-title-active-text-color | _var(--van-danger-color)_ | - |
+| --van-dropdown-menu-title-active-text-color | _var(--van-primary-color)_ | - |
 | --van-dropdown-menu-title-disabled-text-color | _var(--van-text-color-2)_ | - |
 | --van-dropdown-menu-title-padding | _0 var(--van-padding-xs)_ | - |
 | --van-dropdown-menu-title-line-height | _var(--van-line-height-lg)_ | - |
-| --van-dropdown-menu-option-active-color | _var(--van-danger-color)_ | - |
+| --van-dropdown-menu-option-active-color | _var(--van-primary-color)_ | - |
 | --van-dropdown-menu-content-max-height | _80%_ | - |
 | --van-dropdown-item-z-index | _10_ | - |

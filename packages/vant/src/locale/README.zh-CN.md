@@ -49,6 +49,7 @@ Locale.add(messages);
 | 德语（正式）         | de-DE-formal | -        |
 | 希腊语               | el-GR        | `v3.5.0` |
 | 英语                 | en-US        | -        |
+| 世界语               | eo-EO        | `v4.0.9` |
 | 西班牙语             | es-ES        | -        |
 | 波斯语               | fa-IR        | `v3.5.0` |
 | 法语                 | fr-FR        | -        |
@@ -58,22 +59,46 @@ Locale.add(messages);
 | 冰岛语               | is-IS        | `v3.4.7` |
 | 意大利语             | it-IT        | `v3.4.5` |
 | 日语                 | ja-JP        | -        |
+| 高棉语               | km-KH        | `v4.1.2` |
 | 韩语/朝鲜语          | ko-KR        | `v3.4.3` |
 | 老挝语               | la-LA        | `v3.4.7` |
+| 蒙古语               | mm-MN        | `v4.0.5` |
 | 挪威语               | nb-NO        | -        |
+| 荷兰语               | nl-NL        | `v4.0.5` |
 | 葡萄牙语（巴西）     | pt-BR        | `v3.3.3` |
 | 罗马尼亚语           | ro-RO        | -        |
 | 俄罗斯语             | ru-RU        | `v3.1.5` |
+| 塞尔维亚语           | sr-RS        | `v4.6.4` |
 | 瑞典语               | sv-SE        | `v3.4.7` |
-| 土耳其语             | tr-TR        | -        |
 | 泰语                 | th-TH        | -        |
+| 土耳其语             | tr-TR        | -        |
 | 乌克兰语             | uk-UA        | `v3.4.5` |
 | 越南语               | vi-VN        | `v3.4.5` |
 | 简体中文             | zh-CN        | -        |
 | 繁體中文（港）       | zh-HK        | -        |
 | 繁體中文（台）       | zh-TW        | -        |
 
-> 在 [这里](https://github.com/vant-ui/vant/tree/dev/packages/vant/src/locale/lang) 查看所有的语言包源文件。
+> 在 [这里](https://github.com/vant-ui/vant/tree/main/packages/vant/src/locale/lang) 查看所有的语言包源文件。
+
+### 获取当前语言
+
+你可以通过 `useCurrentLang` 方法来获取当前使用的语言。
+
+- **类型：**
+
+```ts
+function useCurrentLang(): Ref<string>;
+```
+
+- **示例：**
+
+```ts
+import { useCurrentLang } from 'vant';
+
+const currentLang = useCurrentLang();
+
+console.log(currentLang.value); // --> 'zh-CN'
+```
 
 ## 常见问题
 

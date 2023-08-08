@@ -47,7 +47,21 @@ export default {
 ### Custom Shape
 
 ```html
-<van-checkbox v-model="checked" shape="square">Checkbox</van-checkbox>
+<van-checkbox-group v-model="checked" shape="square">
+  <van-checkbox name="a">复选框 a</van-checkbox>
+  <van-checkbox name="b">复选框 b</van-checkbox>
+</van-checkbox-group>
+```
+
+```js
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const checked = ref(['a', 'b']);
+    return { checked };
+  },
+};
 ```
 
 ### Custom Color
@@ -96,6 +110,14 @@ export default {
     };
   },
 };
+```
+
+### Left Label
+
+Set `label-position` prop to `'left'` to adjust the label position to the left of the Checkbox.
+
+```html
+<van-checkbox v-model="checked" label-position="left">Checkbox</van-checkbox>
 ```
 
 ### Disable Label Click
@@ -269,6 +291,7 @@ export default {
 | direction | Direction, can be set to `horizontal` | _string_ | `vertical` |
 | icon-size | Icon size of all checkboxes | _number \| string_ | `20px` |
 | checked-color | Checked color of all checkboxes | _string_ | `#1989fa` |
+| shape `v4.6.3` | Can be set to `square` | _string_ | `round` |
 
 ### Checkbox Events
 
@@ -292,7 +315,7 @@ export default {
 
 ### CheckboxGroup Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get CheckboxGroup instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get CheckboxGroup instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
@@ -326,7 +349,7 @@ checkboxGroup.value?.toggleAll({
 
 ### Checkbox Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Checkbox instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Checkbox instance and call instance methods.
 
 | Name   | Description         | Attribute           | Return value |
 | ------ | ------------------- | ------------------- | ------------ |
@@ -372,10 +395,10 @@ The component provides the following CSS variables, which can be used to customi
 | --- | --- | --- |
 | --van-checkbox-size | _20px_ | - |
 | --van-checkbox-border-color | _var(--van-gray-5)_ | - |
-| --van-checkbox-transition-duration | _var(--van-animation-duration-fast)_ | - |
+| --van-checkbox-duration | _var(--van-duration-fast)_ | - |
 | --van-checkbox-label-margin | _var(--van-padding-xs)_ | - |
 | --van-checkbox-label-color | _var(--van-text-color)_ | - |
 | --van-checkbox-checked-icon-color | _var(--van-primary-color)_ | - |
 | --van-checkbox-disabled-icon-color | _var(--van-gray-5)_ | - |
 | --van-checkbox-disabled-label-color | _var(--van-text-color-3)_ | - |
-| --van-checkbox-disabled-background-color | _var(--van-border-color)_ | - |
+| --van-checkbox-disabled-background | _var(--van-border-color)_ | - |

@@ -20,6 +20,8 @@ app.use(Button);
 
 ### Type
 
+The Button supports five types: `default`, `primary`, `success`, `warning`, and `danger`. The default type is `default`.
+
 ```html
 <van-button type="primary">Primary</van-button>
 <van-button type="success">Success</van-button>
@@ -30,12 +32,16 @@ app.use(Button);
 
 ### Plain
 
+Use the `plain` prop to set the button as a plain button. The text color of a plain button is the same as the button color, and the background is white.
+
 ```html
 <van-button plain type="primary">Plain</van-button>
 <van-button plain type="success">Plain</van-button>
 ```
 
 ### Hairline
+
+Setting the `hairline` prop to display a border with a thickness of 0.5px.
 
 ```html
 <van-button plain hairline type="primary">Hairline</van-button>
@@ -44,12 +50,16 @@ app.use(Button);
 
 ### Disabled
 
+Use the `disabled` prop to disable the button. In the disabled state, the button cannot be clicked.
+
 ```html
 <van-button disabled type="primary">Disabled</van-button>
 <van-button disabled type="success">Disabled</van-button>
 ```
 
 ### Loading
+
+Set the button as a loading state using the `loading` prop. In the loading state, the button text is hidden by default. You can set the text for the loading state using the `loading-text` property.
 
 ```html
 <van-button loading type="primary" />
@@ -59,12 +69,16 @@ app.use(Button);
 
 ### Shape
 
+Use the `square` prop to set the button as square-shaped and the `round` prop to set it as round-shaped.
+
 ```html
 <van-button square type="primary">Square</van-button>
 <van-button round type="success">Round</van-button>
 ```
 
 ### Icon
+
+Use the `icon` prop to set the button icon. It supports all icons from the Icon component or you can pass a custom icon URL.
 
 ```html
 <van-button icon="plus" type="primary" />
@@ -79,6 +93,8 @@ app.use(Button);
 
 ### Size
 
+Four sizes are supported: `large`, `normal`, `small`, and `mini`. The default size is `normal`.
+
 ```html
 <van-button type="primary" size="large">Large</van-button>
 <van-button type="primary" size="normal">Normal</van-button>
@@ -88,11 +104,15 @@ app.use(Button);
 
 ### Block Element
 
+By default, the button is an inline-block element. Use the `block` prop to change the button element type to a block-level element.
+
 ```html
 <van-button type="primary" block>Block Element</van-button>
 ```
 
 ### Route
+
+You can use the `url` prop for URL redirection or the `to` prop for route navigation.
 
 ```html
 <van-button type="primary" url="https://github.com">URL</van-button>
@@ -101,12 +121,40 @@ app.use(Button);
 
 ### Custom Color
 
+Customize the button color using the `color` prop.
+
 ```html
 <van-button color="#7232dd">Pure</van-button>
 <van-button color="#7232dd" plain>Pure</van-button>
 <van-button color="linear-gradient(to right, #ff6034, #ee0a24)">
   Gradient
 </van-button>
+```
+
+### Animated Button
+
+With the combination of the Button and [Swipe component](<(/#/en-US/swipe)>), you can create an animated button effect with vertical scrolling.
+
+```html
+<van-button type="danger" round>
+  <van-swipe
+    vertical
+    class="notice-swipe"
+    :autoplay="2000"
+    :touchable="false"
+    :show-indicators="false"
+  >
+    <van-swipe-item>Do Task</van-swipe-item>
+    <van-swipe-item>Lottery</van-swipe-item>
+  </van-swipe>
+</van-button>
+
+<style>
+  .notice-swipe {
+    height: 40px;
+    line-height: 40px;
+  }
+</style>
 ```
 
 ## API
@@ -134,7 +182,7 @@ app.use(Button);
 | loading-type | Loading type, can be set to `spinner` | _string_ | `circular` |
 | loading-size | Loading icon size | _number \| string_ | `20px` |
 | url | Link URL | _string_ | - |
-| to | Target route of the link, same as using vue-router | _string \| object_ | - |
+| to | The target route should navigate to when clicked on, same as the [to prop](https://router.vuejs.org/api/interfaces/RouterLinkProps.html#Properties-to) of Vue Router | _string \| object_ | - |
 | replace | If true, the navigation will not leave a history record | _boolean_ | `false` |
 
 ### Events
@@ -146,11 +194,11 @@ app.use(Button);
 
 ### Slots
 
-| Name           | Description         |
-| -------------- | ------------------- |
-| default        | Default slot        |
-| icon `v3.0.18` | Custom icon         |
-| loading        | Custom loading icon |
+| Name    | Description         |
+| ------- | ------------------- |
+| default | Default slot        |
+| icon    | Custom icon         |
+| loading | Custom loading icon |
 
 ### Types
 
@@ -187,24 +235,24 @@ The component provides the following CSS variables, which can be used to customi
 | --van-button-default-line-height | _1.2_ | - |
 | --van-button-default-font-size | _var(--van-font-size-lg)_ | - |
 | --van-button-default-color | _var(--van-text-color)_ | - |
-| --van-button-default-background-color | _var(--van-background-color-light)_ | - |
-| --van-button-default-border-color | _var(--van-border-color)_ | - |
+| --van-button-default-background | _var(--van-background-2)_ | - |
+| --van-button-default-border-color | _var(--van-gray-4)_ | - |
 | --van-button-primary-color | _var(--van-white)_ | - |
-| --van-button-primary-background-color | _var(--van-primary-color)_ | - |
+| --van-button-primary-background | _var(--van-primary-color)_ | - |
 | --van-button-primary-border-color | _var(--van-primary-color)_ | - |
 | --van-button-success-color | _var(--van-white)_ | - |
-| --van-button-success-background-color | _var(--van-success-color)_ | - |
+| --van-button-success-background | _var(--van-success-color)_ | - |
 | --van-button-success-border-color | _var(--van-success-color)_ | - |
 | --van-button-danger-color | _var(--van-white)_ | - |
-| --van-button-danger-background-color | _var(--van-danger-color)_ | - |
+| --van-button-danger-background | _var(--van-danger-color)_ | - |
 | --van-button-danger-border-color | _var(--van-danger-color)_ | - |
 | --van-button-warning-color | _var(--van-white)_ | - |
-| --van-button-warning-background-color | _var(--van-warning-color)_ | - |
+| --van-button-warning-background | _var(--van-warning-color)_ | - |
 | --van-button-warning-border-color | _var(--van-warning-color)_ | - |
-| --van-button-border-width | _var(--van-border-width-base)_ | - |
-| --van-button-border-radius | _var(--van-border-radius-sm)_ | - |
-| --van-button-round-border-radius | _var(--van-border-radius-max)_ | - |
-| --van-button-plain-background-color | _var(--van-white)_ | - |
+| --van-button-border-width | _var(--van-border-width)_ | - |
+| --van-button-radius | _var(--van-radius-md)_ | - |
+| --van-button-round-radius | _var(--van-radius-max)_ | - |
+| --van-button-plain-background | _var(--van-white)_ | - |
 | --van-button-disabled-opacity | _var(--van-disabled-opacity)_ | - |
 | --van-button-icon-size | _1.2em_ | - |
 | --van-button-loading-icon-size | _20px_ | - |

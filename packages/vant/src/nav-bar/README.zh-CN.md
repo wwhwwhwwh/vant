@@ -66,12 +66,12 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const onClickLeft = () => history.back();
-    const onClickRight = () => Toast('按钮');
+    const onClickRight = () => showToast('按钮');
     return {
       onClickLeft,
       onClickRight,
@@ -107,6 +107,7 @@ export default {
 | placeholder | 固定在顶部时，是否在标签位置生成一个等高的占位元素 | _boolean_ | `false` |
 | z-index | 导航栏 z-index | _number \| string_ | `1` |
 | safe-area-inset-top | 是否开启[顶部安全区适配](#/zh-CN/advanced-usage#di-bu-an-quan-qu-gua-pei) | _boolean_ | `false` |
+| clickable | 是否开启两侧按钮的点击反馈 | _boolean_ | `true` |
 
 ### Slots
 
@@ -137,13 +138,13 @@ import type { NavBarProps } from 'vant';
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称                           | 默认值                              | 描述 |
-| ------------------------------ | ----------------------------------- | ---- |
-| --van-nav-bar-height           | _46px_                              | -    |
-| --van-nav-bar-background-color | _var(--van-background-color-light)_ | -    |
-| --van-nav-bar-arrow-size       | _16px_                              | -    |
-| --van-nav-bar-icon-color       | _var(--van-primary-color)_          | -    |
-| --van-nav-bar-text-color       | _var(--van-primary-color)_          | -    |
-| --van-nav-bar-title-font-size  | _var(--van-font-size-lg)_           | -    |
-| --van-nav-bar-title-text-color | _var(--van-text-color)_             | -    |
-| --van-nav-bar-z-index          | _1_                                 | -    |
+| 名称                           | 默认值                     | 描述 |
+| ------------------------------ | -------------------------- | ---- |
+| --van-nav-bar-height           | _46px_                     | -    |
+| --van-nav-bar-background       | _var(--van-background-2)_  | -    |
+| --van-nav-bar-arrow-size       | _16px_                     | -    |
+| --van-nav-bar-icon-color       | _var(--van-primary-color)_ | -    |
+| --van-nav-bar-text-color       | _var(--van-primary-color)_ | -    |
+| --van-nav-bar-title-font-size  | _var(--van-font-size-lg)_  | -    |
+| --van-nav-bar-title-text-color | _var(--van-text-color)_    | -    |
+| --van-nav-bar-z-index          | _1_                        | -    |

@@ -7,14 +7,19 @@ import {
 } from 'vue';
 
 // Utils
-import { numericProp, createNamespace, makeArrayProp } from '../utils';
+import {
+  numericProp,
+  makeArrayProp,
+  makeStringProp,
+  createNamespace,
+} from '../utils';
 
 // Composables
 import { useChildren, useCustomFieldValue } from '@vant/use';
 import { useExpose } from '../composables/use-expose';
 
 // Types
-import type { CheckerDirection } from '../checkbox/Checker';
+import type { CheckerShape, CheckerDirection } from '../checkbox/Checker';
 import type {
   CheckboxGroupExpose,
   CheckboxGroupProvide,
@@ -23,8 +28,9 @@ import type {
 
 const [name, bem] = createNamespace('checkbox-group');
 
-const checkboxGroupProps = {
+export const checkboxGroupProps = {
   max: numericProp,
+  shape: makeStringProp<CheckerShape>('round'),
   disabled: Boolean,
   iconSize: numericProp,
   direction: String as PropType<CheckerDirection>,
@@ -72,7 +78,7 @@ export default defineComponent({
 
     watch(
       () => props.modelValue,
-      (value) => emit('change', value)
+      (value) => emit('change', value),
     );
 
     useExpose<CheckboxGroupExpose>({ toggleAll });

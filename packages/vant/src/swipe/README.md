@@ -78,11 +78,11 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
-    const onChange = (index) => Toast('Current Swipe index:' + index);
+    const onChange = (index) => showToast('Current Swipe index:' + index);
     return { onChange };
   },
 };
@@ -158,9 +158,11 @@ export default {
 
 ### Swipe Events
 
-| Event  | Description                        | Arguments                     |
-| ------ | ---------------------------------- | ----------------------------- |
-| change | Emitted when current swipe changed | index: index of current swipe |
+| Event | Description | Arguments |
+| --- | --- | --- |
+| change | Emitted when current swipe changed | _index: number_ |
+| drag-start `v4.0.9` | Emitted when user starts dragging the swipe | _{ index: number }_ |
+| drag-end `v4.0.9` | Emitted when user ends dragging the swipe | _{ index: number }_ |
 
 ### SwipeItem Events
 
@@ -170,7 +172,7 @@ export default {
 
 ### Swipe Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Swipe instance and call instance methods..
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Swipe instance and call instance methods..
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
@@ -206,10 +208,10 @@ swipeRef.value?.next();
 
 ### Swipe Slots
 
-| Name               | Description      | SlotProps                           |
-| ------------------ | ---------------- | ----------------------------------- |
-| default            | Content          | -                                   |
-| indicator `v3.4.0` | Custom indicator | _{ active: number, total: number }_ |
+| Name      | Description      | SlotProps                           |
+| --------- | ---------------- | ----------------------------------- |
+| default   | Content          | -                                   |
+| indicator | Custom indicator | _{ active: number, total: number }_ |
 
 ## Theming
 
@@ -223,5 +225,5 @@ The component provides the following CSS variables, which can be used to customi
 | --van-swipe-indicator-margin | _var(--van-padding-sm)_ | - |
 | --van-swipe-indicator-active-opacity | _1_ | - |
 | --van-swipe-indicator-inactive-opacity | _0.3_ | - |
-| --van-swipe-indicator-active-background-color | _var(--van-primary-color)_ | - |
-| --van-swipe-indicator-inactive-background-color | _var(--van-border-color)_ | - |
+| --van-swipe-indicator-active-background | _var(--van-primary-color)_ | - |
+| --van-swipe-indicator-inactive-background | _var(--van-border-color)_ | - |

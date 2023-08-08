@@ -48,3 +48,32 @@ export type CalendarMonthInstance = ComponentPublicInstance<
     disabledDays: Ref<ComputedRef<CalendarDayItem[]>>;
   }
 >;
+
+export type CalendarThemeVars = {
+  calendarBackground?: string;
+  calendarPopupHeight?: string;
+  calendarHeaderShadow?: string;
+  calendarHeaderTitleHeight?: string;
+  calendarHeaderTitleFontSize?: string;
+  calendarHeaderSubtitleFontSize?: string;
+  calendarWeekdaysHeight?: string;
+  calendarWeekdaysFontSize?: string;
+  calendarMonthTitleFontSize?: string;
+  calendarMonthMarkColor?: string;
+  calendarMonthMarkFontSize?: string;
+  calendarDayHeight?: string;
+  calendarDayFontSize?: string;
+  calendarDayMarginBottom?: string;
+  calendarRangeEdgeColor?: string;
+  calendarRangeEdgeBackground?: string;
+  calendarRangeMiddleColor?: string;
+  calendarRangeMiddleBackgroundOpacity?: number | string;
+  calendarSelectedDaySize?: string;
+  calendarSelectedDayColor?: string;
+  calendarInfoFontSize?: string;
+  calendarInfoLineHeight?: number | string;
+  calendarSelectedDayBackground?: string;
+  calendarDayDisabledColor?: string;
+  calendarConfirmButtonHeight?: string;
+  calendarConfirmButtonMargin?: string;
+};

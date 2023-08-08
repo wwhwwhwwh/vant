@@ -130,13 +130,13 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     const onOversize = (file) => {
       console.log(file);
-      Toast('File size cannot exceed 500kb');
+      showToast('File size cannot exceed 500kb');
     };
 
     return {
@@ -153,8 +153,6 @@ If you need to make different size limits for different types of files, you can 
 ```
 
 ```js
-import { Toast } from 'vant';
-
 export default {
   setup() {
     const isOverSize = (file) => {
@@ -224,14 +222,14 @@ You can set the width and height separately.
 ```
 
 ```js
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
     // 返回布尔值
     const beforeRead = (file) => {
       if (file.type !== 'image/jpeg') {
-        Toast('Please upload an image in jpg format');
+        showToast('Please upload an image in jpg format');
         return false;
       }
       return true;
@@ -241,7 +239,7 @@ export default {
     const asyncBeforeRead = (file) =>
       new Promise((resolve, reject) => {
         if (file.type !== 'image/jpeg') {
-          Toast('Please upload an image in jpg format');
+          showToast('Please upload an image in jpg format');
           reject();
         } else {
           const img = new File(['foo'], 'bar.jpg', {
@@ -275,7 +273,7 @@ Use `disabled` prop to disable uploader.
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 
 export default {
   setup() {
@@ -284,13 +282,35 @@ export default {
         url: 'https://fastly.jsdelivr.net/npm/@vant/assets/sand.jpeg',
         deletable: true,
         beforeDelete: () => {
-          Toast('Customize the events and styles of a single preview image');
+          showToast(
+            'Customize the events and styles of a single preview image',
+          );
         },
       },
       {
         url: 'https://fastly.jsdelivr.net/npm/@vant/assets/tree.jpeg',
         imageFit: 'contain',
       },
+    ]);
+
+    return { fileList };
+  },
+};
+```
+
+### Enable Reupload
+
+```html
+<van-uploader v-model="fileList" reupload max-count="2" />
+```
+
+```ts
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const fileList = ref([
+      { url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' },
     ]);
 
     return { fileList };
@@ -313,15 +333,16 @@ export default {
 | preview-options | Options of full screen image preview, see [ImagePreview](#/en-US/image-preview) | _object_ | - |
 | multiple | Whether to enable multiple selection pictures | _boolean_ | `false` |
 | disabled | Whether to disabled the upload | _boolean_ | `false` |
-| readonly `v3.1.5` | Whether to make upload area readonly | _boolean_ | `false` |
+| readonly | Whether to make upload area readonly | _boolean_ | `false` |
 | deletable | Whether to show delete icon | _boolean_ | `true` |
+| reupload `v4.4.0` | Whether to enable reupload, if enabled, the image preview will be disabled | _boolean_ | `false` |
 | show-upload | Whether to show upload area | _boolean_ | `true` |
 | lazy-load | Whether to enable lazy load, should register [Lazyload](#/en-US/lazyload) component | _boolean_ | `false` |
 | capture | Capture, can be set to `camera` | _string_ | - |
 | after-read | Hook after reading the file | _Function_ | - |
 | before-read | Hook before reading the file, return false to stop reading the file, can return Promise | _Function_ | - |
 | before-delete | Hook before delete the file, return false to stop reading the file, can return Promise | _Function_ | - |
-| max-size `v3.0.17` | Max size of file | _number \| string \| (file: File) => boolean_ | `Infinity` |
+| max-size | Max size of file | _number \| string \| (file: File) => boolean_ | `Infinity` |
 | max-count | Max count of image | _number \| string_ | `Infinity` |
 | result-type | Type of file read result, can be set to `file` `text` | _string_ | `dataUrl` |
 | upload-text | Upload text | _string_ | - |
@@ -335,8 +356,9 @@ export default {
 | Event | Description | Arguments |
 | --- | --- | --- |
 | oversize | Emitted when file size over limit | Same as after-read |
-| click-upload `v3.1.5` | Emitted when click upload area | _event: MouseEvent_ |
+| click-upload | Emitted when click upload area | _event: MouseEvent_ |
 | click-preview | Emitted when preview image is clicked | Same as after-read |
+| click-reupload | Emitted when reupload image is clicked | Same as after-read |
 | close-preview | Emitted when the full screen image preview is closed | - |
 | delete | Emitted when preview file is deleted | Same as after-read |
 
@@ -345,8 +367,8 @@ export default {
 | Name | Description | SlotProps |
 | --- | --- | --- |
 | default | Custom upload area | - |
-| preview-delete `v.3.5.0` | Custom delete icon | `item: FileListItem` |
-| preview-cover | Custom content that covers the image preview | `item: FileListItem` |
+| preview-delete | Custom delete icon | - |
+| preview-cover | Custom content that covers the image preview | _item: FileListItem_ |
 
 ### Parameters of before-read、after-read、before-delete
 
@@ -365,7 +387,7 @@ export default {
 
 ### Methods
 
-Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Uploader instance and call instance methods.
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get Uploader instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
@@ -409,12 +431,12 @@ The component provides the following CSS variables, which can be used to customi
 | --van-uploader-icon-color | _var(--van-gray-4)_ | - |
 | --van-uploader-text-color | _var(--van-text-color-2)_ | - |
 | --van-uploader-text-font-size | _var(--van-font-size-sm)_ | - |
-| --van-uploader-upload-background-color | _var(--van-gray-1)_ | - |
+| --van-uploader-upload-background | _var(--van-gray-1)_ | - |
 | --van-uploader-upload-active-color | _var(--van-active-color)_ | - |
 | --van-uploader-delete-color | _var(--van-white)_ | - |
 | --van-uploader-delete-icon-size | _14px_ | - |
-| --van-uploader-delete-background-color | _rgba(0, 0, 0, 0.7)_ | - |
-| --van-uploader-file-background-color | _var(--van-background-color)_ | - |
+| --van-uploader-delete-background | _rgba(0, 0, 0, 0.7)_ | - |
+| --van-uploader-file-background | _var(--van-background)_ | - |
 | --van-uploader-file-icon-size | _20px_ | - |
 | --van-uploader-file-icon-color | _var(--van-gray-7)_ | - |
 | --van-uploader-file-name-padding | _0 var(--van-padding-base)_ | - |
@@ -422,7 +444,7 @@ The component provides the following CSS variables, which can be used to customi
 | --van-uploader-file-name-font-size | _var(--van-font-size-sm)_ | - |
 | --van-uploader-file-name-text-color | _var(--van-gray-7)_ | - |
 | --van-uploader-mask-text-color | _var(--van-white)_ | - |
-| --van-uploader-mask-background-color | _fade(var(--van-gray-8), 88%)_ | - |
+| --van-uploader-mask-background | _fade(var(--van-gray-8), 88%)_ | - |
 | --van-uploader-mask-icon-size | _22px_ | - |
 | --van-uploader-mask-message-font-size | _var(--van-font-size-sm)_ | - |
 | --van-uploader-mask-message-line-height | _var(--van-line-height-xs)_ | - |

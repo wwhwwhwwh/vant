@@ -1,4 +1,8 @@
-export const areaList = {
+export const areaList: {
+  province_list: Record<string, string>;
+  city_list: Record<string, string>;
+  county_list: Record<string, string>;
+} = {
   province_list: {
     110000: '北京市',
     120000: '天津市',
@@ -1387,11 +1391,10 @@ export const areaList = {
     340190: '高新技术开发区',
     340191: '经济技术开发区',
     340202: '镜湖区',
-    340203: '弋江区',
     340207: '鸠江区',
-    340208: '三山区',
-    340221: '芜湖县',
-    340222: '繁昌县',
+    340209: '弋江区',
+    340210: '湾沚区',
+    340212: '繁昌区',
     340223: '南陵县',
     340281: '无为市',
     340302: '龙子湖区',
@@ -1621,7 +1624,6 @@ export const areaList = {
     360724: '上犹县',
     360725: '崇义县',
     360726: '安远县',
-    360727: '龙南县',
     360728: '定南县',
     360729: '全南县',
     360730: '宁都县',
@@ -1631,6 +1633,7 @@ export const areaList = {
     360734: '寻乌县',
     360735: '石城县',
     360781: '瑞金市',
+    360783: '龙南市',
     360802: '吉州区',
     360803: '青原区',
     360821: '吉安县',
@@ -3886,3 +3889,53 @@ export const areaList = {
     820204: '圣方济各堂区',
   },
 };
+
+type CascaderOption = {
+  text: string;
+  value: string;
+  children?: CascaderOption[];
+};
+
+const makeOption = (
+  text: string,
+  value: string,
+  children?: CascaderOption[],
+): CascaderOption => ({
+  text,
+  value,
+  children,
+});
+
+export function useCascaderAreaData() {
+  const {
+    city_list: city,
+    county_list: county,
+    province_list: province,
+  } = areaList;
+
+  const provinceMap = new Map<string, CascaderOption>();
+  Object.keys(province).forEach((code) => {
+    provinceMap.set(code.slice(0, 2), makeOption(province[code], code, []));
+  });
+
+  const cityMap = new Map<string, CascaderOption>();
+
+  Object.keys(city).forEach((code) => {
+    const option = makeOption(city[code], code, []);
+    cityMap.set(code.slice(0, 4), option);
+
+    const province = provinceMap.get(code.slice(0, 2));
+    if (province) {
+      province.children!.push(option);
+    }
+  });
+
+  Object.keys(county).forEach((code) => {
+    const city = cityMap.get(code.slice(0, 4));
+    if (city) {
+      city.children!.push(makeOption(county[code], code));
+    }
+  });
+
+  return Array.from(provinceMap.values());
+}

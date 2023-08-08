@@ -13,6 +13,7 @@ const t = useTranslate({
     text2: '选中且禁用',
     withCell: '搭配单元格组件使用',
     horizontal: '水平排列',
+    leftLabel: '左侧文本',
     customIcon: '自定义图标',
     customColor: '自定义颜色',
     customShape: '自定义形状',
@@ -24,7 +25,8 @@ const t = useTranslate({
     text1: 'Disabled',
     text2: 'Disabled and checked',
     withCell: 'Inside a Cell',
-    horizontal: 'Hrizontal',
+    horizontal: 'Horizontal',
+    leftLabel: 'Left Label',
     customIcon: 'Custom Icon',
     customColor: 'Custom Color',
     customShape: 'Custom Shape',
@@ -39,9 +41,11 @@ const radio3 = ref('1');
 const radio4 = ref('1');
 const radio5 = ref('1');
 const radioLabel = ref('1');
-const radioShape = ref('1');
+const radioSquare = ref('1');
+const radioDot = ref('1');
 const radioIconSize = ref('1');
 const radioHorizontal = ref('1');
+const radioLeftLabel = ref('1');
 const activeIcon = cdnURL('user-active.png');
 const inactiveIcon = cdnURL('user-inactive.png');
 </script>
@@ -73,9 +77,22 @@ const inactiveIcon = cdnURL('user-inactive.png');
   </demo-block>
 
   <demo-block :title="t('customShape')">
-    <van-radio-group v-model="radioShape" class="demo-radio-group">
-      <van-radio name="1" shape="square">{{ t('radio') }} 1</van-radio>
-      <van-radio name="2" shape="square">{{ t('radio') }} 2</van-radio>
+    <van-radio-group
+      v-model="radioSquare"
+      class="demo-radio-group"
+      shape="square"
+    >
+      <van-radio name="1">{{ t('radio') }} 1</van-radio>
+      <van-radio name="2">{{ t('radio') }} 2</van-radio>
+    </van-radio-group>
+    <van-radio-group
+      v-model="radioDot"
+      class="demo-radio-group"
+      shape="dot"
+      style="margin-top: 20px"
+    >
+      <van-radio name="1">{{ t('radio') }} 1</van-radio>
+      <van-radio name="2">{{ t('radio') }} 2</van-radio>
     </van-radio-group>
   </demo-block>
 
@@ -111,6 +128,13 @@ const inactiveIcon = cdnURL('user-inactive.png');
           <img :src="checked ? activeIcon : inactiveIcon" />
         </template>
       </van-radio>
+    </van-radio-group>
+  </demo-block>
+
+  <demo-block :title="t('leftLabel')">
+    <van-radio-group v-model="radioLeftLabel" class="demo-radio-group">
+      <van-radio name="1" label-position="left">{{ t('radio') }} 1</van-radio>
+      <van-radio name="2" label-position="left">{{ t('radio') }} 2</van-radio>
     </van-radio-group>
   </demo-block>
 

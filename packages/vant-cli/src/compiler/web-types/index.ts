@@ -1,5 +1,5 @@
 import glob from 'fast-glob';
-import { join } from 'path';
+import { join } from 'node:path';
 import fse from 'fs-extra';
 import { mdParser } from './parser.js';
 import { formatter } from './formatter.js';
@@ -36,7 +36,7 @@ export async function parseAndWrite(options: Options) {
   const webTypes = genWebTypes(vueTags, options);
   fse.outputFileSync(
     join(options.outputDir, 'web-types.json'),
-    JSON.stringify(webTypes, null, 2)
+    JSON.stringify(webTypes),
   );
 }
 

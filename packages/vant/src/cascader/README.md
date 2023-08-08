@@ -83,7 +83,7 @@ export default {
   v-model="cascaderValue"
   title="Select Area"
   :options="options"
-  active-color="#1989fa"
+  active-color="#ee0a24"
   @close="show = false"
   @finish="onFinish"
 />
@@ -114,6 +114,7 @@ export default {
 
 ```js
 import { ref } from 'vue';
+import { closeToast, showLoadingToast } from 'vant';
 
 export default {
   setup() {
@@ -128,13 +129,19 @@ export default {
       },
     ]);
     const onChange = ({ value }) => {
-      if (value === options.value[0].value) {
+      if (
+        value === options.value[0].value &&
+        options.value[0].children.length === 0
+      ) {
+        showLoadingToast('Loading...');
+        // mock data request
         setTimeout(() => {
           options.value[0].children = [
             { text: 'Hangzhou', value: '330100' },
             { text: 'Ningbo', value: '330200' },
           ];
-        }, 500);
+          closeToast();
+        }, 1000);
       }
     };
     const onFinish = ({ selectedOptions }) => {
@@ -202,13 +209,15 @@ export default {
 ```html
 <van-cascader v-model="code" title="Select Area" :options="options">
   <template #options-top="{ tabIndex }">
-    <div class="current-level">Current level is {{ tabIndex }}</div>
+    <div class="current-level">Current level is {{ tabIndex + 1 }}</div>
   </template>
 </van-cascader>
 
 <style>
   .current-level {
-    padding: 10px 16px 0;
+    font-size: 14px;
+    padding: 16px 16px 0;
+    color: var(--van-gray-6);
   }
 </style>
 ```
@@ -246,27 +255,27 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
+| v-model | Value of selected option | _string \| number_ | - |
 | title | Title | _string_ | - |
-| value | Value of selected option | _string \| number_ | - |
 | options | Options | _CascaderOption[]_ | `[]` |
 | placeholder | Placeholder of unselected tab | _string_ | `Select` |
-| active-color | Active color | _string_ | `#ee0a24` |
-| swipeable `v3.0.11` | Whether to enable gestures to slide left and right | _boolean_ | `false` |
+| active-color | Active color | _string_ | `#1989fa` |
+| swipeable | Whether to enable gestures to slide left and right | _boolean_ | `true` |
 | closeable | Whether to show close icon | _boolean_ | `true` |
-| show-header `v3.4.2` | Whether to show header | _boolean_ | `true` |
-| close-icon `v3.0.10` | Close icon name | _string_ | `cross` |
-| field-names `v3.0.4` | Custom the fields of options | _object_ | `{ text: 'text', value: 'value', children: 'children' }` |
+| show-header | Whether to show header | _boolean_ | `true` |
+| close-icon | Close icon name | _string_ | `cross` |
+| field-names | Custom the fields of options | _CascaderFieldNames_ | `{ text: 'text', value: 'value', children: 'children' }` |
 
 ### Data Structure of CascaderOption
 
-| Key                | Description               | Type                        |
-| ------------------ | ------------------------- | --------------------------- |
-| text               | Option text               | _string_                    |
-| value              | Option value              | _string \| number_          |
-| color `v3.1.0`     | Text color                | _string_                    |
-| children           | Cascade children          | _CascaderOption[]_          |
-| disabled `v3.1.2`  | Whether to disable option | _boolean_                   |
-| className `v3.1.0` | className for the option  | _string \| Array \| object_ |
+| Key       | Description               | Type                        |
+| --------- | ------------------------- | --------------------------- |
+| text      | Option text               | _string_                    |
+| value     | Option value              | _string \| number_          |
+| color     | Text color                | _string_                    |
+| children  | Cascade children          | _CascaderOption[]_          |
+| disabled  | Whether to disable option | _boolean_                   |
+| className | className for the option  | _string \| Array \| object_ |
 
 ### Events
 
@@ -282,9 +291,9 @@ export default {
 | Name | Description | SlotProps |
 | --- | --- | --- |
 | title | Custom title | - |
-| option `v3.1.4` | Custom option text | _{ option: CascaderOption, selected: boolean }_ |
-| options-top `v3.2.7` | Custom the content above the options | _{ tabIndex: number }_ |
-| options-bottom `v3.2.8` | Custom the content below the options | _{ tabIndex: number }_ |
+| option | Custom option text | _{ option: CascaderOption, selected: boolean }_ |
+| options-top | Custom the content above the options | _{ tabIndex: number }_ |
+| options-bottom | Custom the content below the options | _{ tabIndex: number }_ |
 
 ### Types
 

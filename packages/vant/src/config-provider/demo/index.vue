@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import VanCell from '../../cell';
 import VanForm from '../../form';
 import VanField from '../../field';
 import VanRate from '../../rate';
 import VanSlider from '../../slider';
 import VanButton from '../../button';
 import VanConfigProvider from '..';
-import { ref } from 'vue';
 import { useTranslate } from '../../../docs/site';
 
 const t = useTranslate({
@@ -16,6 +17,8 @@ const t = useTranslate({
     submit: '提交',
     customTheme: '定制主题',
     defaultTheme: '默认主题',
+    darkMode: '深色模式',
+    switchDarkMode: '请点击文档右上角的按钮，切换深浅模式。',
   },
   'en-US': {
     rate: 'Rate',
@@ -24,6 +27,9 @@ const t = useTranslate({
     submit: 'Submit',
     customTheme: 'Custom Theme',
     defaultTheme: 'DefaultTheme',
+    darkMode: 'Dark Mode',
+    switchDarkMode:
+      'Please click the button in the upper right corner to switch between dark and light modes.',
   },
 });
 
@@ -34,37 +40,19 @@ const themeVars = {
   sliderBarHeight: '4px',
   sliderButtonWidth: '20px',
   sliderButtonHeight: '20px',
-  sliderActiveBackgroundColor: '#07c160',
+  sliderActiveBackground: '#07c160',
+  buttonPrimaryBackground: '#07c160',
   buttonPrimaryBorderColor: '#07c160',
-  buttonPrimaryBackgroundColor: '#07c160',
 };
 </script>
 
 <template>
-  <demo-block :title="t('defaultTheme')">
-    <van-form>
-      <van-field name="rate" :label="t('rate')">
-        <template #input>
-          <van-rate v-model="rate" />
-        </template>
-      </van-field>
+  <div :style="{ minHeight: '100vh' }">
+    <demo-block :title="t('darkMode')">
+      <van-cell :title="t('switchDarkMode')" />
+    </demo-block>
 
-      <van-field name="slider" :label="t('slider')">
-        <template #input>
-          <van-slider v-model="slider" />
-        </template>
-      </van-field>
-
-      <div style="margin: 16px">
-        <van-button round block type="primary" native-type="submit">
-          {{ t('submit') }}
-        </van-button>
-      </div>
-    </van-form>
-  </demo-block>
-
-  <demo-block :title="t('customTheme')">
-    <van-config-provider :theme-vars="themeVars">
+    <demo-block :title="t('defaultTheme')">
       <van-form>
         <van-field name="rate" :label="t('rate')">
           <template #input>
@@ -84,8 +72,32 @@ const themeVars = {
           </van-button>
         </div>
       </van-form>
-    </van-config-provider>
-  </demo-block>
+    </demo-block>
+
+    <demo-block :title="t('customTheme')">
+      <van-config-provider :theme-vars="themeVars">
+        <van-form>
+          <van-field name="rate" :label="t('rate')">
+            <template #input>
+              <van-rate v-model="rate" />
+            </template>
+          </van-field>
+
+          <van-field name="slider" :label="t('slider')">
+            <template #input>
+              <van-slider v-model="slider" />
+            </template>
+          </van-field>
+
+          <div style="margin: 16px">
+            <van-button round block type="primary" native-type="submit">
+              {{ t('submit') }}
+            </van-button>
+          </div>
+        </van-form>
+      </van-config-provider>
+    </demo-block>
+  </div>
 </template>
 
 <style lang="less">

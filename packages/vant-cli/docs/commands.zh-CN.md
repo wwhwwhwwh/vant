@@ -31,7 +31,7 @@ npx vant-cli dev
 
 构建组件库。
 
-运行 build 命令会在 `es` 和 `lib` 目录下生成可用于生产环境的组件代码，详见 [目录结构](https://github.com/vant-ui/vant/tree/dev/packages/vant-cli/docs/directory.zh-CN.md)。
+运行 build 命令会在 `es` 和 `lib` 目录下生成可用于生产环境的组件代码，详见 [目录结构](https://github.com/vant-ui/vant/tree/main/packages/vant-cli/docs/directory.zh-CN.md)。
 
 发布 npm 时，请将以下配置加入到 `package.json` 中，使 npm 包能被正确识别:
 
@@ -50,11 +50,7 @@ npx vant-cli dev
 
 ### release
 
-发布组件库，发布前会自动执行 build 和 changelog 命令，并通过 [release-it](https://github.com/release-it/release-it) 发布 npm 包。
-
-### changelog
-
-基于 commit 记录生成更新日志，基于 [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) 实现。
+发布组件库，发布前会自动执行 build 命令，并按照流程发布 npm 包。
 
 ### commit-lint
 

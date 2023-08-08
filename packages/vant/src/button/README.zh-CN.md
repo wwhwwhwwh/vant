@@ -131,6 +131,32 @@ app.use(Button);
 </van-button>
 ```
 
+### 动画按钮
+
+搭配 Button 和 [Swipe 组件](/#/zh-CN/swipe)，可以实现垂直滚动的动画按钮效果。
+
+```html
+<van-button type="danger" round>
+  <van-swipe
+    vertical
+    class="notice-swipe"
+    :autoplay="2000"
+    :touchable="false"
+    :show-indicators="false"
+  >
+    <van-swipe-item>做任务</van-swipe-item>
+    <van-swipe-item>抽大奖</van-swipe-item>
+  </van-swipe>
+</van-button>
+
+<style>
+  .notice-swipe {
+    height: 40px;
+    line-height: 40px;
+  }
+</style>
+```
+
 ## API
 
 ### Props
@@ -157,7 +183,7 @@ app.use(Button);
 | loading-type | [加载图标类型](#/zh-CN/loading)，可选值为 `spinner` | _string_ | `circular` |
 | loading-size | 加载图标大小，默认单位为 `px` | _number \| string_ | `20px` |
 | url | 点击后跳转的链接地址 | _string_ | - |
-| to | 点击后跳转的目标路由对象，等同于 vue-router 的 [to 属性](https://router.vuejs.org/zh/api/#to) | _string \| object_ | - |
+| to | 点击后跳转的目标路由对象，等同于 Vue Router 的 [to 属性](https://router.vuejs.org/zh/api/interfaces/RouterLinkProps.html#Properties-to) | _string \| object_ | - |
 | replace | 是否在跳转时替换当前页面历史 | _boolean_ | `false` |
 
 ### Events
@@ -169,11 +195,11 @@ app.use(Button);
 
 ### Slots
 
-| 名称           | 说明           |
-| -------------- | -------------- |
-| default        | 按钮内容       |
-| icon `v3.0.18` | 自定义图标     |
-| loading        | 自定义加载图标 |
+| 名称    | 说明           |
+| ------- | -------------- |
+| default | 按钮内容       |
+| icon    | 自定义图标     |
+| loading | 自定义加载图标 |
 
 ### 类型定义
 
@@ -195,39 +221,39 @@ import type {
 
 组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 [ConfigProvider 组件](#/zh-CN/config-provider)。
 
-| 名称 | 默认值 | 描述 |
-| --- | --- | --- |
-| --van-button-mini-height | _24px_ | - |
-| --van-button-mini-padding | _0 var(--van-padding-base)_ | - |
-| --van-button-mini-font-size | _var(--van-font-size-xs)_ | - |
-| --van-button-small-height | _32px_ | - |
-| --van-button-small-padding | _0 var(--van-padding-xs)_ | - |
-| --van-button-small-font-size | _var(--van-font-size-sm)_ | - |
-| --van-button-normal-font-size | _var(--van-font-size-md)_ | - |
-| --van-button-normal-padding | _0 15px_ | - |
-| --van-button-large-height | _50px_ | - |
-| --van-button-default-height | _44px_ | - |
-| --van-button-default-line-height | _1.2_ | - |
-| --van-button-default-font-size | _var(--van-font-size-lg)_ | - |
-| --van-button-default-color | _var(--van-text-color)_ | - |
-| --van-button-default-background-color | _var(--van-background-color-light)_ | - |
-| --van-button-default-border-color | _var(--van-border-color)_ | - |
-| --van-button-primary-color | _var(--van-white)_ | - |
-| --van-button-primary-background-color | _var(--van-primary-color)_ | - |
-| --van-button-primary-border-color | _var(--van-primary-color)_ | - |
-| --van-button-success-color | _var(--van-white)_ | - |
-| --van-button-success-background-color | _var(--van-success-color)_ | - |
-| --van-button-success-border-color | _var(--van-success-color)_ | - |
-| --van-button-danger-color | _var(--van-white)_ | - |
-| --van-button-danger-background-color | _var(--van-danger-color)_ | - |
-| --van-button-danger-border-color | _var(--van-danger-color)_ | - |
-| --van-button-warning-color | _var(--van-white)_ | - |
-| --van-button-warning-background-color | _var(--van-orange)_ | - |
-| --van-button-warning-border-color | _var(--van-orange)_ | - |
-| --van-button-border-width | _var(--van-border-width-base)_ | - |
-| --van-button-border-radius | _var(--van-border-radius-sm)_ | - |
-| --van-button-round-border-radius | _var(--van-border-radius-max)_ | - |
-| --van-button-plain-background-color | _var(--van-white)_ | - |
-| --van-button-disabled-opacity | _var(--van-disabled-opacity)_ | - |
-| --van-button-icon-size | _1.2em_ | - |
-| --van-button-loading-icon-size | _20px_ | - |
+| 名称                              | 默认值                        | 描述 |
+| --------------------------------- | ----------------------------- | ---- |
+| --van-button-mini-height          | _24px_                        | -    |
+| --van-button-mini-padding         | _0 var(--van-padding-base)_   | -    |
+| --van-button-mini-font-size       | _var(--van-font-size-xs)_     | -    |
+| --van-button-small-height         | _32px_                        | -    |
+| --van-button-small-padding        | _0 var(--van-padding-xs)_     | -    |
+| --van-button-small-font-size      | _var(--van-font-size-sm)_     | -    |
+| --van-button-normal-font-size     | _var(--van-font-size-md)_     | -    |
+| --van-button-normal-padding       | _0 15px_                      | -    |
+| --van-button-large-height         | _50px_                        | -    |
+| --van-button-default-height       | _44px_                        | -    |
+| --van-button-default-line-height  | _1.2_                         | -    |
+| --van-button-default-font-size    | _var(--van-font-size-lg)_     | -    |
+| --van-button-default-color        | _var(--van-text-color)_       | -    |
+| --van-button-default-background   | _var(--van-background-2)_     | -    |
+| --van-button-default-border-color | _var(--van-gray-4)_           | -    |
+| --van-button-primary-color        | _var(--van-white)_            | -    |
+| --van-button-primary-background   | _var(--van-primary-color)_    | -    |
+| --van-button-primary-border-color | _var(--van-primary-color)_    | -    |
+| --van-button-success-color        | _var(--van-white)_            | -    |
+| --van-button-success-background   | _var(--van-success-color)_    | -    |
+| --van-button-success-border-color | _var(--van-success-color)_    | -    |
+| --van-button-danger-color         | _var(--van-white)_            | -    |
+| --van-button-danger-background    | _var(--van-danger-color)_     | -    |
+| --van-button-danger-border-color  | _var(--van-danger-color)_     | -    |
+| --van-button-warning-color        | _var(--van-white)_            | -    |
+| --van-button-warning-background   | _var(--van-orange)_           | -    |
+| --van-button-warning-border-color | _var(--van-orange)_           | -    |
+| --van-button-border-width         | _var(--van-border-width)_     | -    |
+| --van-button-radius               | _var(--van-radius-md)_        | -    |
+| --van-button-round-radius         | _var(--van-radius-max)_       | -    |
+| --van-button-plain-background     | _var(--van-white)_            | -    |
+| --van-button-disabled-opacity     | _var(--van-disabled-opacity)_ | -    |
+| --van-button-icon-size            | _1.2em_                       | -    |
+| --van-button-loading-icon-size    | _20px_                        | -    |

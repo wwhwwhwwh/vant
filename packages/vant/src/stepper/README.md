@@ -85,18 +85,18 @@ export default {
 
 ```js
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { closeToast, showLoadingToast } from 'vant';
 
 export default {
   setup() {
     const value = ref(1);
 
     const beforeChange = (value) => {
-      Toast.loading({ forbidClick: true });
+      showLoadingToast({ forbidClick: true });
 
       return new Promise((resolve) => {
         setTimeout(() => {
-          Toast.clear();
+          closeToast();
           // resolve 'true' or 'false'
           resolve(true);
         }, 500);
@@ -126,6 +126,7 @@ export default {
 | v-model | Current value | _number \| string_ | - |
 | min | Min value | _number \| string_ | `1` |
 | max | Max value | _number \| string_ | - |
+| auto-fixed | Whether to auto fix value that is out of range, set to `false` and value that is out of range won’t be auto fixed | _boolean_ | `true` |
 | default-value | Default value, valid when v-model is empty | _number \| string_ | `1` |
 | step | Value change step | _number \| string_ | `1` |
 | name | Stepper name, usually a unique string or number | _number \| string_ | - |
@@ -173,16 +174,16 @@ The component provides the following CSS variables, which can be used to customi
 
 | Name | Default Value | Description |
 | --- | --- | --- |
-| --van-stepper-background-color | _var(--van-active-color)_ | - |
+| --van-stepper-background | _var(--van-active-color)_ | - |
 | --van-stepper-button-icon-color | _var(--van-text-color)_ | - |
-| --van-stepper-button-disabled-color | _var(--van-background-color)_ | - |
+| --van-stepper-button-disabled-color | _var(--van-background)_ | - |
 | --van-stepper-button-disabled-icon-color | _var(--van-gray-5)_ | - |
-| --van-stepper-button-round-theme-color | _var(--van-danger-color)_ | - |
+| --van-stepper-button-round-theme-color | _var(--van-primary-color)_ | - |
 | --van-stepper-input-width | _32px_ | - |
 | --van-stepper-input-height | _28px_ | - |
 | --van-stepper-input-font-size | _var(--van-font-size-md)_ | - |
 | --van-stepper-input-line-height | _normal_ | - |
 | --van-stepper-input-text-color | _var(--van-text-color)_ | - |
 | --van-stepper-input-disabled-text-color | _var(--van-text-color-3)_ | - |
-| --van-stepper-input-disabled-background-color | _var(--van-active-color)_ | - |
-| --van-stepper-border-radius | _var(--van-border-radius-md)_ | - |
+| --van-stepper-input-disabled-background | _var(--van-active-color)_ | - |
+| --van-stepper-radius | _var(--van-radius-md)_ | - |

@@ -52,7 +52,7 @@ function genAlphabet() {
 
 const [name, bem] = createNamespace('index-bar');
 
-const indexBarProps = {
+export const indexBarProps = {
   sticky: truthProp,
   zIndex: numericProp,
   teleport: [String, Object] as PropType<TeleportProps['to']>,
@@ -105,7 +105,7 @@ export default defineComponent({
 
     const getActiveAnchor = (
       scrollTop: number,
-      rects: Array<{ top: number; height: number }>
+      rects: Array<{ top: number; height: number }>,
     ) => {
       for (let i = children.length - 1; i >= 0; i--) {
         const prevHeight = i > 0 ? rects[i - 1].height : 0;
@@ -132,7 +132,7 @@ export default defineComponent({
       const scrollParentRect = useRect(scrollParent);
 
       const rects = children.map((item) =>
-        item.getRect(scrollParent.value, scrollParentRect)
+        item.getRect(scrollParent.value, scrollParentRect),
       );
 
       let active = -1;
@@ -221,12 +221,12 @@ export default defineComponent({
         const scrollParentRect = useRect(scrollParent);
         const { offsetHeight } = document.documentElement;
 
+        match.$el.scrollIntoView();
+
         if (scrollTop === offsetHeight - scrollParentRect.height) {
           onScroll();
           return;
         }
-
-        match.$el.scrollIntoView();
 
         if (props.sticky && props.stickyOffsetTop) {
           setRootScrollTop(getRootScrollTop() - props.stickyOffsetTop);
@@ -258,7 +258,7 @@ export default defineComponent({
         const { clientX, clientY } = event.touches[0];
         const target = document.elementFromPoint(
           clientX,
-          clientY
+          clientY,
         ) as HTMLElement;
         if (target) {
           const { index } = target.dataset;

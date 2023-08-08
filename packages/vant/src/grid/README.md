@@ -118,7 +118,7 @@ app.use(GridItem);
 | square | Whether to be square shape | _boolean_ | `false` |
 | clickable | Whether to show click feedback when clicked | _boolean_ | `false` |
 | direction | Content arrangement direction, can be set to `horizontal` | _string_ | `vertical` |
-| reverse `v3.1.0` | Whether to reverse the position of icon and text | _boolean_ | `false` |
+| reverse | Whether to reverse the position of icon and text | _boolean_ | `false` |
 
 ### GridItem Props
 
@@ -130,9 +130,9 @@ app.use(GridItem);
 | icon-color | Icon color | _string_ | - |
 | dot | Whether to show red dot | _boolean_ | `false` |
 | badge | Content of the badge | _number \| string_ | - |
-| badge-props `v3.2.8` | Props of Badge, see [Badge - props](#/en-US/badge#props) | _BadgeProps_ | - |
+| badge-props | Props of Badge, see [Badge - props](#/en-US/badge#props) | _BadgeProps_ | - |
 | url | Link URL | _string_ | - |
-| to | Target route of the link, same as to of vue-router | _string \| object_ | - |
+| to | The target route should navigate to when clicked on, same as the [to prop](https://router.vuejs.org/api/interfaces/RouterLinkProps.html#Properties-to) of Vue Router | _string \| object_ | - |
 | replace | If true, the navigation will not leave a history record | _boolean_ | `false` |
 
 ### GridItem Events
@@ -166,8 +166,8 @@ The component provides the following CSS variables, which can be used to customi
 | Name | Default Value | Description |
 | --- | --- | --- |
 | --van-grid-item-content-padding | _var(--van-padding-md) var(--van-padding-xs)_ | - |
-| --van-grid-item-content-background-color | _var(--van-background-color-light)_ | - |
+| --van-grid-item-content-background | _var(--van-background-2)_ | - |
 | --van-grid-item-content-active-color | _var(--van-active-color)_ | - |
 | --van-grid-item-icon-size | _28px_ | - |
-| --van-grid-item-text-color | _var(--van-gray-7)_ | - |
+| --van-grid-item-text-color | _var(--van-text-color)_ | - |
 | --van-grid-item-text-font-size | _var(--van-font-size-sm)_ | - |

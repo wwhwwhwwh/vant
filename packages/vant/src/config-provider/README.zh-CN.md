@@ -159,7 +159,17 @@ export default {
 };
 ```
 
-> 注意：ConfigProvider 仅影响它的子组件的样式，不影响全局 root 节点。
+#### CSS 变量生效范围
+
+默认情况下，themeVars 产生的 CSS 变量是设置在组件根节点上的，因此只会影响它的子组件的样式，不会影响整个页面。
+
+你可以通过 `theme-vars-scope` 属性来修改 CSS 变量的生效范围。比如将 `theme-vars-scope` 设置为 `global`，此时 themeVars 产生的 CSS 变量会设置到 HTML 的根节点，并对整个页面内的所有组件生效。
+
+```html
+<van-config-provider :theme-vars="themeVars" theme-vars-scope="global">
+  ...
+</van-config-provider>
+```
 
 #### 在 TypeScript 中使用
 
@@ -212,22 +222,64 @@ export default {
 };
 ```
 
+#### 使用类名
+
+此外，你也可以使用 `.van-theme-light` 和 `.van-theme-dark` 这两个类名选择器来单独修改浅色或深色模式下的基础变量和组件变量。
+
+```css
+.van-theme-light {
+  --van-white: white;
+}
+
+.van-theme-dark {
+  --van-white: black;
+}
+```
+
 ## 主题变量
 
-### 基础变量
+### 变量类型
 
 Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变量会继承基础变量，因此在修改基础变量后，会影响所有相关的组件。
 
 #### 修改变量
 
-由于 CSS 变量继承机制的原因，两者的修改方式有一定差异：
+CSS 变量存在继承关系，组件变量会寻找最近的父级基础变量进行继承。
 
-- 基础变量只能通过 `:root 选择器` 修改，不能通过 `ConfigProvider 组件` 修改。
-- 组件变量可以通过 `:root 选择器` 和 `ConfigProvider 组件` 修改。
+因此修改基础变量存在一定限制，你需要使用 `:root` 选择器或 ConfigProvider 组件的 global 模式来修改基础变量。否则，组件变量可能会无法正确继承基础变量。
 
-你也可以使用 `.van-theme-light` 和 `.van-theme-dark` 这两个类名选择器来单独修改浅色或深色模式下的基础变量和组件变量。
+以 `--van-primary-color` 这个基础变量为例：
 
-#### 变量列表
+- 可以通过 `:root` 选择器修改：
+
+```css
+:root {
+  --van-primary-color: red;
+}
+```
+
+- 可以通过 ConfigProvider 组件的 global 模式修改：
+
+```html
+<van-config-provider
+  :theme-vars="{ primaryColor: 'red' }"
+  theme-vars-scope="global"
+>
+  ...
+</van-config-provider>
+```
+
+- 不可以通过 ConfigProvider 组件默认的 `local` 模式修改：
+
+```html
+<van-config-provider :theme-vars="{ primaryColor: 'red' }">
+  ...
+</van-config-provider>
+```
+
+对于组件变量，则没有上述限制，可以通过任意方式修改。
+
+### 基础变量列表
 
 下面是所有的基础变量：
 
@@ -318,6 +370,7 @@ Vant 中的 CSS 变量分为 **基础变量** 和 **组件变量**。组件变�
 | theme-vars | 自定义主题变量，局部生效 | _object_ | - |
 | theme-vars-dark | 仅在深色模式下生效的主题变量，优先级高于 `theme-vars` | _object_ | - |
 | theme-vars-light | 仅在浅色模式下生效的主题变量，优先级高于 `theme-vars` | _object_ | - |
+| theme-vars-scope | 默认仅影响子组件的样式，设置为 `global` 整个页面生效 | _ConfigProviderThemeVarsScope_ | `local` |
 | tag | 根节点对应的 HTML 标签名 | _string_ | `div` |
 | z-index | 设置所有弹窗类组件的 z-index，该属性对全局生效 | _number_ | `2000` |
 | icon-prefix | 所有图标的类名前缀，等同于 Icon 组件的 [class-prefix 属性](#/zh-CN/icon#props) | _string_ | `van-icon` |
@@ -331,5 +384,6 @@ import type {
   ConfigProviderProps,
   ConfigProviderTheme,
   ConfigProviderThemeVars,
+  ConfigProviderThemeVarsScope,
 } from 'vant';
 ```

@@ -1,8 +1,8 @@
 import {
-  computed,
-  defineComponent,
   ref,
   watch,
+  computed,
+  defineComponent,
   type ExtractPropTypes,
 } from 'vue';
 
@@ -13,6 +13,7 @@ import {
   createNamespace,
   makeArrayProp,
   makeNumericProp,
+  preventDefault,
   truthProp,
   windowHeight,
 } from '../utils';
@@ -28,15 +29,13 @@ export const floatingPanelProps = {
   anchors: makeArrayProp<number>(),
   duration: makeNumericProp(0.2),
   contentDraggable: truthProp,
-  lockScroll: truthProp,
+  lockScroll: Boolean,
   safeAreaInsetBottom: truthProp,
 };
 
 export type FloatingPanelProps = ExtractPropTypes<typeof floatingPanelProps>;
 
 const [name, bem] = createNamespace('floating-panel');
-
-const DAMP = 0.2;
 
 export default defineComponent({
   name,
@@ -46,6 +45,7 @@ export default defineComponent({
   emits: ['heightChange', 'update:height'],
 
   setup(props, { emit, slots }) {
+    const DAMP = 0.2;
     const rootRef = ref<HTMLDivElement>();
     const contentRef = ref<HTMLDivElement>();
     const height = useSyncPropRef(
@@ -90,12 +90,14 @@ export default defineComponent({
     };
 
     let startY: number;
+    let maxScroll: number = -1;
     const touch = useTouch();
 
     const onTouchstart = (e: TouchEvent) => {
       touch.start(e);
       dragging.value = true;
       startY = -height.value;
+      maxScroll = -1;
     };
 
     const onTouchmove = (e: TouchEvent) => {
@@ -103,13 +105,17 @@ export default defineComponent({
 
       const target = e.target as Element;
       if (contentRef.value === target || contentRef.value?.contains(target)) {
+        const { scrollTop } = contentRef.value;
+        // If maxScroll value more than zero, indicates that panel movement is not triggered from the top
+        maxScroll = Math.max(maxScroll, scrollTop);
+
         if (!props.contentDraggable) return;
 
         if (-startY < boundary.value.max) {
-          if (e.cancelable) e.preventDefault();
-          e.stopPropagation();
+          preventDefault(e, true);
         } else if (
-          !(contentRef.value.scrollTop <= 0 && touch.deltaY.value > 0)
+          !(scrollTop <= 0 && touch.deltaY.value > 0) ||
+          maxScroll > 0
         ) {
           return;
         }
@@ -120,6 +126,7 @@ export default defineComponent({
     };
 
     const onTouchend = () => {
+      maxScroll = -1;
       dragging.value = false;
       height.value = closest(anchors.value, height.value);
 

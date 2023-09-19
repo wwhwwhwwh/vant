@@ -14,7 +14,7 @@ npm i vant
 npm i vant@latest-v2
 ```
 
-Using `yarn` or `pnpm`:
+Using `yarn`, `pnpm`, or `bun`:
 
 ```bash
 # with yarn
@@ -22,11 +22,23 @@ yarn add vant
 
 # with pnpm
 pnpm add vant
+
+# with Bun
+bun add vant
 ```
+
+### Using in a New Project
+
+If you need to create a new project, we recommend using [Vite](https://vitejs.dev/) or [Nuxt framework](https://nuxtjs.org/).
+
+Here are the example projects provided by Vant official. You can clone these projects and copy the code.
+
+- [vant-demo - vite](https://github.com/vant-ui/vant-demo/tree/master/vant/vite): Build an application using Vue 3, Vant 4, and Vite.
+- [vant-demo - nuxt3](https://github.com/vant-ui/vant-demo/tree/master/vant/nuxt3): Build an application using Vue 3, Nuxt 3, and Vant 4.
 
 ### CDN
 
-The easiest way to use Vant is to include a CDN link in the HTML file, after which you can access all components via the global variable `vant`.
+If you only need to develop a simple HTML page, you can directly include the CDN links in the HTML file. After that, you can access all the components through the global variable `vant`.
 
 ```html
 <!-- import style -->
@@ -71,30 +83,11 @@ For enterprise developers, we recommend:
 - install with npm, use build tools to bundle it
 - download the scripts, host it on your own server
 
-### CLI
-
-We recommend to use [Vue CLI](https://cli.vuejs.org/) to create a new project.
-
-```bash
-# Install Vue CLI
-npm install -g @vue/cli
-
-# Create a project
-vue create hello-world
-
-# Open GUI
-vue ui
-```
-
-![](https://fastly.jsdelivr.net/npm/@vant/assets/vue-cli-demo-201809030812.png)
-
-In the GUI, click on 'Dependencies' -> `Install Dependencies` and add `vant` to the dependencies.
-
 ## Usage
 
 ### Basic Usage
 
-The basic usage of Vant components;
+The basic usage of Vant components:
 
 ```js
 import { createApp } from 'vue';
@@ -113,19 +106,26 @@ app.use(Button);
 
 ### Import on demand
 
-If you are using vite, webpack or vue-cli, you can use [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components), this plugin can help you to auto importing components and reduce CSS file size.
+If you are using `vite`, `webpack` or `vue-cli`, you can use [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components), this plugin can help you to auto importing components.
+
+Vant officially wrote an automatic import style parser [@vant/auto-import-resolver](https://github.com/youzan/vant/tree/main/packages/vant-auto-import-resolver) based on `unplugin-vue-components`, both of which are used together.
+
+Compared with conventional usage, this method can introduce the CSS style of components on demand, thus reducing part of the code volume, but it will become more cumbersome to use. If the business's volume requirements for CSS are not particularly extreme, we recommend a simpler general usage.
 
 #### 1. Install Plugin
 
 ```bash
 # with npm
-npm i unplugin-vue-components -D
+npm i @vant/auto-import-resolver unplugin-vue-components -D
 
 # with yarn
-yarn add unplugin-vue-components -D
+yarn add @vant/auto-import-resolver unplugin-vue-components -D
 
 # with pnpm
-pnpm add unplugin-vue-components -D
+pnpm add @vant/auto-import-resolver unplugin-vue-components -D
+
+# with Bun
+bun add @vant/auto-import-resolver unplugin-vue-components -D
 ```
 
 #### 2. Configure Plugin
@@ -135,7 +135,7 @@ For `vite` based project，configure the plugin in the `vite.config.js` file:
 ```js
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { VantResolver } from 'unplugin-vue-components/resolvers';
+import { VantResolver } from '@vant/auto-import-resolver';
 
 export default {
   plugins: [
@@ -150,7 +150,7 @@ export default {
 For `vue-cli` based project，configure the plugin in the `vue.config.js` file:
 
 ```js
-const { VantResolver } = require('unplugin-vue-components/resolvers');
+const { VantResolver } = require('@vant/auto-import-resolver');
 const ComponentsPlugin = require('unplugin-vue-components/webpack');
 
 module.exports = {
@@ -167,7 +167,7 @@ module.exports = {
 For `webpack` based project，configure the plugin in the `webpack.config.js` file:
 
 ```js
-const { VantResolver } = require('unplugin-vue-components/resolvers');
+const { VantResolver } = require('@vant/auto-import-resolver');
 const ComponentsPlugin = require('unplugin-vue-components/webpack');
 
 module.exports = {
@@ -181,7 +181,7 @@ module.exports = {
 
 #### 3. Using Components
 
-Then you can using components from Vant in the template, the `unplugin-vue-components` will automatically import the corresponding Vant components.
+Then you can using components from Vant in the template, the `unplugin-vue-components` will automatically import the corresponding Vant components,`@vant/auto-import-resolver` The corresponding component style will be automatically introduced.
 
 ```html
 <template>
@@ -191,7 +191,7 @@ Then you can using components from Vant in the template, the `unplugin-vue-compo
 
 #### 4. Style of Function Components
 
-Some components of Vant are provided as function, including `Toast`, `Dialog`, `Notify` and `ImagePreview`. When using function components, `unplugin-vue-components` can not auto import the component style, so we need to import style manually.
+Some components of Vant are provided as function, including `Toast`, `Dialog`, `Notify` and `ImagePreview`. When using function components, `unplugin-vue-components` cannot parse the automatic registration component, resulting in `@vant/auto-import-resolver` unable to parse the style, so the style needs to be introduced manually.
 
 ```js
 // Toast
@@ -216,7 +216,8 @@ import 'vant/es/image-preview/style';
 #### Tips
 
 - "Full Import" and "On-demand Import" should not be used at the same time, otherwise it will lead to problems such as code duplication and style overrides.
-- unplugin-vue-components is not officially maintained by Vant. If you encounter issues when using this plugin, please feedback to [antfu/unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) repository.
+- During use, if the component cannot be imported, because `unplugin-vue-components` is not a plug-in officially maintained by `Vant`, it is recommended to give feedback under the [unplugin/unplugin-vue-components](https://github.com/antfu/unplugin/unplugin-vue-components) repository.
+- If it is a similar problem that the style does not take effect, feedback under the `Vant` repository
 
 ## With Frameworks
 
@@ -235,6 +236,9 @@ yarn add @vant/nuxt -D
 
 # with pnpm
 pnpm add @vant/nuxt -D
+
+# with Bun
+bun add @vant/nuxt -D
 ```
 
 #### 2. Add Module

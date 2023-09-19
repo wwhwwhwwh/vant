@@ -19,6 +19,9 @@ yarn add vant@^4 @vant/compat@^1
 
 # Install via pnpm
 pnpm add vant@^4 @vant/compat@^1
+
+# Install via Bun
+bun add vant@^4 @vant/compat@^1
 ```
 
 You can also change the version directly in the `dependencies` field of `package.json`, and you will need to reinstall the dependencies after the change.
@@ -76,7 +79,7 @@ The way the CSS code is imported can be selected from the following two ways:
 import 'vant/lib/index.css';
 ```
 
-- Use the [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) plugin to import styles on demand, see [Quick Start](#/en-US/quickstart) for detailed usage.
+- Use the [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) plugin to import styles on demand, see [Quick Start](#/en-US/quickstart) for detailed usage.
 
 ## Component refactoring
 

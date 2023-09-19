@@ -18,7 +18,7 @@ npm i vant
 npm i vant@latest-v2
 ```
 
-当然，你也可以通过 `yarn` 或 `pnpm` 进行安装：
+当然，你也可以通过 `yarn`、`pnpm` 或 `bun` 进行安装：
 
 ```bash
 # 通过 yarn 安装
@@ -26,11 +26,23 @@ yarn add vant
 
 # 通过 pnpm 安装
 pnpm add vant
+
+# 通过 Bun 安装
+bun add vant
 ```
+
+### 在新项目中使用
+
+如果你需要新建一个项目，我们推荐使用 [Vite](https://cn.vitejs.dev/) 或 [Nuxt 框架](https://nuxt.com)。
+
+以下是 Vant 官方提供的一些示例项目，你可以克隆该项目，并直接拷贝代码来使用。
+
+- [vant-demo - vite](https://github.com/vant-ui/vant-demo/tree/master/vant/vite)：使用 Vue 3、Vant 4、Vite 搭建应用
+- [vant-demo - nuxt3](https://github.com/vant-ui/vant-demo/tree/master/vant/nuxt3)：使用 Vue 3、Nuxt 3、Vant 4 搭建应用。
 
 ### 通过 CDN 安装
 
-使用 Vant 最简单的方法是直接在 HTML 文件中引入 CDN 链接，之后你可以通过全局变量 `vant` 访问到所有组件。
+如果你只需要开发一个简单的 HTML 页面，那么可以直接在 HTML 文件中引入 CDN 链接，之后你可以通过全局变量 `vant` 访问到所有组件。
 
 ```html
 <!-- 引入样式文件 -->
@@ -115,7 +127,9 @@ Vant 支持多种组件注册方式，除了在 app 上全局注册组件，你�
 
 ### 方法二. 按需引入组件样式
 
-在基于 `vite`、`webpack` 或 `vue-cli` 的项目中使用 Vant 时，可以使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 插件，它可以自动引入组件，并按需引入组件的样式。
+在基于 `vite`、`webpack` 或 `vue-cli` 的项目中使用 Vant 时，可以使用 [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) 插件，它可以自动引入组件。
+
+Vant 官方基于 `unplugin-vue-components` 提供了自动导入样式的解析器 [@vant/auto-import-resolver](https://github.com/youzan/vant/tree/main/packages/vant-auto-import-resolver)，两者可以配合使用。
 
 相比于常规用法，这种方式可以按需引入组件的 CSS 样式，从而减少一部分代码体积，但使用起来会变得繁琐一些。如果业务对 CSS 的体积要求不是特别极致，我们推荐使用更简便的常规用法。
 
@@ -123,13 +137,16 @@ Vant 支持多种组件注册方式，除了在 app 上全局注册组件，你�
 
 ```bash
 # 通过 npm 安装
-npm i unplugin-vue-components -D
+npm i @vant/auto-import-resolver unplugin-vue-components -D
 
 # 通过 yarn 安装
-yarn add unplugin-vue-components -D
+yarn add @vant/auto-import-resolver unplugin-vue-components -D
 
 # 通过 pnpm 安装
-pnpm add unplugin-vue-components -D
+pnpm add @vant/auto-import-resolver unplugin-vue-components -D
+
+# 通过 bun 安装
+bun add @vant/auto-import-resolver unplugin-vue-components -D
 ```
 
 #### 2. 配置插件
@@ -139,7 +156,7 @@ pnpm add unplugin-vue-components -D
 ```js
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { VantResolver } from 'unplugin-vue-components/resolvers';
+import { VantResolver } from '@vant/auto-import-resolver';
 
 export default {
   plugins: [
@@ -154,7 +171,7 @@ export default {
 如果是基于 `vue-cli` 的项目，在 `vue.config.js` 文件中配置插件：
 
 ```js
-const { VantResolver } = require('unplugin-vue-components/resolvers');
+const { VantResolver } = require('@vant/auto-import-resolver');
 const ComponentsPlugin = require('unplugin-vue-components/webpack');
 
 module.exports = {
@@ -171,7 +188,7 @@ module.exports = {
 如果是基于 `webpack` 的项目，在 `webpack.config.js` 文件中配置插件：
 
 ```js
-const { VantResolver } = require('unplugin-vue-components/resolvers');
+const { VantResolver } = require('@vant/auto-import-resolver');
 const ComponentsPlugin = require('unplugin-vue-components/webpack');
 
 module.exports = {
@@ -185,7 +202,7 @@ module.exports = {
 
 #### 3. 使用组件
 
-完成以上两步，就可以直接在模板中使用 Vant 组件了，`unplugin-vue-components` 会解析模板并自动注册对应的组件。
+完成以上两步，就可以直接在模板中使用 Vant 组件了，`unplugin-vue-components` 会解析模板并自动注册对应的组件, `@vant/auto-import-resolver` 会自动引入对应的组件样式。
 
 ```html
 <template>
@@ -195,7 +212,7 @@ module.exports = {
 
 #### 4. 引入函数组件的样式
 
-Vant 中有个别组件是以函数的形式提供的，包括 `Toast`，`Dialog`，`Notify` 和 `ImagePreview` 组件。在使用函数组件时，`unplugin-vue-components` 无法自动引入对应的样式，因此需要手动引入样式。
+Vant 中有个别组件是以函数的形式提供的，包括 `Toast`，`Dialog`，`Notify` 和 `ImagePreview` 组件。在使用函数组件时，`unplugin-vue-components` 无法解析自动注册组件，导致 `@vant/auto-import-resolver` 无法解析样式，因此需要手动引入样式。
 
 ```js
 // Toast
@@ -220,7 +237,8 @@ import 'vant/es/image-preview/style';
 #### 使用提示
 
 - 请避免同时使用「全量引入」和「按需引入」这两种引入方式，否则会导致代码重复、样式错乱等问题。
-- unplugin-vue-components 并不是 Vant 官方维护的插件，如果在使用过程中遇到问题，建议优先到 [antfu/unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 仓库下反馈。
+- 在使用过程中，如果你遇到组件不能导入的问题，因为 unplugin-vue-components 并不是 Vant 官方维护的插件，所以建议到 [unplugin/unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) 仓库下反馈。
+- 如果是样式不生效的相关问题，你可以在 Vant 仓库下反馈。
 
 ## 在框架中使用
 
@@ -239,6 +257,9 @@ yarn add @vant/nuxt -D
 
 # 通过 pnpm 安装
 pnpm add @vant/nuxt -D
+
+# 通过 Bun 安装
+bun add @vant/nuxt -D
 ```
 
 #### 2. 增加模块
@@ -288,7 +309,7 @@ module.exports = {
 移除 `babel-plugin-import` 有以下收益：
 
 - 不再强依赖 babel，项目可以使用 esbuild、swc 等更高效的编译工具，大幅度提升编译效率。
-- 不再受到 `babel-plugin-import` 的 import 写法限制，可以从 vant 中导入除了组件以外的其他内容，比如 Vant 4 中新增的 `showToast` 等方法：
+- 不再受到 `babel-plugin-import` 的 import 写法限制，可以从 vant 中导入除了组件以外的其他内容，比如 Vant 4 中新增的 `showToast` 等方法。
 
 ```ts
 import { showToast, showDialog } from 'vant';

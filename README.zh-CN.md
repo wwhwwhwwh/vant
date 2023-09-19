@@ -8,7 +8,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/npm/v/vant?style=flat-square" alt="npm version" />
-    <img src="https://img.shields.io/codecov/c/github/vant-ui/vant/dev.svg?style=flat-square&color=#4fc08d" alt="Coverage Status" />
+    <img src="https://img.shields.io/codecov/c/github/youzan/vant/main.svg?style=flat-square&color=#4fc08d" alt="Coverage Status" />
     <img src="https://img.shields.io/npm/dm/vant.svg?style=flat-square&color=#4fc08d" alt="downloads" />
     <img src="https://img.badgesize.io/https://unpkg.com/vant/lib/vant.min.js?compression=gzip&style=flat-square&label=gzip%20size&color=#4fc08d" alt="Gzip Size" />
 </p>
@@ -57,7 +57,7 @@ npm i vant
 npm i vant@latest-v2
 ```
 
-当然，你也可以通过 `yarn` 或 `pnpm` 进行安装：
+当然，你也可以通过 `yarn` 或 `pnpm` 或 `bun` 进行安装：
 
 ```bash
 # 通过 yarn 安装
@@ -65,6 +65,9 @@ yarn add vant
 
 # 通过 pnpm 安装
 pnpm add vant
+
+# 通过 bun 安装
+bun add vant
 ```
 
 ## 快速上手

@@ -1,5 +1,5 @@
 import { later, mount } from '../../../test';
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, onMounted, computed } from 'vue';
 import DropdownItem from '../../dropdown-item';
 import DropdownMenu, { DropdownMenuDirection } from '..';
 
@@ -198,7 +198,7 @@ test('disable dropdown item', async () => {
 });
 
 test('change event', async () => {
-  const onChange = jest.fn();
+  const onChange = vi.fn();
 
   const wrapper = mount({
     setup() {
@@ -231,36 +231,38 @@ test('change event', async () => {
   expect(onChange).toHaveBeenCalledTimes(1);
 });
 
-test('toggle method', (done) => {
-  const wrapper = mount({
-    setup() {
-      const item = ref();
+test('toggle method', () => {
+  return new Promise<void>((resolve) => {
+    const wrapper = mount({
+      setup() {
+        const item = ref();
 
-      onMounted(async () => {
-        // show
-        item.value.toggle(true, { immediate: true });
-        await later();
+        onMounted(async () => {
+          // show
+          item.value.toggle(true, { immediate: true });
+          await later();
 
-        expect(
-          wrapper.find('.van-dropdown-item__content').style.display,
-        ).toEqual('');
+          expect(
+            wrapper.find('.van-dropdown-item__content').style.display,
+          ).toEqual('');
 
-        // hide
-        item.value.toggle(false, { immediate: true });
-        await later();
-        expect(
-          wrapper.find('.van-dropdown-item__content').style.display,
-        ).toEqual('none');
+          // hide
+          item.value.toggle(false, { immediate: true });
+          await later();
+          expect(
+            wrapper.find('.van-dropdown-item__content').style.display,
+          ).toEqual('none');
 
-        done();
-      });
+          resolve();
+        });
 
-      return () => (
-        <DropdownMenu>
-          <DropdownItem ref={item} />
-        </DropdownMenu>
-      );
-    },
+        return () => (
+          <DropdownMenu>
+            <DropdownItem ref={item} />
+          </DropdownMenu>
+        );
+      },
+    });
   });
 });
 
@@ -294,4 +296,32 @@ test('DropdownItem should inherit attrs when using teleport prop', async () => {
   await later();
   const item = root.querySelector('.van-dropdown-item');
   expect(item?.classList.contains('foo')).toBeTruthy();
+});
+
+test('scrolling is allowed when the number of items exceeds the threshold', async () => {
+  const itemCounts = ref(4);
+  const wrapper = mount({
+    setup() {
+      const options = [
+        { text: 'A', value: 0 },
+        { text: 'B', value: 1 },
+      ];
+
+      const dropdownItems = computed(() =>
+        new Array(itemCounts.value)
+          .fill(0)
+          .map(() => <DropdownItem modelValue={0} options={options} />),
+      );
+
+      return () => (
+        <DropdownMenu swipeThreshold={4}>{dropdownItems.value}</DropdownMenu>
+      );
+    },
+  });
+
+  const bar = wrapper.find('.van-dropdown-menu__bar');
+  expect(bar.classes()).not.toContain('van-dropdown-menu__bar--scrollable');
+  itemCounts.value = 5;
+  await later();
+  expect(bar.classes()).toContain('van-dropdown-menu__bar--scrollable');
 });

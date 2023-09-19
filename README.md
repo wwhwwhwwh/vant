@@ -8,7 +8,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/npm/v/vant?style=flat-square" alt="npm version" />
-    <img src="https://img.shields.io/codecov/c/github/vant-ui/vant/dev.svg?style=flat-square&color=#4fc08d" alt="Coverage Status" />
+    <img src="https://img.shields.io/codecov/c/github/youzan/vant/main.svg?style=flat-square&color=#4fc08d" alt="Coverage Status" />
     <img src="https://img.shields.io/npm/dm/vant.svg?style=flat-square&color=#4fc08d" alt="downloads" />
     <img src="https://img.badgesize.io/https://unpkg.com/vant/lib/vant.min.js?compression=gzip&style=flat-square&label=gzip%20size&color=#4fc08d" alt="Gzip Size" />
 </p>
@@ -53,7 +53,7 @@ npm i vant
 npm i vant@latest-v2
 ```
 
-Using `yarn` or `pnpm`:
+Using `yarn`, `pnpm`, or `bun`:
 
 ```bash
 # with yarn
@@ -61,6 +61,9 @@ yarn add vant
 
 # with pnpm
 pnpm add vant
+
+# with Bun
+bun add vant
 ```
 
 ## Quickstart

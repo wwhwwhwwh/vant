@@ -4,6 +4,14 @@
   "rules": {
     "prefer-object-spread": "off"
   },
+  "globals": {
+    "vi": true
+  },
+  "ignorePatterns": [
+    "es",
+    "lib",
+    "node_modules"
+  ],
   "overrides": [
     {
       "files": ["src/**/*"],

@@ -1,3 +1,4 @@
+import 'vitest-canvas-mock';
 import { Signature } from '..';
 import { mount } from '../../../test';
 
@@ -62,7 +63,7 @@ test('submit() should output a valid canvas', async () => {
 test('should render tips correctly', async () => {
   const createElement = document.createElement.bind(document);
 
-  const spy = jest.spyOn(document, 'createElement');
+  const spy = vi.spyOn(document, 'createElement');
   spy.mockImplementation((tagName, options) => {
     if (tagName === 'canvas') {
       return {} as HTMLCanvasElement;

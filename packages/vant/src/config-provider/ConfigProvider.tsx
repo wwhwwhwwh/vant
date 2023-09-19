@@ -26,6 +26,8 @@ const [name, bem] = createNamespace('config-provider');
 
 export type ConfigProviderTheme = 'light' | 'dark';
 
+export type ConfigProviderThemeVarsScope = 'local' | 'global';
+
 export type ConfigProviderProvide = {
   iconPrefix?: string;
 };
@@ -42,17 +44,40 @@ export const configProviderProps = {
   themeVars: Object as ThemeVars,
   themeVarsDark: Object as ThemeVars,
   themeVarsLight: Object as ThemeVars,
+  themeVarsScope: makeStringProp<ConfigProviderThemeVarsScope>('local'),
   iconPrefix: String,
 };
 
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>;
 
+/** map `gray1` to `gray-1` */
+function insertDash(str: string) {
+  return str.replace(/([a-zA-Z])(\d)/g, '$1-$2');
+}
+
 function mapThemeVarsToCSSVars(themeVars: Record<string, Numeric>) {
   const cssVars: Record<string, Numeric> = {};
   Object.keys(themeVars).forEach((key) => {
-    cssVars[`--van-${kebabCase(key)}`] = themeVars[key];
+    const formattedKey = insertDash(kebabCase(key));
+    cssVars[`--van-${formattedKey}`] = themeVars[key];
   });
   return cssVars;
+}
+
+function syncThemeVarsOnRoot(
+  newStyle: Record<string, Numeric> = {},
+  oldStyle: Record<string, Numeric> = {},
+) {
+  Object.keys(newStyle).forEach((key) => {
+    if (newStyle[key] !== oldStyle[key]) {
+      document.documentElement.style.setProperty(key, newStyle[key] as string);
+    }
+  });
+  Object.keys(oldStyle).forEach((key) => {
+    if (!newStyle[key]) {
+      document.documentElement.style.removeProperty(key);
+    }
+  });
 }
 
 export default defineComponent({
@@ -93,6 +118,34 @@ export default defineComponent({
       onActivated(addTheme);
       onDeactivated(removeTheme);
       onBeforeUnmount(removeTheme);
+
+      watch(style, (newStyle, oldStyle) => {
+        if (props.themeVarsScope === 'global') {
+          syncThemeVarsOnRoot(
+            newStyle as Record<string, Numeric>,
+            oldStyle as Record<string, Numeric>,
+          );
+        }
+      });
+
+      watch(
+        () => props.themeVarsScope,
+        (newScope, oldScope) => {
+          if (oldScope === 'global') {
+            // remove on Root
+            syncThemeVarsOnRoot({}, style.value as Record<string, Numeric>);
+          }
+          if (newScope === 'global') {
+            // add on root
+            syncThemeVarsOnRoot(style.value as Record<string, Numeric>, {});
+          }
+        },
+      );
+
+      if (props.themeVarsScope === 'global') {
+        // add on root
+        syncThemeVarsOnRoot(style.value as Record<string, Numeric>, {});
+      }
     }
 
     provide(CONFIG_PROVIDER_KEY, props);
@@ -104,7 +157,10 @@ export default defineComponent({
     });
 
     return () => (
-      <props.tag class={bem()} style={style.value}>
+      <props.tag
+        class={bem()}
+        style={props.themeVarsScope === 'local' ? style.value : undefined}
+      >
         {slots.default?.()}
       </props.tag>
     );

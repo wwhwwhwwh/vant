@@ -20,6 +20,7 @@ const defaultConfig: ImagePreviewOptions = {
   closeIcon: 'clear',
   transition: undefined,
   beforeClose: undefined,
+  doubleScale: true,
   overlayStyle: undefined,
   overlayClass: undefined,
   startPosition: 0,
@@ -49,6 +50,9 @@ function initInstance() {
   }));
 }
 
+/**
+ * Display a full-screen image preview component
+ */
 export const showImagePreview = (
   options: string[] | ImagePreviewOptions,
   startPosition = 0,

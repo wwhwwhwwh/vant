@@ -7,11 +7,15 @@ import {
   type ExtractPropTypes,
 } from 'vue';
 
-// Composables
-import { useEventListener } from '@vant/use';
-
 // Utils
-import { makeNumericProp, makeStringProp, createNamespace } from '../utils';
+import {
+  makeNumericProp,
+  makeStringProp,
+  createNamespace,
+  windowWidth,
+} from '../utils';
+
+import { useExpose } from '../composables/use-expose';
 
 const [name, bem] = createNamespace('text-ellipsis');
 
@@ -183,8 +187,12 @@ export default defineComponent({
       document.body.removeChild(container);
     };
 
+    const toggle = (isExpanded = !expanded.value) => {
+      expanded.value = isExpanded;
+    };
+
     const onClickAction = (event: MouseEvent) => {
-      expanded.value = !expanded.value;
+      toggle();
       emit('clickAction', event);
     };
 
@@ -196,9 +204,12 @@ export default defineComponent({
 
     onMounted(calcEllipsised);
 
-    watch(() => [props.content, props.rows, props.position], calcEllipsised);
+    watch(
+      [windowWidth, () => [props.content, props.rows, props.position]],
+      calcEllipsised,
+    );
 
-    useEventListener('resize', calcEllipsised);
+    useExpose({ toggle });
 
     return () => (
       <div ref={root} class={bem()}>

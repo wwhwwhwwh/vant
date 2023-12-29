@@ -115,22 +115,54 @@ export default {
 };
 ```
 
+### Required
+
+Use the `required` prop to display a required asterisk.
+
+```html
+<van-cell-group inset>
+  <van-field
+    v-model="username"
+    required
+    label="Username"
+    placeholder="Username"
+  />
+  <van-field v-model="phone" required label="Phone" placeholder="Phone" />
+</van-cell-group>
+```
+
+Please note that the `required` prop is only used for controlling the style. For form validation, you need to use the `rule.required` option to control the validation logic.
+
+### Auto Required
+
+You can set `required="auto"` on the Form component, and all the fields inside the Form will automatically display the asterisk based on the `rule.required` option.
+
+```html
+<van-form required="auto">
+  <van-field
+    v-model="username"
+    :rules="[{ required: true }]"
+    label="Username"
+    placeholder="Username"
+  />
+  <van-field
+    v-model="phone"
+    :rules="[{ required: false }]"
+    label="Phone"
+    placeholder="Phone"
+  />
+</van-form>
+```
+
 ### Error Info
 
 Use `error` or `error-message` to show error info.
 
 ```html
 <van-cell-group inset>
-  <van-field
-    v-model="username"
-    error
-    required
-    label="Username"
-    placeholder="Username"
-  />
+  <van-field v-model="username" error label="Username" placeholder="Username" />
   <van-field
     v-model="phone"
-    required
     label="Phone"
     placeholder="Phone"
     error-message="Invalid phone"
@@ -285,14 +317,14 @@ Use `label-align` prop to align the input value, can be set to `center`, `right`
 | name | As the identifier when submitting the form | _string_ | - |
 | id | Input id, the for attribute of the label also will be set | _string_ | `van-field-n-input` |
 | type | Input type, support all [native types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types) and `digit` type | _FieldType_ | `text` |
-| size | Size, can be set to `large` | _string_ | - |
+| size | Size, can be set to `large` `normal` | _string_ | - |
 | maxlength | Max length of value | _number \| string_ | - |
 | placeholder | Input placeholder | _string_ | - |
 | border | Whether to show inner border | _boolean_ | `true` |
 | disabled | Whether to disable field | _boolean_ | `false` |
 | readonly | Whether to be readonly | _boolean_ | `false` |
 | colon | Whether to display colon after label | _boolean_ | `false` |
-| required | Whether to show required mark | _boolean_ | `false` |
+| required | Whether to show required mark | _boolean \| 'auto'_ | `null` |
 | center | Whether to center content vertically | _boolean_ | `true` |
 | clearable | Whether to be clearable | _boolean_ | `false` |
 | clear-icon | Clear icon name | _string_ | `clear` |

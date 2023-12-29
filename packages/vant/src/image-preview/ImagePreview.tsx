@@ -38,7 +38,10 @@ import { Popup, PopupCloseIconPosition } from '../popup';
 import ImagePreviewItem from './ImagePreviewItem';
 
 // Types
-import { ImagePreviewScaleEventParams } from './types';
+import {
+  ImagePreviewScaleEventParams,
+  ImagePreviewItemInstance,
+} from './types';
 
 const [name, bem] = createNamespace('image-preview');
 
@@ -63,6 +66,7 @@ export const imagePreviewProps = {
   closeIcon: makeStringProp('clear'),
   transition: String,
   beforeClose: Function as PropType<Interceptor>,
+  doubleScale: truthProp,
   overlayClass: unknownProp,
   overlayStyle: Object as PropType<CSSProperties>,
   swipeDuration: makeNumericProp(300),
@@ -85,6 +89,7 @@ export default defineComponent({
 
   setup(props, { emit, slots }) {
     const swipeRef = ref<SwipeInstance>();
+    const activedPreviewItemRef = ref<ImagePreviewItemInstance>();
 
     const state = reactive({
       active: 0,
@@ -166,6 +171,11 @@ export default defineComponent({
             v-slots={{
               image: slots.image,
             }}
+            ref={(item) => {
+              if (index === state.active) {
+                activedPreviewItemRef.value = item as ImagePreviewItemInstance;
+              }
+            }}
             src={image}
             show={props.show}
             active={state.active}
@@ -174,6 +184,7 @@ export default defineComponent({
             rootWidth={state.rootWidth}
             rootHeight={state.rootHeight}
             disableZoom={state.disableZoom}
+            doubleScale={props.doubleScale}
             closeOnClickOverlay={props.closeOnClickOverlay}
             onScale={emitScale}
             onClose={emitClose}
@@ -204,7 +215,12 @@ export default defineComponent({
     const swipeTo = (index: number, options?: SwipeToOptions) =>
       swipeRef.value?.swipeTo(index, options);
 
-    useExpose({ swipeTo });
+    useExpose({
+      resetScale: () => {
+        activedPreviewItemRef.value?.resetScale();
+      },
+      swipeTo,
+    });
 
     onMounted(resize);
 

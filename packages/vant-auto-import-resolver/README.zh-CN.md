@@ -1,6 +1,6 @@
 # Vant Auto Import Resolver
 
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
 `@vant/auto-import-resolver` 是 [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) 的一个解析器，用于实现 Vant 按需引入。
 
@@ -126,3 +126,49 @@ build({
   ],
 });
 ```
+
+## 选项
+
+### importStyle
+
+是否自动引用组件对应的样式。
+
+- **Type：** `boolean`
+- **Default：** `true`
+- **Example：**
+
+```ts
+Components({
+  resolvers: [
+    VantResolver({
+      // 禁用样式引用
+      importStyle: false,
+    }),
+  ],
+});
+```
+
+### module
+
+设置引用的模块类型。
+
+- **Type：** `'esm' | 'cjs'`
+- **Default：** `'esm'`
+- **Example：**
+
+```ts
+Components({
+  resolvers: [
+    VantResolver({
+      module: 'cjs',
+    }),
+  ],
+});
+```
+
+### ssr
+
+- **Type：** `boolean`
+- **Default：** `undefined`
+
+此选项已废弃，请使用 `module` 选项来设置模块类型。

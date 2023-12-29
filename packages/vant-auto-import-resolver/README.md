@@ -1,6 +1,6 @@
 # Vant Auto Import Resolver
 
-[English](./README.md) | 简体中文
+English | [简体中文](./README.zh-CN.md)
 
 `@vant/auto-import-resolver` is a resolver for [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) that enables on-demand importing of Vant components.
 
@@ -126,3 +126,49 @@ build({
   ],
 });
 ```
+
+## Options
+
+### importStyle
+
+Whether to automatically import the corresponding styles of the components.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Example:**
+
+```ts
+Components({
+  resolvers: [
+    VantResolver({
+      // Disable style import
+      importStyle: false,
+    }),
+  ],
+});
+```
+
+### module
+
+Specifies the type of module to be imported.
+
+- **Type:** `'esm' | 'cjs'`
+- **Default:** `'esm'`
+- **Example:**
+
+```ts
+Components({
+  resolvers: [
+    VantResolver({
+      module: 'cjs',
+    }),
+  ],
+});
+```
+
+### ssr
+
+- **Type:** `boolean`
+- **Default:** `undefined`
+
+This option is deprecated. Please use the `module` option to set the module type.

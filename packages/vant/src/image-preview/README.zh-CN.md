@@ -61,7 +61,7 @@ showImagePreview({
 
 ### 展示关闭按钮
 
-设置 `closeable` 属性后，会在弹出层的右上角显示关闭图标，并且可以通过 `close-icon` 属性自定义图标，使用`close-icon-position` 属性可以自定义图标位置。
+开启 `closeable` 选项后，会在弹出层的右上角显示关闭图标，并且可以通过 `close-icon` 属性自定义图标，使用`close-icon-position` 属性可以自定义图标位置。
 
 ```js
 import { showImagePreview } from 'vant';
@@ -95,7 +95,7 @@ showImagePreview({
 
 ### 异步关闭
 
-通过 `beforeClose` 属性可以拦截关闭行为。
+通过 `beforeClose` 属性可以传入一个回调函数，在图片预览关闭前进行特定操作。
 
 ```js
 import { showImagePreview } from 'vant';
@@ -190,7 +190,7 @@ Vant 中导出了以下 ImagePreview 相关的辅助函数：
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| showImagePreview | 展示图片预览 | _string[] \| ImagePreviewOptions_ | ImagePreview 实例 |
+| showImagePreview | 展示一个全屏的图片预览组件 | _string[] \| ImagePreviewOptions_ | ImagePreview 实例 |
 
 ### ImagePreviewOptions
 
@@ -204,13 +204,14 @@ Vant 中导出了以下 ImagePreview 相关的辅助函数：
 | showIndex | 是否显示页码 | _boolean_ | `true` |
 | showIndicators | 是否显示轮播指示器 | _boolean_ | `false` |
 | loop | 是否开启循环播放 | _boolean_ | `true` |
+| doubleScale `v4.7.2` | 是否启用双击缩放手势，禁用后，点击时会立即关闭图片预览 | _boolean_ | `true` |
 | onClose | 关闭时的回调函数 | _Function_ | - |
 | onChange | 切换图片时的回调函数，回调参数为当前索引 | _Function_ | - |
 | onScale | 缩放图片时的回调函数，回调参数为当前索引和当前缩放值组成的对象 | _Function_ | - |
 | beforeClose | 关闭前的回调函数，返回 `false` 可阻止关闭，支持返回 Promise | _(active: number) => boolean \| Promise\<boolean\>_ | - |
 | closeOnPopstate | 是否在页面回退时自动关闭 | _boolean_ | `true` |
 | closeOnClickOverlay `v4.6.4` | 是否在点击遮罩层后关闭图片预览 | _boolean_ | `true` |
-| className | 自定义类名 | _string \| Array \| object_ | - |
+| className | 自定义类名 (应用在图片预览的弹出层) | _string \| Array \| object_ | - |
 | maxZoom | 手势缩放时，最大缩放比例 | _number \| string_ | `3` |
 | minZoom | 手势缩放时，最小缩放比例 | _number \| string_ | `1/3` |
 | closeable | 是否显示关闭图标 | _boolean_ | `false` |
@@ -234,6 +235,7 @@ Vant 中导出了以下 ImagePreview 相关的辅助函数：
 | show-index | 是否显示页码 | _boolean_ | `true` |
 | show-indicators | 是否显示轮播指示器 | _boolean_ | `false` |
 | loop | 是否开启循环播放 | _boolean_ | `true` |
+| double-scale `v4.7.2` | 是否启用双击缩放手势，禁用后，点击时会立即关闭图片预览 | _boolean_ | `true` |
 | before-close | 关闭前的回调函数，返回 `false` 可阻止关闭，支持返回 Promise | _(active: number) => boolean \| Promise\<boolean\>_ | - |
 | close-on-popstate | 是否在页面回退时自动关闭 | _boolean_ | `true` |
 | close-on-click-overlay `v4.6.4` | 是否在点击遮罩层后关闭图片预览 | _boolean_ | `true` |
@@ -266,7 +268,8 @@ Vant 中导出了以下 ImagePreview 相关的辅助函数：
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| swipeTo `2.9.0` | 切换到指定位置 | _index: number, options?: SwipeToOptions_ | - |
+| resetScale `4.7.4` | 重置当前图片的缩放比 | - | - |
+| swipeTo | 切换到指定位置 | _index: number, options?: SwipeToOptions_ | - |
 
 ### 类型定义
 

@@ -91,12 +91,12 @@ export const fieldSharedProps = {
   autocorrect: String,
   errorMessage: String,
   enterkeyhint: String,
+  clearTrigger: makeStringProp<FieldClearTrigger>('focus'),
+  formatTrigger: makeStringProp<FieldFormatTrigger>('onChange'),
   spellcheck: {
     type: Boolean,
     default: null,
   },
-  clearTrigger: makeStringProp<FieldClearTrigger>('focus'),
-  formatTrigger: makeStringProp<FieldFormatTrigger>('onChange'),
   error: {
     type: Boolean,
     default: null,
@@ -191,6 +191,14 @@ export default defineComponent({
         return customValue.value();
       }
       return props.modelValue;
+    });
+
+    const showRequiredMark = computed(() => {
+      const required = getProp('required');
+      if (required === 'auto') {
+        return props.rules?.some((rule: FieldRule) => rule.required);
+      }
+      return required;
     });
 
     const runRules = (rules: FieldRule[]) =>
@@ -696,7 +704,7 @@ export default defineComponent({
           titleStyle={labelStyle.value}
           valueClass={bem('value')}
           titleClass={[
-            bem('label', [labelAlign, { required: props.required }]),
+            bem('label', [labelAlign, { required: showRequiredMark.value }]),
             props.labelClass,
           ]}
           arrowDirection={props.arrowDirection}

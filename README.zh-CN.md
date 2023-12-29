@@ -70,6 +70,20 @@ pnpm add vant
 bun add vant
 ```
 
+## 脚手架
+
+推荐使用 [Rsbuild](https://github.com/web-infra-dev/rsbuild) 来创建一个脚手架项目。
+
+Rsbuild 是基于 Rspack 的构建工具，由 Vant 作者开发，具备一流的构建速度和开发体验，对 Vant 提供第一优先级支持。
+
+你可以通过以下命令创建一个 Rsbuild 项目：
+
+```bash
+npm create rsbuild@latest
+```
+
+请访问 [Rsbuild 仓库](https://github.com/web-infra-dev/rsbuild) 了解更多信息。
+
 ## 快速上手
 
 ```js
@@ -117,7 +131,11 @@ Vant 3/4 支持现代浏览器以及 Chrome >= 51、iOS >= 10.0（与 Vue 3 一�
 | [taroify](https://gitee.com/mallfoundry/taroify) | Vant Taro 版 |
 | [vant-theme](https://github.com/Aisen60/vant-theme) | Vant 在线主题预览工具 |
 | [@antmjs/vantui](https://github.com/antmjs/vantui) | 基于 Vant Weapp 开发的多端组件库，同时支持 Taro 和 React |
-| [sfc-playground-vant](https://github.com/zhixiaoqiang/sfc-playground-vant) | Vant Playground. 当前仅支持 Vant 3.0 以上 |
+| [vant-playground](https://github.com/LadyChatterleyLover/vant-playground) | Vant Playground |
+| [sfc-playground-vant](https://github.com/zhixiaoqiang/sfc-playground-vant) | Vant Playground |
+| [vue3-h5-template](https://github.com/yulimchen/vue3-h5-template) | 基于 Vant 的移动端项目模板 |
+| [vue3-vant-mobile](https://github.com/CharleeWa/vue3-vant-mobile) | 基于 Vant 的移动端项目模板 |
+| [vscode-common-intellisense](https://github.com/Simon-He95/vscode-common-intellisense) | VS Code 扩展，为 Vant 开发者提供更好的智能感知 |
 
 ## 链接
 

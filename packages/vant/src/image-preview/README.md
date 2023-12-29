@@ -32,6 +32,8 @@ showImagePreview(['https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg']);
 
 ### Basic Usage
 
+When calling `showImagePreview`, you can directly pass an array of images to display the image preview.
+
 ```js
 import { showImagePreview } from 'vant';
 
@@ -42,6 +44,8 @@ showImagePreview([
 ```
 
 ### Set Start Position
+
+`showImagePreview` supports passing a configuration object, and you can specify the initial position (index value) of the image through the `startPosition` option.
 
 ```js
 import { showImagePreview } from 'vant';
@@ -57,7 +61,7 @@ showImagePreview({
 
 ### Show Close Icon
 
-After setting the `closeable` attribute, the close icon will be displayed in the upper right corner of the pop-up layer, and the icon can be customized through the `close-icon` attribute, and the icon location can be customized by using the `close-icon-position` attribute.
+When the `closeable` option is enabled, a close icon will be displayed in the top-right corner of the popup layer. You can customize the icon by using the `close-icon` option, and the icon position can be customized using the `close-icon-position` option.
 
 ```js
 import { showImagePreview } from 'vant';
@@ -72,6 +76,8 @@ showImagePreview({
 ```
 
 ### Close Event
+
+You can listen to the close event of the image preview through the `onClose` option.
 
 ```js
 import { showToast, showImagePreview } from 'vant';
@@ -88,6 +94,8 @@ showImagePreview({
 ```
 
 ### Before Close
+
+You can pass a callback function through the `beforeClose` option to perform specific operations before closing the image preview.
 
 ```js
 import { showImagePreview } from 'vant';
@@ -106,6 +114,8 @@ setTimeout(() => {
 ```
 
 ### Use ImagePreview Component
+
+If you need to embed components or other custom content inside the ImagePreview, you can directly use the ImagePreview component and customize it using the `index` slot. Before using it, you need to register the component through `app.use` or other methods.
 
 ```html
 <van-image-preview v-model:show="show" :images="images" @change="onChange">
@@ -179,7 +189,7 @@ Vant exports following ImagePreview utility functions:
 
 | Methods | Description | Attribute | Return value |
 | --- | --- | --- | --- |
-| showImagePreview | Show image preview | _string[] \| ImagePreviewOptions_ | ImagePreview Instance |
+| showImagePreview | Display a full-screen image preview component | _string[] \| ImagePreviewOptions_ | ImagePreview Instance |
 
 ### ImagePreviewOptions
 
@@ -195,6 +205,7 @@ Vant exports following ImagePreview utility functions:
 | onChange | Emitted when current image changed | _Function_ | - |
 | onScale | Emitted when scaling current image | _Function_ | - |
 | closeOnPopstate | Whether to close when popstate | _boolean_ | `true` |
+| doubleScale `v4.7.2` | Whether to enable double tap zoom gesture. When disabled, the image preview will be closed immediately upon clicking | _boolean_ | `true` |
 | closeOnClickOverlay `v4.6.4` | Whether to close when overlay is clicked | _boolean_ | `true` |
 | beforeClose | Callback function before close | _(action) => boolean \| Promise_ | - |
 | className | Custom className | _string \| Array \| object_ | - |
@@ -219,10 +230,11 @@ Vant exports following ImagePreview utility functions:
 | show-index | Whether to show index | _boolean_ | `true` |
 | show-indicators | Whether to show indicators | _boolean_ | `false` |
 | loop | Whether to enable loop | _boolean_ | `true` |
+| double-scale | Whether to enable double tap zoom gesture. When disabled, the image preview will be closed immediately upon clicking | _boolean_ | `true` |
 | before-close | Callback function before close | _(action: number) => boolean \| Promise\<boolean\>_ | - |
 | close-on-popstate | Whether to close when popstate | _boolean_ | `true` |
 | close-on-click-overlay `v4.6.4` | Whether to close when overlay is clicked | _boolean_ | `true` |
-| class-name | Custom className | _string \| Array \| object_ | - |
+| class-name | Custom className (apply to Popup in image preview) | _string \| Array \| object_ | - |
 | max-zoom | Max zoom | _number \| string_ | `3` |
 | min-zoom | Min zoom | _number \| string_ | `1/3` |
 | closeable | Whether to show close icon | _boolean_ | `false` |
@@ -249,7 +261,8 @@ Use [ref](https://vuejs.org/v2/api/#ref) to get ImagePreview instance and call i
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
-| swipeTo `2.9.0` | Swipe to target index | _index: number, options?: SwipeToOptions_ | - |
+| resetScale `4.7.4` | Reset the current image's zoom ratio | - | - |
+| swipeTo | Swipe to target index | _index: number, options?: SwipeToOptions_ | - |
 
 ### Types
 

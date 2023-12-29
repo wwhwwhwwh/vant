@@ -24,6 +24,20 @@
 - 🍭 Support SSR
 - 🌍 Support i18n, built-in 30+ languages
 
+## Scaffold
+
+It is recommended to use [Rsbuild](https://github.com/web-infra-dev/rsbuild) to create a scaffold project.
+
+Rsbuild is a build tool based on Rspack, developed by the author of Vant, with first-class build speed and development experience, providing first-priority support for Vant.
+
+You can create a Rsbuild project with the following command:
+
+```bash
+npm create rsbuild@latest
+```
+
+Please visit the [Rsbuild repository](https://github.com/web-infra-dev/rsbuild) for more information.
+
 ### Quickstart
 
 See in [Quickstart](#/en-US/quickstart).
@@ -67,7 +81,10 @@ The current maintenance status of each version of Vant is as follows:
 | [taroify](https://gitee.com/mallfoundry/taroify) | Vant Taro |
 | [vant-theme](https://github.com/Aisen60/vant-theme) | Online theme preview built on Vant UI |
 | [@antmjs/vantui](https://github.com/antmjs/vantui) | Mobile UI Components based on Vant, supporting Taro and React |
-| [sfc-playground-vant](https://github.com/zhixiaoqiang/sfc-playground-vant) | Try Vant in the Playground. Currently only Vant 3+ is supported |
+| [vant-playground](https://github.com/LadyChatterleyLover/vant-playground) | Vant Playground |
+| [sfc-playground-vant](https://github.com/zhixiaoqiang/sfc-playground-vant) | Vant Playground |
+| [vue3-h5-template](https://github.com/yulimchen/vue3-h5-template) | Mobile project template based on Vant |
+| [vue3-vant-mobile](https://github.com/CharleeWa/vue3-vant-mobile) | Mobile project template based on Vant |
 
 ### Other Links
 

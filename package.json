@@ -3,7 +3,7 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "pnpm --dir ./packages/vant dev",
-    "lint": "eslint ./packages/**/src ./packages/**/test --ext .js,.ts,.tsx,.vue,.mjs,.cjs",
+    "lint": "eslint \"./packages/**/{src,test}/**/*.{vue,ts,tsx,js,mjs,cjs}\"",
     "test": "pnpm --dir ./packages/vant test",
     "test:watch": "pnpm --dir ./packages/vant test:watch",
     "test:update": "pnpm --dir ./packages/vant test:update",
@@ -17,9 +17,9 @@
     "*.{ts,tsx,js,vue}": "eslint --fix"
   },
   "engines": {
-    "pnpm": ">= 8.0.0"
+    "pnpm": ">= 8.8.0"
   },
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@8.8.0",
   "devDependencies": {
     "@vant/cli": "workspace:*",
     "@vant/eslint-config": "workspace:*",
@@ -27,5 +27,10 @@
     "husky": "^8.0.1",
     "nano-staged": "^0.8.0",
     "prettier": "^3.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rspack/core": "0.4.3"
+    }
   }
 }

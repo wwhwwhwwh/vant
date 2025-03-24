@@ -54,7 +54,9 @@ const imagePreviewItemProps = {
   rootHeight: makeRequiredProp(Number),
   disableZoom: Boolean,
   doubleScale: Boolean,
+  closeOnClickImage: Boolean,
   closeOnClickOverlay: Boolean,
+  vertical: Boolean,
 };
 
 export type ImagePreviewItemProps = ExtractPropTypes<
@@ -224,9 +226,10 @@ export default defineComponent({
         // if the image is moved to the edge, no longer trigger move,
         // allow user to swipe to next image
         if (
-          (moveX > maxMoveX.value || moveX < -maxMoveX.value) &&
-          !isImageMoved &&
-          touch.isHorizontal()
+          (props.vertical
+            ? touch.isVertical() && Math.abs(moveY) > maxMoveY.value
+            : touch.isHorizontal() && Math.abs(moveX) > maxMoveX.value) &&
+          !isImageMoved
         ) {
           state.moving = false;
           return;
@@ -251,8 +254,15 @@ export default defineComponent({
     };
 
     const checkClose = (event: TouchEvent) => {
-      const isClickOverlay = event.target === swipeItem.value?.$el;
+      const swipeItemEl: HTMLElement = swipeItem.value?.$el;
 
+      if (!swipeItemEl) return;
+
+      const imageEl = swipeItemEl.firstElementChild;
+      const isClickOverlay = event.target === swipeItemEl;
+      const isClickImage = imageEl?.contains(event.target as HTMLElement);
+
+      if (!props.closeOnClickImage && isClickImage) return;
       if (!props.closeOnClickOverlay && isClickOverlay) return;
 
       emit('close');
@@ -400,7 +410,11 @@ export default defineComponent({
         >
           {slots.image ? (
             <div class={bem('image-wrap')}>
-              {slots.image({ src: props.src })}
+              {slots.image({
+                src: props.src,
+                onLoad,
+                style: imageStyle.value,
+              })}
             </div>
           ) : (
             <Image

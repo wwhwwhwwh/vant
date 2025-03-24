@@ -181,6 +181,25 @@ test('before close prop', async () => {
   expect(wrapper.emitted('close')![0]).toBeTruthy();
 });
 
+test('should close when image is clicked', async () => {
+  const wrapper = mount(ImagePreview, {
+    props: {
+      images,
+      show: true,
+      'onUpdate:show': (show) => {
+        wrapper.setProps({ show });
+      },
+    },
+  });
+
+  await later();
+  const image = wrapper.find('.van-image');
+
+  await triggerDrag(image, 0, 0);
+  await later(300);
+  expect(wrapper.emitted('close')).toBeTruthy();
+});
+
 test('should close when overlay is clicked', async () => {
   const wrapper = mount(ImagePreview, {
     props: {
@@ -197,6 +216,26 @@ test('should close when overlay is clicked', async () => {
   await triggerDrag(swipe, 0, 0);
   await later(300);
   expect(wrapper.emitted('close')).toBeTruthy();
+});
+
+test('should not close when image is clicked and closeOnClickImage is false', async () => {
+  const wrapper = mount(ImagePreview, {
+    props: {
+      images,
+      show: true,
+      closeOnClickImage: false,
+      'onUpdate:show': (show) => {
+        wrapper.setProps({ show });
+      },
+    },
+  });
+
+  await later();
+  const image = wrapper.find('.van-image');
+
+  triggerDrag(image, 0, 0);
+  await later(300);
+  expect(wrapper.emitted('close')).toBeFalsy();
 });
 
 test('should not close when overlay is clicked and closeOnClickOverlay is false', async () => {
@@ -362,6 +401,23 @@ test('should render image slot correctly 2', async () => {
   await later();
 
   expect(wrapper.html().includes('video')).toBeTruthy();
+});
+
+test('should render image slot correctly 3', async () => {
+  const wrapper = mount(ImagePreview, {
+    props: {
+      show: true,
+      images,
+    },
+    slots: {
+      image: ({ src, style }) =>
+        `<img class="test-img" src="${src}" style="${Object.assign({ width: '100px' }, style)}" />`,
+    },
+  });
+
+  await later();
+
+  expect(wrapper.html().includes('width: 100px')).toBeTruthy();
 });
 
 test('should emit long-press event after long press', async () => {

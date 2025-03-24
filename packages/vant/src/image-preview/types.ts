@@ -14,6 +14,7 @@ export type ImagePreviewOptions = {
   images: string[];
   maxZoom?: number;
   minZoom?: number;
+  vertical?: boolean;
   teleport?: TeleportProps['to'];
   className?: unknown;
   showIndex?: boolean;
@@ -29,6 +30,7 @@ export type ImagePreviewOptions = {
   showIndicators?: boolean;
   closeOnPopstate?: boolean;
   closeIconPosition?: PopupCloseIconPosition;
+  closeOnClickImage?: boolean;
   closeOnClickOverlay?: boolean;
   onClose?(): void;
   onScale?(args: { scale: number; index: number }): void;

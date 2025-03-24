@@ -9,6 +9,7 @@ import {
   defineComponent,
   type PropType,
   type ExtractPropTypes,
+  type HTMLAttributes,
 } from 'vue';
 
 // Utils
@@ -27,6 +28,7 @@ import {
   makeNumericProp,
   createNamespace,
   type ComponentInstance,
+  clamp,
 } from '../utils';
 import {
   cutString,
@@ -81,6 +83,8 @@ export const fieldSharedProps = {
   autofocus: Boolean,
   clearable: Boolean,
   maxlength: numericProp,
+  max: Number,
+  min: Number,
   formatter: Function as PropType<(value: string) => string>,
   clearIcon: makeStringProp('clear'),
   modelValue: makeNumericProp(''),
@@ -109,6 +113,7 @@ export const fieldSharedProps = {
     type: Boolean,
     default: null,
   },
+  inputmode: String as PropType<HTMLAttributes['inputmode']>,
 };
 
 export const fieldProps = extend({}, cellSharedProps, fieldSharedProps, {
@@ -326,9 +331,26 @@ export default defineComponent({
       const limitDiffLen =
         getStringLength(originalValue) - getStringLength(value);
 
+      // https://github.com/youzan/vant/issues/13058
       if (props.type === 'number' || props.type === 'digit') {
         const isNumber = props.type === 'number';
         value = formatNumber(value, isNumber, isNumber);
+
+        if (
+          trigger === 'onBlur' &&
+          value !== '' &&
+          (props.min !== undefined || props.max !== undefined)
+        ) {
+          const adjustedValue = clamp(
+            +value,
+            props.min ?? -Infinity,
+            props.max ?? Infinity,
+          );
+
+          if (+value !== adjustedValue) {
+            value = adjustedValue.toString();
+          }
+        }
       }
 
       let formatterDiffLen = 0;
@@ -510,6 +532,7 @@ export default defineComponent({
         enterkeyhint: props.enterkeyhint,
         spellcheck: props.spellcheck,
         'aria-labelledby': props.label ? `${id}-label` : undefined,
+        'data-allow-mismatch': 'attribute',
         onBlur,
         onFocus,
         onInput,
@@ -521,10 +544,12 @@ export default defineComponent({
       };
 
       if (props.type === 'textarea') {
-        return <textarea {...inputAttrs} />;
+        return <textarea {...inputAttrs} inputmode={props.inputmode} />;
       }
 
-      return <input {...mapInputType(props.type)} {...inputAttrs} />;
+      return (
+        <input {...mapInputType(props.type, props.inputmode)} {...inputAttrs} />
+      );
     };
 
     const renderLeftIcon = () => {
@@ -601,6 +626,7 @@ export default defineComponent({
           <label
             id={`${id}-label`}
             for={slots.input ? undefined : getInputId()}
+            data-allow-mismatch="attribute"
             onClick={(event: MouseEvent) => {
               // https://github.com/youzan/vant/issues/11831
               preventDefault(event);

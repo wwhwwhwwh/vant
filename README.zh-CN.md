@@ -10,13 +10,14 @@
     <img src="https://img.shields.io/npm/v/vant?style=flat-square" alt="npm version" />
     <img src="https://img.shields.io/codecov/c/github/youzan/vant/main.svg?style=flat-square&color=#4fc08d" alt="Coverage Status" />
     <img src="https://img.shields.io/npm/dm/vant.svg?style=flat-square&color=#4fc08d" alt="downloads" />
-    <img src="https://img.badgesize.io/https://unpkg.com/vant/lib/vant.min.js?compression=gzip&style=flat-square&label=gzip%20size&color=#4fc08d" alt="Gzip Size" />
 </p>
 
 <p align="center">
-  🔥 <a href="https://vant-contrib.gitee.io/vant">文档网站（国内）</a>
+  🌈 <a href="https://vant.pro/vant/">文档网站（国内）</a>
   &nbsp;
-  🌈 <a href="https://vant-ui.github.io/vant">文档网站（GitHub）</a>
+  ·
+  &nbsp;
+  <a href="https://vant-ui.github.io/vant">文档网站（GitHub）</a>
 </p>
 
 ---
@@ -25,7 +26,7 @@
 
 Vant 是一个**轻量、可定制的移动端组件库**，于 2017 年开源。
 
-目前 Vant 官方提供了 [Vue 2 版本](https://vant-contrib.gitee.io/vant/v2)、[Vue 3 版本](https://vant-contrib.gitee.io/vant)和[微信小程序版本](http://vant-contrib.gitee.io/vant-weapp)，并由社区团队维护 [React 版本](https://github.com/3lang3/react-vant)和[支付宝小程序版本](https://github.com/ant-move/Vant-Aliapp)。
+目前 Vant 官方提供了 [Vue 2 版本](https://vant-ui.github.io/vant/v2/)、[Vue 3 版本](https://vant-ui.github.io/vant/)和[微信小程序版本](https://vant-ui.github.io/vant-weapp/)，并由社区团队维护 [React 版本](https://github.com/3lang3/react-vant)和[支付宝小程序版本](https://github.com/ant-move/Vant-Aliapp)。
 
 ## 特性
 
@@ -99,7 +100,7 @@ const app = createApp();
 app.use(Button);
 ```
 
-vant 也支持按需引入、CDN 引入等方式，详细说明见 [快速上手](https://vant-contrib.gitee.io/vant#/zh-CN/quickstart).
+vant 也支持按需引入、CDN 引入等方式，详细说明见 [快速上手](https://vant-ui.github.io/vant/#/zh-CN/quickstart).
 
 ## 浏览器支持
 
@@ -128,20 +129,21 @@ Vant 3/4 支持现代浏览器以及 Chrome >= 51、iOS >= 10.0（与 Vue 3 一�
 | --- | --- |
 | [3lang3/react-vant](https://github.com/3lang3/react-vant) | 参照 Vant 打造的 React 框架移动端组件库 |
 | [vant-aliapp](https://github.com/ant-move/Vant-Aliapp) | Vant 支付宝小程序版 |
-| [taroify](https://gitee.com/mallfoundry/taroify) | Vant Taro 版 |
 | [vant-theme](https://github.com/Aisen60/vant-theme) | Vant 在线主题预览工具 |
 | [@antmjs/vantui](https://github.com/antmjs/vantui) | 基于 Vant Weapp 开发的多端组件库，同时支持 Taro 和 React |
+| [Taroify](https://github.com/mallfoundry/taroify) | Taroify 是 Vant 的 Taro 版本，两者基于相同的视觉规范，提供一致的 API 接口，助力开发者快速搭建小程序应用 |
 | [vant-playground](https://github.com/LadyChatterleyLover/vant-playground) | Vant Playground |
 | [sfc-playground-vant](https://github.com/zhixiaoqiang/sfc-playground-vant) | Vant Playground |
 | [vue3-h5-template](https://github.com/yulimchen/vue3-h5-template) | 基于 Vant 的移动端项目模板 |
-| [vue3-vant-mobile](https://github.com/CharleeWa/vue3-vant-mobile) | 基于 Vant 的移动端项目模板 |
+| [vue3-vant-mobile](https://github.com/easy-temps/vue3-vant-mobile) | 基于 Vant 的移动端项目模板 |
 | [vscode-common-intellisense](https://github.com/Simon-He95/vscode-common-intellisense) | VS Code 扩展，为 Vant 开发者提供更好的智能感知 |
+| [nuxt-vant-mobile](https://github.com/easy-temps/nuxt-vant-mobile) | 基于 Vant 的 Nuxt _⁴_ 项目模板，开箱即用 |
+| [mobvue](https://github.com/un-pany/mobvue) | 一个精心制作的移动端 H5 模板 |
 
 ## 链接
 
-- [详细文档](https://vant-contrib.gitee.io/vant)
-- [更新日志](https://vant-contrib.gitee.io/vant#/zh-CN/changelog)
-- [码云镜像仓库](https://gitee.com/vant-contrib/vant)
+- [详细文档](https://vant-ui.github.io/vant/)
+- [更新日志](https://vant-ui.github.io/vant/#/zh-CN/changelog)
 - [Discussions 讨论区](https://github.com/vant-ui/vant/discussions)
 
 ## 手机预览
@@ -172,7 +174,7 @@ Vant 3/4 支持现代浏览器以及 Chrome >= 51、iOS >= 10.0（与 Vue 3 一�
 
 ## 贡献指南
 
-修改代码请阅读我们的 [贡献指南](https://vant-contrib.gitee.io/vant/#/zh-CN/contribution)。
+修改代码请阅读我们的 [贡献指南](https://vant-ui.github.io/vant/#/zh-CN/contribution)。
 
 使用过程中发现任何问题都可以提 [Issue](https://github.com/vant-ui/vant/issues) 给我们，当然，我们也非常欢迎你给我们发 [PR](https://github.com/vant-ui/vant/pulls)。
 

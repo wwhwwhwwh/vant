@@ -38,10 +38,12 @@ export default {
 
 ### Embedded Content
 
+Any content can be embedded on the overlay through the default slot.
+
 ```html
 <van-overlay :show="show" @click="show = false">
-  <div class="wrapper" @click.stop>
-    <div class="block" />
+  <div class="wrapper">
+    <div class="block" @click.stop />
   </div>
 </van-overlay>
 
@@ -82,6 +84,7 @@ The default z-index level of the Overlay component is `1`. You can set its z-ind
 | custom-class | Custom style | _object_ | - |
 | lock-scroll | Whether to lock background scroll | _boolean_ | `true` |
 | lazy-render | Whether to lazy render util appeared | _boolean_ | `true` |
+| teleport | Specifies a target element where Overlay will be mounted | _string \| Element_ | - |
 
 ### Events
 

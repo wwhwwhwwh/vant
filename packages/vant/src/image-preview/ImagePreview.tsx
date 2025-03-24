@@ -60,6 +60,7 @@ export const imagePreviewProps = {
   minZoom: makeNumericProp(1 / 3),
   maxZoom: makeNumericProp(3),
   overlay: truthProp,
+  vertical: Boolean,
   closeable: Boolean,
   showIndex: truthProp,
   className: unknownProp,
@@ -73,6 +74,7 @@ export const imagePreviewProps = {
   startPosition: makeNumericProp(0),
   showIndicators: Boolean,
   closeOnPopstate: truthProp,
+  closeOnClickImage: truthProp,
   closeOnClickOverlay: truthProp,
   closeIconPosition: makeStringProp<PopupCloseIconPosition>('top-right'),
   teleport: [String, Object] as PropType<TeleportProps['to']>,
@@ -158,6 +160,7 @@ export default defineComponent({
         lazyRender
         loop={props.loop}
         class={bem('swipe')}
+        vertical={props.vertical}
         duration={props.swipeDuration}
         initialSwipe={props.startPosition}
         showIndicators={props.showIndicators}
@@ -185,7 +188,9 @@ export default defineComponent({
             rootHeight={state.rootHeight}
             disableZoom={state.disableZoom}
             doubleScale={props.doubleScale}
+            closeOnClickImage={props.closeOnClickImage}
             closeOnClickOverlay={props.closeOnClickOverlay}
+            vertical={props.vertical}
             onScale={emitScale}
             onClose={emitClose}
             onLongPress={() => emit('longPress', { index })}

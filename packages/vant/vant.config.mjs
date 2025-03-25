@@ -376,6 +376,10 @@ location.href = location.href.replace('youzan.github.io', 'vant-ui.github.io');
                 path: 'watermark',
                 title: 'Watermark 水印',
               },
+              {
+                path: 'Avatar',
+                title: 'Avatar 头像',
+              },
             ],
           },
           {

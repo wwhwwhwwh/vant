@@ -1,0 +1,122 @@
+/**
+ * Entry of all component's style
+ */
+/* base */
+/**
+ * Entry of basic styles
+ */
+ *,
+ *:before,
+ *:after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   outline: none;
+ }
+ i {
+   font-style: normal;
+ }
+ /* 改变主题色变量 */
+ .van-color-primary {
+   color: #32ae57;
+ }
+ .van-bgcolor-primary {
+   background-color: #32ae57;
+ }
+ .van-color-success {
+   color: #00982d;
+ }
+ .van-bgcolor-success {
+   background-color: #00982d;
+ }
+ .van-color-danger {
+   color: #ff5f4e;
+ }
+ .van-bgcolor-danger {
+   background-color: #ff5f4e;
+ }
+ .van-color-warning {
+   color: #ff7b35;
+ }
+ .van-bgcolor-warning {
+   background-color: #ff7b35;
+ }
+ .van-color-info {
+   color: #0283ef;
+ }
+ .van-bgcolor-info {
+   background-color: #0283ef;
+ }
+ .van-color-text-primary {
+   color: #111111;
+ }
+ .van-bgcolor-text-primary {
+   background-color: #111111;
+ }
+ .van-color-text-regular {
+   color: #333333;
+ }
+ .van-bgcolor-text-regular {
+   background-color: #333333;
+ }
+ .van-color-text-assist {
+   color: #666666;
+ }
+ .van-bgcolor-text-assist {
+   background-color: #666666;
+ }
+ .van-color-text-secondary {
+   color: #999999;
+ }
+ .van-bgcolor-text-secondary {
+   background-color: #999999;
+ }
+ .van-color-text-placeholder {
+   color: #b2b2b2;
+ }
+ .van-bgcolor-text-placeholder {
+   background-color: #b2b2b2;
+ }
+ .van-color-text-empty {
+   color: #6c7d8f;
+ }
+ .van-bgcolor-text-empty {
+   background-color: #6c7d8f;
+ }
+ .van-color-border-color {
+   color: #cdcdcd;
+ }
+ .van-bgcolor-border-color {
+   background-color: #cdcdcd;
+ }
+ .van-color-line-color {
+   color: #e2e2e2;
+ }
+ .van-bgcolor-line-color {
+   background-color: #e2e2e2;
+ }
+ .van-color-background-color {
+   color: #f6f6f6;
+ }
+ .van-bgcolor-background-color {
+   background-color: #f6f6f6;
+ }
+ .van-color-white {
+   color: #ffffff;
+ }
+ .van-bgcolor-white {
+   background-color: #ffffff;
+ }
+ .van-color-black {
+   color: #000000;
+ }
+ .van-bgcolor-black {
+   background-color: #000000;
+ }
+ .van-color-transparent {
+   color: transparent;
+ }
+ .van-bgcolor-transparent {
+   background-color: transparent;
+ }
+ 

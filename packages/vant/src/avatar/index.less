@@ -1,0 +1,23 @@
+// @import '../style/var';
+
+@import '../style/base.less';
+
+.van-avatar {
+  overflow: hidden;
+  &--round {
+    border-radius: 100%;
+  }
+  img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
+}

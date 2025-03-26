@@ -1,0 +1,1023 @@
+/* 改变主题色变量 */
+@color-primary: #32ae57; // 主题色（背景）
+@color-success: #00982d; // 主题色（文字）
+@color-warning: #ff7b35; // 警告色（支付按钮、特殊文字、重点传达信息文字；）
+@color-danger: #ff5f4e; // 错误色（错误提示、删除文字及图标等警示类信息）
+@color-info: #0283ef; // 信息色
+@color-text-primary: #111111; // 主要文字色（一级信息、标题、主内容文字等)
+@color-text-regular: #333333; // 常规文字色（二级信息、普通级别、tab文字等）
+@color-text-assist: #666666; // 辅助文字色（辅助文字、次要信息、表单标题等）
+@color-text-secondary: #999999; // 次要文字色（表单次级辅助文字，时间、数据等）
+@color-text-placeholder: #b2b2b2; // 占位文字色（表单输入提示性文字）
+@color-text-empty: #6c7d8f; // 无数据提示文字
+@border-color: #cdcdcd; // 边框色
+@line-color: #e2e2e2; // 分割线色
+@background-color: #f6f6f6; // 背景色（页面最底层背景）
+@white: #ffffff;
+@black: #000000;
+@color-transparent: transparent;
+
+// Other Color
+@active-color: #f2f3f5;
+@active-opacity: 0.7;
+@disabled-opacity: 0.5;
+@background-color-light: #fafafa;
+
+@color-primary-dark-2: mix(@black, @color-primary, 20%);
+// @color-primary-dark-1: mix(@black, @color-primary, 12%);
+// @color-primary-light-7: mix(@white, @color-primary, 70%);
+
+@color-success-dark-2: mix(@black, @color-success, 20%);
+// @color-success-dark-1: mix(@black, @color-success, 12%);
+// @color-success-light-7: mix(@white, @color-success, 70%);
+
+@color-warning-dark-2: mix(@black, @color-warning, 20%);
+// @color-warning-dark-1: mix(@black, @color-warning, 12%);
+// @color-warning-light-7: mix(@white, @color-warning, 70%);
+
+@color-danger-dark-2: mix(@black, @color-danger, 20%);
+// @color-danger-dark-1: mix(@black, @color-danger, 12%);
+// @color-danger-light-7: mix(@white, @color-danger, 70%);
+
+@color-info-dark-2: mix(@black, @color-info, 20%);
+// @color-info-dark-1: mix(@black, @color-info, 12%);
+// @color-info-light-7: mix(@white, @color-info, 70%);
+
+// class
+.van-color-primary {
+  color: @color-primary;
+}
+.van-bgcolor-primary {
+  background-color: @color-primary;
+}
+.van-color-success {
+  color: @color-success;
+}
+.van-bgcolor-success {
+  background-color: @color-success;
+}
+.van-color-danger {
+  color: @color-danger;
+}
+.van-bgcolor-danger {
+  background-color: @color-danger;
+}
+.van-color-warning {
+  color: @color-warning;
+}
+.van-bgcolor-warning {
+  background-color: @color-warning;
+}
+.van-color-info {
+  color: @color-info;
+}
+.van-bgcolor-info {
+  background-color: @color-info;
+}
+.van-color-text-primary {
+  color: @color-text-primary;
+}
+.van-bgcolor-text-primary {
+  background-color: @color-text-primary;
+}
+.van-color-text-regular {
+  color: @color-text-regular;
+}
+.van-bgcolor-text-regular {
+  background-color: @color-text-regular;
+}
+.van-color-text-assist {
+  color: @color-text-assist;
+}
+.van-bgcolor-text-assist {
+  background-color: @color-text-assist;
+}
+.van-color-text-secondary {
+  color: @color-text-secondary;
+}
+.van-bgcolor-text-secondary {
+  background-color: @color-text-secondary;
+}
+.van-color-text-placeholder {
+  color: @color-text-placeholder;
+}
+.van-bgcolor-text-placeholder {
+  background-color: @color-text-placeholder;
+}
+.van-color-text-empty {
+  color: @color-text-empty;
+}
+.van-bgcolor-text-empty {
+  background-color: @color-text-empty;
+}
+.van-color-border-color {
+  color: @border-color;
+}
+.van-bgcolor-border-color {
+  background-color: @border-color;
+}
+.van-color-line-color {
+  color: @line-color;
+}
+.van-bgcolor-line-color {
+  background-color: @line-color;
+}
+.van-color-background-color {
+  color: @background-color;
+}
+.van-bgcolor-background-color {
+  background-color: @background-color;
+}
+.van-color-white {
+  color: @white;
+}
+.van-bgcolor-white {
+  background-color: @white;
+}
+.van-color-black {
+  color: @black;
+}
+.van-bgcolor-black {
+  background-color: @black;
+}
+.van-color-transparent {
+  color: @color-transparent;
+}
+.van-bgcolor-transparent {
+  background-color: @color-transparent;
+}
+
+// .van-color-primary-dark-1 {
+//   color: @color-primary-dark-1;
+// }
+// .van-bgcolor-primary-dark-1 {
+//   background-color: @color-primary-dark-1;
+// }
+// .van-color-primary-light-7 {
+//   color: @color-primary-light-7;
+// }
+// .van-bgcolor-primary-light-7 {
+//   background-color: @color-primary-light-7;
+// }
+// .van-color-success-dark-1 {
+//   color: @color-success-dark-1;
+// }
+// .van-bgcolor-success-dark-1 {
+//   background-color: @color-success-dark-1;
+// }
+// .van-color-success-light-7 {
+//   color: @color-success-light-7;
+// }
+// .van-bgcolor-success-light-7 {
+//   background-color: @color-success-light-7;
+// }
+// .van-color-warning-dark-1 {
+//   color: @color-warning-dark-1;
+// }
+// .van-bgcolor-warning-dark-1 {
+//   background-color: @color-warning-dark-1;
+// }
+// .van-color-warning-light-7 {
+//   color: @color-warning-light-7;
+// }
+// .van-bgcolor-warning-light-7 {
+//   background-color: @color-warning-light-7;
+// }
+// .van-color-danger-dark-1 {
+//   color: @color-danger-dark-1;
+// }
+// .van-bgcolor-danger-dark-1 {
+//   background-color: @color-danger-dark-1;
+// }
+// .van-color-danger-light-7 {
+//   color: @color-danger-light-7;
+// }
+// .van-bgcolor-danger-light-7 {
+//   background-color: @color-danger-light-7;
+// }
+// .van-color-info-dark-1 {
+//   color: @color-info-dark-1;
+// }
+// .van-bgcolor-info-dark-1 {
+//   background-color: @color-info-dark-1;
+// }
+// .van-color-info-light-7 {
+//   color: @color-info-light-7;
+// }
+// .van-bgcolor-info-light-7 {
+//   background-color: @color-info-light-7;
+// }
+
+//=================
+
+// Padding
+@padding-base: 4px;
+@padding-xs: @padding-base * 2;
+@padding-sm: @padding-base * 3;
+@padding-md: 14px;
+@padding-md-1: @padding-base * 4;
+@padding-lg: @padding-base * 6;
+@padding-xl: @padding-base * 8;
+
+// Font
+@font-size-xs: 10px;
+@font-size-sm: 12px;
+@font-size-sm-1: 13px;
+@font-size-md: 14px;
+@font-size-md-1: 15px;
+@font-size-lg: 16px;
+@font-size-lg-1: 17px;
+@font-size-xl: 18px;
+@font-size-xl-1: 20px;
+@font-weight-bold: 500;
+
+// Animation
+@animation-duration-base: 0.3s;
+@animation-duration-fast: 0.2s;
+
+// Border
+@border-width-base: 1px;
+@border-radius-sm: 2px;
+@border-radius-md: 4px;
+@border-radius-lg: 8px;
+@border-radius-max: 999px;
+
+// ActionSheet
+@action-sheet-max-height: 90%;
+@action-sheet-header-height: 44px;
+@action-sheet-header-font-size: @font-size-lg;
+@action-sheet-description-color: @color-text-assist;
+@action-sheet-description-font-size: @font-size-md;
+@action-sheet-description-line-height: 20px;
+@action-sheet-item-height: 54px;
+@action-sheet-item-color: @color-text-primary;
+@action-sheet-item-background: @white;
+@action-sheet-item-font-size: @font-size-lg-1;
+@action-sheet-item-text-color: @color-text-regular;
+@action-sheet-item-disabled-text-color: @color-text-placeholder;
+@action-sheet-subname-color: @color-text-assist;
+@action-sheet-subname-font-size: @font-size-sm;
+@action-sheet-close-icon-size: 18px;
+@action-sheet-close-icon-color: @color-text-placeholder;
+@action-sheet-close-icon-padding: 0 @padding-sm;
+@action-sheet-cancel-padding-top: @padding-xs;
+@action-sheet-cancel-padding-color: @background-color;
+
+// AddressEdit
+@address-edit-buttons-padding: @padding-xl @padding-md;
+@address-edit-button-margin-bottom: @padding-sm;
+@address-edit-detail-finish-color: @color-info;
+@address-edit-detail-finish-font-size: @font-size-sm;
+
+// AddressList
+@address-list-disabled-text-color: @color-text-secondary;
+@address-list-disabled-text-font-size: @font-size-sm;
+@address-list-disabled-text-line-height: 30px;
+@address-list-item-padding: @padding-md;
+@address-list-item-text-color: @color-text-assist;
+@address-list-item-disabled-text-color: @color-text-secondary;
+@address-list-item-font-size: @font-size-md;
+@address-list-item-line-height: 20px;
+@address-list-edit-color: @color-text-secondary;
+@address-list-edit-icon-size: 16px;
+
+// Button
+@button-mini-height: 19px;
+@button-mini-min-width: 40px;
+@button-mini-padding: 0 9.5px;
+@button-mini-font-size: @font-size-xs;
+@button-mini-line-height: 17px;
+@button-small-height: 26px;
+@button-small-min-width: 60px;
+@button-small-padding: 0 16px;
+@button-small-font-size: @font-size-md;
+@button-small-line-height: 24px;
+@button-middle-height: 36px;
+@button-middle-line-height: 34px;
+@button-middle-padding: 0 20.5px;
+@button-middle-font-size: @font-size-md-1;
+@button-normal-padding: 0 24px;
+@button-normal-font-size: @font-size-lg-1;
+@button-default-height: 46px;
+@button-default-line-height: 44px;
+@button-default-font-size: @font-size-xl;
+@button-default-color: @color-text-regular;
+@button-default-background-color: @white;
+@button-default-border-color: @border-color;
+@button-primary-color: @white;
+@button-primary-background-color: @color-primary;
+@button-primary-border-color: @color-primary;
+@button-info-color: @white;
+@button-info-background-color: @color-info;
+@button-info-border-color: @color-info;
+@button-danger-color: @white;
+@button-danger-background-color: @color-danger;
+@button-danger-border-color: @color-danger;
+@button-warning-color: @white;
+@button-warning-background-color: @color-warning;
+@button-warning-border-color: @color-warning;
+@button-border-width: @border-width-base;
+@button-border-radius: @border-radius-md;
+@button-round-border-radius: @border-radius-max;
+@button-plain-background-color: @white;
+@button-disabled-opacity: @disabled-opacity;
+
+// Card
+@card-padding: @padding-xs @padding-md;
+@card-font-size: @font-size-sm;
+@card-text-color: @color-text-regular;
+@card-background-color: @background-color-light;
+@card-thumb-size: 90px;
+@card-title-line-height: 16px;
+@card-desc-color: @color-text-assist;
+@card-desc-line-height: 20px;
+@card-price-color: @color-danger;
+@card-origin-price-color: @color-text-secondary;
+@card-origin-price-font-size: @font-size-xs;
+
+// Cell
+@cell-font-size: @font-size-lg;
+@cell-line-height: 22px;
+@cell-padding: @padding-md-1 @padding-md;
+@cell-text-color: @color-text-assist;
+@cell-background-color: @white;
+@cell-active-color: @active-color;
+@cell-required-color: @color-danger;
+@cell-label-color: @color-text-secondary;
+@cell-label-font-size: @font-size-sm;
+@cell-label-line-height: 18px;
+@cell-label-margin-top: 6px;
+@cell-label-less-spacing-margin-top: 2px;
+@cell-title-color: @color-text-primary;
+@cell-value-color: @color-text-assist;
+@cell-icon-size: @font-size-md;
+@cell-right-icon-color: @color-text-secondary;
+@cell-large-vertical-padding: @padding-sm;
+@cell-large-title-font-size: @font-size-lg;
+@cell-large-label-font-size: @font-size-md;
+
+@switch-cell-line-height: 30px;
+@switch-cell-padding: @font-size-sm @font-size-md;
+
+// CellGroup
+@cell-group-background-color: @white;
+@cell-group-title-color: @color-text-regular;
+@cell-group-title-padding: @padding-sm @padding-md;
+@cell-group-title-font-size: @font-size-lg;
+@cell-group-title-line-height: 22px;
+
+// Checkbox
+@checkbox-size: 20px;
+@checkbox-border-color: @border-color;
+@checkbox-transition-duration: @animation-duration-fast;
+@checkbox-label-margin: @padding-xs;
+@checkbox-label-color: @color-text-primary;
+@checkbox-checked-icon-color: @color-primary;
+@checkbox-disabled-background-color: @line-color;
+@checkbox-disabled-label-color: @color-text-secondary;
+
+// Circle
+@circle-text-color: @color-text-regular;
+@circle-text-font-weight: @font-weight-bold;
+@circle-text-font-size: @font-size-md;
+@circle-text-line-height: 18px;
+
+// Collapse
+@collapse-item-transition-duration: @animation-duration-base;
+@collapse-item-content-padding: @padding-md;
+@collapse-item-content-font-size: 13px;
+@collapse-item-content-line-height: 1.5;
+@collapse-item-content-text-color: @color-text-assist;
+@collapse-item-content-background-color: @white;
+@collapse-item-title-disabled-color: @color-text-placeholder;
+@collapse-item-title-color: @color-text-primary;
+@collapse-item-title-icon-color: @color-text-placeholder;
+
+// ContactCard
+@contact-card-padding: @padding-md;
+@contact-card-add-icon-size: 40px;
+@contact-card-add-icon-color: @color-info;
+@contact-card-value-line-height: 20px;
+
+// ContactEdit
+@contact-edit-buttons-padding: @padding-xl @padding-md;
+@contact-edit-button-margin-bottom: @padding-sm;
+@contact-edit-field-label-width: 65px;
+
+// ContactList
+@contact-list-edit-icon-size: 16px;
+@contact-list-add-button-z-index: 999;
+@contact-list-item-padding: @padding-md;
+
+// CountDown
+@count-down-text-color: @color-text-regular;
+@count-down-font-size: @font-size-md;
+@count-down-line-height: 20px;
+
+// Coupon
+@coupon-margin: 0 @padding-md @padding-md;
+@coupon-content-height: 100px;
+@coupon-content-padding: @padding-lg 0 0 @padding-md;
+@coupon-background-color: @white;
+@coupon-active-background-color: @active-color;
+@coupon-border-radius: @border-radius-md;
+@coupon-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+@coupon-head-width: 85px;
+@coupon-amount-color: @color-danger;
+@coupon-amount-font-size: 24px;
+@coupon-currency-font-size: 50%;
+@coupon-name-font-size: @font-size-lg;
+@coupon-disabled-text-color: @color-text-placeholder;
+@coupon-description-padding: @padding-xs @padding-md;
+@coupon-description-background-color: @background-color-light;
+@coupon-description-border-color: @border-color;
+
+// CouponCell
+@coupon-cell-selected-text-color: @color-text-regular;
+
+// CouponList
+@coupon-list-background-color: @background-color;
+@coupon-list-field-padding: @padding-xs @padding-md;
+@coupon-list-exchange-button-height: 32px;
+@coupon-list-empty-image-size: 200px;
+@coupon-list-empty-tip-color: @color-text-secondary;
+@coupon-list-empty-tip-font-size: @font-size-md;
+@coupon-list-empty-tip-line-height: 20px;
+
+// Dialog
+@dialog-width: 290px;
+@dialog-small-screen-width: 90%;
+@dialog-font-size: @font-size-lg;
+@dialog-transition: @animation-duration-base;
+@dialog-border-radius: 8px;
+@dialog-background-color: @white;
+@dialog-header-font-weight: @font-weight-bold;
+@dialog-header-padding-top: 28px;
+@dialog-header-isolated-padding: 28px 0;
+@dialog-message-padding: 28px 20px;
+@dialog-message-font-size: @font-size-lg;
+@dialog-message-max-height: 60vh;
+@dialog-has-title-message-text-color: @color-text-assist;
+@dialog-has-title-message-padding-top: @padding-sm;
+
+@dialog-close-size: 14px;
+
+// Divider
+@divider-text-color: @line-color;
+@divider-font-size: @font-size-md;
+@divider-line-height: 20px;
+@divider-border-color: @line-color;
+@divider-content-padding: 10px;
+@divider-content-left-width: 10%;
+@divider-content-right-width: 10%;
+
+// DropdownMenu
+@dropdown-menu-height: 50px;
+@dropdown-menu-background-color: @white;
+@dropdown-menu-title-font-size: 15px;
+@dropdown-menu-title-text-color: @color-text-regular;
+@dropdown-menu-title-active-text-color: @color-success;
+@dropdown-menu-title-disabled-text-color: @color-text-placeholder;
+@dropdown-menu-title-padding: 0 @padding-xs;
+@dropdown-menu-title-line-height: 18px;
+// DropdownItem
+@dropdown-item-content-max-height: 80%;
+@dropdown-item-title-color: @color-text-assist;
+@dropdown-item-title-font-size: @font-size-md;
+@dropdown-item-option-padding-top: @padding-md;
+@dropdown-item-option-active-color: @color-success;
+@dropdown-item-option-active-bgcolor: @color-primary;
+
+// Field
+@field-label-max-width: 105px;
+@field-input-label-color: @color-text-regular;
+@field-input-text-color: @color-text-primary;
+@field-textarea-label-color: @color-text-regular;
+@field-textarea-label-line-height: 46px;
+@field-input-error-text-color: @color-danger;
+@field-input-disabled-text-color: @color-text-placeholder;
+@field-placeholder-text-color: @color-text-placeholder;
+@field-icon-size: 16px;
+@field-clear-icon-size: 14px;
+@field-clear-icon-color: @color-text-placeholder;
+@field-right-icon-color: @color-primary;
+@field-right-text-color: @color-success;
+@field-error-message-color: @color-danger;
+@field-error-message-text-color: 12px;
+@field-text-area-min-height: 60px;
+@field-word-limit-color: @color-text-secondary;
+@field-word-limit-font-size: @font-size-sm;
+@field-word-limit-line-height: 16px;
+@field-count-color: @color-text-regular;
+
+// GridItem
+@grid-item-content-vertical-padding: 18px;
+@grid-item-content-horizontal-padding: @padding-xs;
+@grid-item-content-background-color: @white;
+@grid-item-content-active-color: @active-color;
+@grid-item-icon-size: 48px;
+@grid-item-text-color: @color-text-primary;
+@grid-item-text-font-size: @font-size-lg-1;
+@grid-item-2-content-vertical-padding: 20px;
+@grid-item-more-content-vertical-padding-top: 16px;
+@grid-item-more-content-vertical-padding-bottom: 12px;
+
+// GoodsAction
+@goods-action-background-color: @white;
+@goods-action-icon-width: 48px;
+@goods-action-icon-height: 50px;
+@goods-action-icon-color: @color-text-regular;
+@goods-action-icon-size: 18px;
+@goods-action-icon-font-size: @font-size-xs;
+@goods-action-icon-active-color: @active-color;
+@goods-action-icon-text-color: @color-text-assist;
+@goods-action-button-height: 40px;
+@goods-action-button-warning-color: linear-gradient(to right, #ffd01e, #ff8917);
+@goods-action-button-danger-color: linear-gradient(to right, #ff6034, #ff5f4e);
+
+// IndexAnchor
+@index-anchor-padding: 0 @padding-md;
+@index-anchor-text-color: @color-text-regular;
+@index-anchor-font-weight: @font-weight-bold;
+@index-anchor-font-size: @font-size-md;
+@index-anchor-line-height: 32px;
+@index-anchor-background-color: transparent;
+@index-anchor-sticky-background-color: @white;
+
+// IndexBar
+@index-bar-index-font-size: @font-size-xs;
+@index-bar-index-line-height: 14px;
+
+// Info
+@info-size: 16px;
+@info-color: @white;
+@info-padding: 0 3px;
+@info-font-size: @font-size-sm;
+@info-font-weight: @font-weight-bold;
+@info-border-width: @border-width-base;
+@info-background-color: @color-danger;
+@info-dot-color: @color-danger;
+@info-dot-size: 8px;
+@info-font-family:
+  PingFang SC,
+  Helvetica Neue,
+  Arial,
+  sans-serif;
+
+// Image
+@image-placeholder-text-color: @color-text-placeholder;
+@image-placeholder-font-size: @font-size-md;
+@image-placeholder-background-color: @background-color;
+
+// ImagePreview
+@image-preview-index-text-color: @white;
+@image-preview-index-font-size: @font-size-md;
+@image-preview-overlay-background-color: rgba(0, 0, 0, 0.9);
+
+// List
+@list-icon-margin-right: 5px;
+@list-text-color: @color-text-secondary;
+@list-text-font-size: @font-size-md;
+@list-text-line-height: 50px;
+
+// Loading
+@loading-text-color: @color-text-secondary;
+@loading-text-font-size: @font-size-md;
+@loading-spinner-color: @color-text-secondary;
+@loading-spinner-size: 33px;
+@loading-spinner-animation-duration: 0.6s;
+
+// NavBar
+@nav-bar-height: 44px;
+@nav-bar-background-color: @white;
+@nav-bar-arrow-size: @font-size-lg;
+@nav-bar-icon-size: 22px;
+@nav-bar-icon-color: @color-text-primary;
+@nav-bar-text-color: @color-text-primary;
+@nav-bar-title-font-size: @font-size-xl;
+@nav-bar-title-text-color: @color-text-primary;
+
+// NoticeBar
+@notice-bar-height: 38px;
+@notice-bar-padding: 9px @padding-md;
+@notice-bar-wrapable-padding: 9px @padding-md 7px;
+@notice-bar-text-color: @color-warning;
+@notice-bar-text-remind-color: @color-text-assist;
+@notice-bar-font-size: @font-size-md;
+@notice-bar-line-height: 20px;
+@notice-bar-background-color: #fefbe0;
+@notice-bar-icon-size: 16px;
+@notice-bar-icon-min-width: 22px;
+@notice-bar-icon-width: 16px;
+@notice-bar-icon-height: 16px;
+
+// Notify
+@notify-padding: @padding-xs @padding-md;
+@notify-font-size: @font-size-md;
+@notify-line-height: 20px;
+@notify-success-background-color: @color-primary;
+@notify-info-background-color: @color-info;
+@notify-danger-background-color: @color-danger;
+@notify-warning-background-color: @color-warning;
+
+// NumberKeyboard
+@number-keyboard-background-color: @white;
+@number-keyboard-key-height: 54px;
+@number-keyboard-key-background: #ebedf0;
+@number-keyboard-key-font-size: 24px;
+@number-keyboard-key-active-color: @active-color;
+@number-keyboard-delete-font-size: @font-size-lg;
+@number-keyboard-title-color: @color-text-assist;
+@number-keyboard-title-height: 30px;
+@number-keyboard-title-font-size: @font-size-md;
+@number-keyboard-close-padding: 0 @padding-md;
+@number-keyboard-close-color: @color-info;
+@number-keyboard-close-font-size: @font-size-md;
+@number-keyboard-button-text-color: @white;
+@number-keyboard-button-background-color: @color-info;
+@number-keyboard-cursor-color: @color-text-regular;
+@number-keyboard-cursor-width: 1px;
+@number-keyboard-cursor-height: 40%;
+@number-keyboard-cursor-animation-duration: 1s;
+
+// Overlay
+@overlay-background-color: rgba(0, 0, 0, 0.5);
+
+// Pagination
+@pagination-height: 40px;
+@pagination-font-size: @font-size-md;
+@pagination-item-width: 36px;
+@pagination-item-default-color: @color-info;
+@pagination-item-disabled-color: @color-text-placeholder;
+@pagination-item-disabled-background-color: @background-color;
+@pagination-background-color: @white;
+@pagination-desc-color: @color-text-assist;
+@pagination-disabled-opacity: @disabled-opacity;
+
+// Panel
+@panel-background-color: @white;
+@panel-header-value-color: @color-danger;
+@panel-footer-padding: @padding-xs @padding-md;
+
+// PasswordInput
+@password-input-height: 50px;
+@password-input-margin: 0 @padding-md;
+@password-input-font-size: 20px;
+@password-input-border-radius: 6px;
+@password-input-background-color: @white;
+@password-input-info-color: @color-text-secondary;
+@password-input-info-font-size: @font-size-md;
+@password-input-error-info-color: @color-danger;
+@password-input-dot-size: 10px;
+@password-input-dot-color: @black;
+
+// Picker
+@picker-background-color: @white;
+@picker-toolbar-height: 47px;
+@picker-title-font-size: @font-size-lg;
+@picker-action-padding: 0 @padding-md;
+@picker-action-font-size: @font-size-lg-1;
+@picker-action-text-color: @color-success;
+@picker-action-cancel-color: @color-text-assist;
+@picker-action-sub-color: @color-text-secondary;
+@picker-option-font-size: @font-size-lg;
+@picker-option-text-color: @color-text-primary;
+@picker-option-disabled-opacity: 0.3;
+@picker-loading-icon-color: @color-info;
+@picker-loading-mask-color: rgba(255, 255, 255, 0.9);
+
+// Popup
+@popup-background-color: @white;
+@popup-transition: transform @animation-duration-base ease-out;
+@popup-round-border-radius: 8px;
+@popup-close-icon-size: 18px;
+@popup-close-icon-color: @color-text-placeholder;
+@popup-close-icon-margin: 16px;
+@popup-close-icon-z-index: 1;
+
+// Progress
+@progress-height: 4px;
+@progress-color: @color-info;
+@progress-background-color: @line-color;
+@progress-pivot-padding: 0 5px;
+@progress-pivot-text-color: @white;
+@progress-pivot-font-size: @font-size-xs;
+@progress-pivot-line-height: 1.6;
+@progress-pivot-background-color: @color-info;
+
+// PullRefresh
+@pull-refresh-head-height: 50px;
+@pull-refresh-head-font-size: @font-size-md;
+@pull-refresh-head-text-color: @color-text-secondary;
+
+// Radio
+@radio-size: 22px;
+@radio-border-color: @border-color;
+@radio-transition-duration: @animation-duration-fast;
+@radio-label-margin: @padding-xs;
+@radio-label-color: @color-text-primary;
+@radio-checked-icon-color: @color-primary;
+@radio-disabled-background-color: @line-color;
+@radio-disabled-label-color: @color-text-secondary;
+
+// Rate
+@rate-icon-size: 20px;
+@rate-icon-gutter: 4px;
+
+// Search
+@search-padding: 6px @padding-md;
+@search-background-color: #f6f6f6;
+@search-input-height: 32px;
+@search-label-padding: 0 5px;
+@search-label-color: @color-text-regular;
+@search-label-font-size: @font-size-md;
+@search-left-icon-color: @border-color;
+@search-action-padding: 0 @padding-xs;
+@search-action-text-color: @color-success;
+@search-action-font-size: @font-size-md;
+
+// Sidebar
+@sidebar-width: 85px;
+
+// SidebarItem
+@sidebar-font-size: @font-size-md;
+@sidebar-line-height: 20px;
+@sidebar-text-color: @color-text-regular;
+@sidebar-disabled-text-color: @color-text-placeholder;
+@sidebar-padding: 20px @padding-sm 20px @padding-xs;
+@sidebar-active-color: @active-color;
+@sidebar-background-color: @background-color-light;
+@sidebar-selected-font-weight: @font-weight-bold;
+@sidebar-selected-text-color: @color-text-regular;
+@sidebar-selected-border-color: @color-danger;
+@sidebar-selected-background-color: @white;
+
+// Skeleton
+@skeleton-row-height: 16px;
+@skeleton-row-background-color: @active-color;
+@skeleton-row-margin-top: @padding-sm;
+@skeleton-avatar-background-color: @active-color;
+@skeleton-animation-duration: 1.2s;
+
+// Slider
+@slider-active-background-color: @color-info;
+@slider-inactive-background-color: @line-color;
+@slider-disabled-opacity: @disabled-opacity;
+@slider-button-width: 24px;
+@slider-button-height: 24px;
+@slider-button-border-radius: 50%;
+@slider-button-background-color: @white;
+@slider-button-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+// Step
+@step-text-color: @color-text-secondary;
+@step-process-text-color: @color-text-primary;
+@step-font-size: @font-size-md;
+@step-line-color: @line-color;
+@step-finish-line-color: @color-primary;
+@step-finish-text-color: @color-text-primary;
+@step-circle-color: @line-color;
+@step-icon-size: 14px;
+@step-horizontal-title-font-size: @font-size-md;
+@step-horizontal-circle-size: 6px;
+@step-horizontal-active-circle-size: 8px;
+@step-horizontal-border-width: 3px;
+@step-vertical-title-font-size: @font-size-md-1;
+@step-vertical-circle-size: 9px;
+@step-vertical-border-width: 5px;
+
+// Steps
+@steps-background-color: @white;
+
+// Sticky
+@sticky-z-index: 99;
+
+// Stepper
+@stepper-active-color: #e8e8e8;
+@stepper-background-color: @white;
+@stepper-button-icon-color: @color-success;
+@stepper-button-disabled-color: @white;
+@stepper-button-disabled-icon-color: @color-text-placeholder;
+@stepper-input-width: 46px;
+@stepper-input-height: 30px;
+@stepper-input-font-size: @font-size-lg;
+@stepper-input-text-color: @color-text-primary;
+@stepper-input-disabled-text-color: @color-text-placeholder;
+@stepper-input-disabled-background-color: @white;
+@stepper-border-radius: @border-radius-sm;
+
+// SubmitBar
+@submit-bar-z-index: 100;
+@submit-bar-background-color: @white;
+@submit-bar-button-width: 110px;
+@submit-bar-price-color: @color-warning;
+@submit-bar-price-font-size: 24px;
+@submit-bar-label-color: @color-text-assist;
+@submit-bar-label-font-size: 16px;
+@submit-bar-suffix-label-color: @color-text-placeholder;
+@submit-bar-suffix-label-font-size: 13px;
+@submit-bar-currency-font-size: @font-size-sm-1;
+@submit-bar-text-color: @color-text-regular;
+@submit-bar-text-font-size: @font-size-md;
+@submit-bar-tip-padding: @padding-xs @padding-sm;
+@submit-bar-tip-font-size: @font-size-sm;
+@submit-bar-tip-color: #f56723;
+@submit-bar-tip-background-color: #fff7cc;
+@submit-bar-tip-icon-size: 12px;
+
+// Swipe
+@swipe-indicator-size: 6px;
+@swipe-indicator-width: 5px;
+@swipe-indicator-height: 2px;
+@swipe-indicator-active-width: 10px;
+@swipe-indicator-margin: @padding-sm;
+@swipe-indicator-active-opacity: 1;
+@swipe-indicator-inactive-opacity: 0.3;
+@swipe-indicator-active-background-color: @color-primary;
+@swipe-indicator-inactive-background-color: @line-color;
+
+// Switch
+@switch-size: 30px;
+@switch-width: 1.95em;
+@switch-height: 1.1em;
+@switch-node-size: 1.05em;
+@switch-node-z-index: 1;
+@switch-node-background-color: @white;
+// @switch-node-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05),
+//   0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+@switch-node-box-shadow:
+  0 0 2px 0 rgba(0, 0, 0, 0.2),
+  0 2px 12px 0 rgba(0, 0, 0, 0.08),
+  -1px 2px 2px 0 rgba(43, 39, 39, 0.1);
+@switch-background-color: @white;
+@switch-on-background-color: @color-primary;
+@switch-transition-duration: @animation-duration-base;
+@switch-disabled-opacity: @disabled-opacity;
+@switch-border: 1px solid rgba(0, 0, 0, 0.1);
+
+// Tabbar
+@tabbar-height: 49px;
+@tabbar-icon-font-size: 24px;
+@tabbar-background-color: @white;
+@tabbar-small-height: 54px;
+@tabbar-small-width: 360px;
+
+// TabbarItem
+@tabbar-item-font-size: @font-size-xs;
+@tabbar-item-text-color: @color-text-regular;
+@tabbar-item-text-active-color: @color-primary;
+@tabbar-item-active-color: @color-primary;
+@tabbar-item-line-height: 1;
+@tabbar-item-icon-size: 24px;
+@tabbar-item-margin-bottom: 3px;
+@tabbar-item-border-radius: 100px;
+@tabbar-item-border-width: 134px;
+@tabbar-item-border-height: 5px;
+
+// Tab
+@tab-text-color: @color-text-regular;
+@tab-active-text-color: @color-success;
+@tab-disabled-text-color: @line-color;
+@tab-font-size: @font-size-md;
+
+// Tabs
+@tabs-default-color: @color-primary;
+@tabs-line-height: 44px;
+@tabs-card-height: 30px;
+@tabs-nav-background-color: @white;
+@tabs-bottom-bar-height: 3px;
+@tabs-bottom-bar-width: 38px;
+@tabs-bottom-bar-color: @tabs-default-color;
+
+// Tag
+@tag-line-height: 14px;
+@tag-font-size: @font-size-sm;
+@tag-small-font-size: 10px;
+@tag-mark-line-height: 20px;
+@tag-mark-font-size: @font-size-xl-1;
+@tag-border-radius: 2px;
+@tag-round-border-radius: @border-radius-max;
+@tag-success-color: @color-success;
+@tag-info-color: @color-info;
+@tag-dander-color: @color-danger;
+@tag-warning-color: @color-warning;
+@tag-default-color: @color-text-secondary;
+@tag-plain-background-color: @white;
+@tag-img-background-color: @color-text-primary;
+
+// Toast
+@toast-max-width: 75%;
+@toast-font-size: @font-size-md;
+@toast-text-color: @white;
+@toast-loading-icon-color: @white;
+@toast-border-radius: @border-radius-lg;
+@toast-background-color: rgba(@black, 0.8);
+@toast-icon-size: 33px;
+@toast-large-icon-size: 60px;
+@toast-text-min-width: 110px;
+@toast-text-padding: 12px 20px;
+@toast-text-font-size: @font-size-lg;
+@toast-default-padding: @padding-base;
+@toast-default-width: 88px;
+@toast-default-min-height: 88px;
+@toast-position-top-distance: 50px;
+@toast-position-bottom-distance: 50px;
+
+// TreeSelect
+@tree-select-font-size: @font-size-md;
+@tree-select-nav-background-color: @background-color-light;
+@tree-select-content-background-color: @white;
+@tree-select-nav-item-padding: @padding-md-1 @padding-xs @padding-md-1 18px;
+@tree-select-item-height: 54px;
+@tree-select-item-active-color: @color-primary;
+@tree-select-item-disabled-color: @color-text-placeholder;
+@tree-item-font-size: @font-size-lg;
+@tree-item-select-color: @color-primary;
+@tree-add-font-size: @font-size-sm;
+@tree-add-color: @color-text-assist;
+@tree-sider-text-line-height: 22px;
+
+// Uploader
+@uploader-size: 80px;
+@uploader-icon-size: 36px;
+@uploader-icon-color: @border-color;
+@uploader-text-color: @color-text-secondary;
+@uploader-text-font-size: @font-size-sm;
+@uploader-upload-border-color: @border-color;
+@uploader-upload-background-color: @white;
+@uploader-delete-color: @color-text-placeholder;
+@uploader-delete-icon-size: 18px;
+@uploader-delete-background-color: @white;
+@uploader-file-background-color: @background-color;
+@uploader-file-icon-size: 20px;
+@uploader-file-icon-color: @color-text-assist;
+@uploader-file-name-padding: 0 @padding-base;
+@uploader-file-name-margin-top: @padding-xs;
+@uploader-file-name-font-size: @font-size-sm;
+@uploader-file-name-text-color: @color-text-assist;
+@uploader-padding: @padding-md;
+@uploader-count-color: @color-text-regular;
+@uploader-max-count-color: @color-danger;
+@uploader-title-line-height: 20px;
+@uploader-title-color: @color-text-primary;
+@uploader-title-font-size: @font-size-md-1;
+@uploader-title-description-color: @color-text-secondary;
+@uploader-title-description-font-size: @font-size-md;
+@uploader-tip-color: @color-text-placeholder;
+@uploader-tip-font-size: @font-size-md;
+@upload-plus-size: 34px;
+
+// Sku
+@sku-item-background-color: #f7f8fa;
+@sku-icon-gray-color: #dcdde0;
+@sku-upload-mask-color: rgba(50, 50, 51, 0.8);
+
+// Result
+@result-padding: 20px 0;
+@result-background-color: @white;
+@result-title-line-height: 28px;
+@result-title-color: @color-text-primary;
+@result-title-font-size: @font-size-xl-1;
+@result-tip-line-height: 18px;
+@result-tip-color: @color-text-secondary;
+@result-tip-font-size: @font-size-sm-1;
+@result-icon-font-size: 65px;
+@result-inline-title-font-size: @font-size-lg-1;
+@result-inline-icon-font-size: 26px;
+
+//Error
+@error-bgcolor: @white;
+@error-padding: 0 31px;
+@error-figure-width: 100%;
+@error-title-margin-top: 50px;
+@error-title-size: @font-size-lg;
+@error-title-color: @color-text-regular;
+@error-tip-margin-top: 20px;
+@error-tip-size: @font-size-lg;
+@error-tip-color: @color-text-assist;
+@error-button-margin-top: 50px;
+
+//Nodata
+@nodata-relative-top: 35vh;
+@nodata-padding: 0 @padding-md;
+@nodata-figure-width: 160px;
+@nodata-figure-height: 160px;
+@nodata-title-margin-top: 28px;
+@nodata-title-size: @font-size-lg-1;
+@nodata-title-color: @color-text-empty;
+@nodata-tip-margin-top: 8px;
+@nodata-tip-size: @font-size-md-1;
+@nodata-tip-color: @color-text-secondary;
+@nodata-button-margin-top: 23px;
+
+//Status
+@status-horizontal-type1-figure-width: 126px;
+@status-horizontal-type1-figure-height: 100px;
+@status-horizontal-type2-figure-width: 133px;
+@status-horizontal-type2-figure-height: 93px;
+@status-vertical-figure-height: 130px;
+@status-horizontal-title-font-size: @font-size-xl;
+@status-vertical-title-font-size: @font-size-lg-1;
+@status-title-color: @color-text-regular;
+@status-tip-font-size: @font-size-md;
+@status-tip-color: @color-text-secondary;

@@ -1,0 +1,44 @@
+@import '../style/var.less';
+
+.van-result {
+  padding: @result-padding;
+  background: @result-background-color;
+  text-align: center;
+  padding: 29px 50px;
+
+  &__icon {
+    font-size: @result-icon-font-size;
+  }
+
+  &__title {
+    margin-top: 16px;
+    line-height: @result-title-line-height;
+    font-size: @result-title-font-size;
+    color: @result-title-color;
+  }
+
+  &__tip {
+    margin-top: 8px;
+    line-height: @result-tip-line-height;
+    font-size: @result-tip-font-size;
+    color: @result-tip-color;
+  }
+
+  &--inline {
+    padding: 19px 50px;
+    .van-result__title {
+      margin-top: 0;
+      margin-left: 12px;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: @result-inline-title-font-size;
+    }
+    .van-result__icon {
+      vertical-align: middle;
+      font-size: @result-inline-icon-font-size;
+    }
+    .van-result__tip {
+      margin-top: 12px;
+    }
+  }
+}

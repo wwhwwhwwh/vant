@@ -379,6 +379,9 @@ location.href = location.href.replace('youzan.github.io', 'vant-ui.github.io');
               {
                 path: 'Avatar',
                 title: 'Avatar 头像',
+              }, {
+                path: 'Result',
+                title: 'Result 结果',
               },
             ],
           },
